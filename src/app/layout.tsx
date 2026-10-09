@@ -95,7 +95,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         `}} />
         <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-PLACEHOLDER"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1548129646460327"
           crossOrigin="anonymous"
         />
         <link rel="sitemap" href="/sitemap.xml" />

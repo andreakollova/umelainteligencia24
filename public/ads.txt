@@ -1,1 +1,1 @@
-# AdSense publisher ID - update when approved
+google.com, pub-1548129646460327, DIRECT, f08c47fec0942fa0

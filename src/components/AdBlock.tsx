@@ -25,7 +25,7 @@ export default function AdBlock({ format = 'rectangle' }: { format?: 'rectangle'
       <ins
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', maxWidth: format === 'horizontal' ? 728 : 300, height: format === 'vertical' ? 600 : format === 'horizontal' ? 90 : 250 }}
-        data-ad-client="ca-pub-PLACEHOLDER"
+        data-ad-client="ca-pub-1548129646460327"
         data-ad-slot=""
         data-ad-format="auto"
         data-full-width-responsive="true"
