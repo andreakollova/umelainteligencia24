@@ -5,7 +5,7 @@ const navLinks = [
   { name: 'Novinky', href: '/' },
   { name: 'Technológie', href: '/kategoria/technologie' },
   { name: 'Development', href: '/kategoria/vyvoj' },
-  { name: 'Roboty', href: '/kategoria/roboty' },
+  { name: 'Roboty', href: '/kategoria/AI technológie' },
   { name: 'Projekty', href: '/projekty' },
   { name: 'App', href: '/app' },
 ];
@@ -19,10 +19,10 @@ export default function Footer() {
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40 }} className="max-md:!grid-cols-1">
           {/* Brand + socials */}
           <div>
-            <Image src="/logo-dark.png" alt="robotika24" width={220} height={44} style={{ height: 40, width: 'auto', marginBottom: 16 }} />
+            <Image src="/logo-dark.png" alt="umelá inteligencia24" width={220} height={44} style={{ height: 40, width: 'auto', marginBottom: 16 }} />
             <p style={{ color: '#d1d5db', fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>
-              Spravodajský portál o robotike, umelej inteligencii a moderných technológiách.
-              Denne prinášame najnovšie správy zo sveta robotov.
+              Spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.
+              Denne prinášame najnovšie správy zo sveta AI systémov.
             </p>
             {/* Social icons */}
             <div style={{ display: 'flex', gap: 12 }}>
@@ -87,7 +87,7 @@ export default function Footer() {
         {/* Bottom bar */}
         <div style={{ borderTop: '1px solid #1f2937', marginTop: 40, paddingTop: 24, display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
           <p style={{ color: '#6b7280', fontSize: 12 }}>
-            &copy; 2026 robotika24. Všetky práva vyhradené.
+            &copy; 2026 umelá inteligencia24. Všetky práva vyhradené.
           </p>
           <p style={{ color: '#6b7280', fontSize: 12 }}>
             Vývoj a dizajn{' '}

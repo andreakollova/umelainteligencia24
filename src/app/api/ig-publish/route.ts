@@ -161,7 +161,7 @@ export async function GET(req: NextRequest) {
 function html(message: string, success: boolean) {
   const color = success ? '#166534' : '#dc2626';
   const bg = success ? '#f0fdf4' : '#fef2f2';
-  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>robotika24 IG</title>
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"><title>umelá inteligencia24 IG</title>
 <style>body{font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;background:#f9fafb}
 .card{background:${bg};border:2px solid ${color};border-radius:12px;padding:32px;max-width:500px;text-align:center;color:${color}}</style></head>
 <body><div class="card"><h2>${success ? '✅' : '❌'}</h2><p>${message}</p></div></body></html>`;

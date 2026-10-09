@@ -31,12 +31,12 @@ export default function OdberPage() {
   return (
     <div style={{ maxWidth: 600, margin: '0 auto', padding: '48px 20px 80px' }}>
       <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <img src="/mascot-small.png" alt="robotika24" style={{ width: 120, height: 120, margin: '0 auto 16px', display: 'block' }} />
+        <img src="/mascot-small.png" alt="umelá inteligencia24" style={{ width: 120, height: 120, margin: '0 auto 16px', display: 'block' }} />
         <h1 style={{ fontSize: 28, fontWeight: 700, color: 'var(--text-primary)', marginBottom: 12 }}>
-          Odoberajte novinky zo sveta robotiky
+          Odoberajte novinky zo sveta umelej inteligencie
         </h1>
         <p style={{ fontSize: 16, color: 'var(--text-tertiary)', lineHeight: 1.6 }}>
-          Prihláste sa na odber a dostanete najnovšie správy o robotike, umelej inteligencii a technológiách priamo do schránky.
+          Prihláste sa na odber a dostanete najnovšie správy o umelej inteligencii, umelej inteligencii a technológiách priamo do schránky.
         </p>
       </div>
 

@@ -31,7 +31,7 @@ export default function AuthGate({ children }: { children: React.ReactNode }) {
       <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'var(--bg)' }}>
         <div style={{ width: '100%', maxWidth: 360, padding: 32 }}>
           <div style={{ textAlign: 'center', marginBottom: 32 }}>
-            <img src="/logo.png" alt="robotika24" style={{ height: 48, margin: '0 auto 16px' }} />
+            <img src="/logo.png" alt="umelá inteligencia24" style={{ height: 48, margin: '0 auto 16px' }} />
             <p style={{ fontSize: 14, color: 'var(--text-tertiary)' }}>Prihláste sa pre prístup</p>
           </div>
           <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

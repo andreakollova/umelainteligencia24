@@ -20,7 +20,7 @@ export async function POST(request: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: `*robotika24 - Kontaktný formulár*\n\nMeno: ${name}\nEmail: ${email}\nSpráva: ${message}`,
+          text: `*umelá inteligencia24 - Kontaktný formulár*\n\nMeno: ${name}\nEmail: ${email}\nSpráva: ${message}`,
         }),
       });
     } catch {}

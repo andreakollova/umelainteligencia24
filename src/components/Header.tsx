@@ -183,7 +183,7 @@ export default function Header() {
       <header className="hidden md:block" style={{ backgroundColor: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 92 }}>
           <Link href="/" style={{ flexShrink: 0 }}>
-            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="robotika24" width={280} height={56} style={{ height: 68, width: 'auto' }} priority />
+            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="umelá inteligencia24" width={280} height={56} style={{ height: 56, width: 'auto' }} priority />
           </Link>
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -225,7 +225,7 @@ export default function Header() {
 
           {/* Logo center */}
           <Link href="/" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
-            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="robotika24" width={200} height={40} style={{ height: 40, width: 'auto' }} priority />
+            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="umelá inteligencia24" width={200} height={40} style={{ height: 40, width: 'auto' }} priority />
           </Link>
 
           {/* Search right */}
@@ -287,7 +287,7 @@ export default function Header() {
           </button>
 
           <Link href="/" style={{ flexShrink: 0 }}>
-            <Image src="/logo-dark.png" alt="robotika24" width={200} height={40} style={{ height: 40, width: 'auto' }} />
+            <Image src="/logo-dark.png" alt="umelá inteligencia24" width={200} height={40} style={{ height: 40, width: 'auto' }} />
           </Link>
 
           {/* Desktop nav */}

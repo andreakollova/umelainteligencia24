@@ -26,12 +26,12 @@ export default function NewsletterBanner() {
   return (
     <section style={{ backgroundColor: '#052136', padding: '48px 20px', marginBottom: 32 }}>
       <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
-        <img src="/newsletter-owl.png" alt="robotika24" style={{ height: 120, margin: '0 auto 16px', display: 'block' }} />
+        <img src="/newsletter-owl.png" alt="umelá inteligencia24" style={{ height: 120, margin: '0 auto 16px', display: 'block' }} />
         <h2 style={{ fontSize: 24, fontWeight: 700, color: '#ffffff', marginBottom: 8 }}>
-          Nepremeškajte žiadnu novinku zo sveta robotiky
+          Nepremeškajte žiadnu novinku zo sveta umelej inteligencie
         </h2>
         <p style={{ fontSize: 15, color: '#9ca3af', marginBottom: 24, lineHeight: 1.5 }}>
-          Pridajte sa k odberateľom a dostávajte najzaujímavejšie správy o robotoch, AI a technológiách priamo do schránky.
+          Pridajte sa k odberateľom a dostávajte najzaujímavejšie správy o AI systémoch, AI a technológiách priamo do schránky.
         </p>
 
         {status === 'success' ? (

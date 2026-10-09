@@ -2,9 +2,9 @@ import ContactForm from '@/components/ContactForm';
 
 export const metadata = {
   title: 'Kontakt',
-  description: 'Kontaktujte redakciu Robotika24. Tip na článok, spolupráca, tlačové správy.',
+  description: 'Kontaktujte redakciu Umelá inteligencia24. Tip na článok, spolupráca, tlačové správy.',
   alternates: { canonical: '/kontakt' },
-  openGraph: { title: 'Kontakt', description: 'Kontaktujte redakciu Robotika24. Tip na článok, spolupráca, tlačové správy.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Kontakt', description: 'Kontaktujte redakciu Umelá inteligencia24. Tip na článok, spolupráca, tlačové správy.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 

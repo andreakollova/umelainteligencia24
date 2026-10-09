@@ -41,23 +41,22 @@ function sleep(ms) {
 
 // Category mapping: RSS category keywords -> our DB category slug
 const CATEGORY_MAP = {
-  technologie: [
-    'batteries', 'power supplies', 'cameras', 'imaging', 'vision',
-    'controllers', 'grippers', 'end effectors', 'microprocessors', 'socs',
-    'motion control', 'sensors', 'sensing', 'soft robotics',
-    'software', 'simulation', 'technologies', 'robot components',
-    'actuators', 'motors', 'servos',
+  modely: [
+    'language model', 'llm', 'gpt', 'chatgpt', 'claude', 'gemini',
+    'transformer', 'foundation model', 'generative ai', 'diffusion',
   ],
-  vyvoj: [
-    'artificial intelligence', 'cognition', 'ai', 'haptics',
-    'mobility', 'navigation', 'design', 'development',
-    'research', 'machine learning', 'deep learning',
+  vyskum: [
+    'artificial intelligence', 'cognition', 'ai', 'research',
+    'machine learning', 'deep learning', 'neural network',
+    'reinforcement learning', 'computer vision',
   ],
-  roboty: [
-    'agv', 'amr', 'autonomous mobile', 'consumer robotics', 'consumer',
-    'collaborative robot', 'cobot', 'uav', 'drones', 'drone',
-    'humanoid', 'industrial robot', 'self-driving', 'autonomous vehicle',
-    'ums', 'unmanned', 'robots', 'platforms', 'robot',
+  nastroje: [
+    'software', 'simulation', 'tools', 'framework', 'api',
+    'natural language', 'nlp', 'automation', 'development',
+  ],
+  biznis: [
+    'startup', 'funding', 'investment', 'enterprise', 'industry',
+    'business', 'company', 'acquisition', 'valuation',
   ],
 };
 
@@ -322,13 +321,13 @@ async function main() {
       'Interesting Engineering',
       ARTICLES_PER_SOURCE * 3
     );
-    // Only take robotics articles (strict filter - must contain "robot" in category or title)
+    // Only take AI articles
     const filtered = ieItems.filter(item => {
       const cats = item.categories.map(c => c.toLowerCase()).join(' ');
       const titleLow = item.title.toLowerCase();
-      const hasRobotCat = cats.includes('robotics') || cats.includes('robot');
-      const hasRobotTitle = titleLow.includes('robot') || titleLow.includes('humanoid') || titleLow.includes('drone') || titleLow.includes('autonomous');
-      return hasRobotCat || hasRobotTitle;
+      const hasAICat = cats.includes('artificial intelligence') || cats.includes('ai') || cats.includes('machine learning');
+      const hasAITitle = titleLow.includes('ai ') || titleLow.includes('artificial intelligence') || titleLow.includes('machine learning') || titleLow.includes('gpt') || titleLow.includes('chatgpt') || titleLow.includes('language model') || titleLow.includes('neural') || titleLow.includes('deep learning');
+      return hasAICat || hasAITitle;
     });
     allItems.push(...filtered);
   } catch (err) {

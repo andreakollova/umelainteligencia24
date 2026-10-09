@@ -46,7 +46,7 @@ export default async function Home() {
     '@type': 'WebSite',
     name: 'umelainteligencia24',
     url: 'https://umelainteligencia24.sk',
-    description: 'Slovenský spravodajský portál o robotike, umelej inteligencii a moderných technológiách.',
+    description: 'Slovenský spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.',
     inLanguage: 'sk',
     publisher: {
       '@type': 'Organization',

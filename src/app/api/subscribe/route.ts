@@ -56,7 +56,7 @@ export async function POST(request: Request) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           channel: SLACK_CHANNEL_ID,
-          text: `*robotika24 - Nový odberateľ*\n${masked}\nCelkom odberateľov: ${count}`,
+          text: `*umelá inteligencia24 - Nový odberateľ*\n${masked}\nCelkom odberateľov: ${count}`,
         }),
       });
     } catch {}

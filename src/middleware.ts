@@ -9,7 +9,7 @@ export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname + request.nextUrl.search;
     const skUrl = `https://umelainteligencia24.sk${path}`;
     const translateUrl = skUrl
-      .replace('https://umelainteligencia24.sk', 'https://robotika24-sk.translate.goog');
+      .replace('https://umelainteligencia24.sk', 'https://umelá inteligencia24-sk.translate.goog');
     const separator = translateUrl.includes('?') ? '&' : '?';
     return NextResponse.redirect(translateUrl + separator + '_x_tr_sl=sk&_x_tr_tl=cs&_x_tr_hl=cs');
   }

@@ -12,9 +12,9 @@ export default function FundingWidget() {
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden' }}>
       <div style={{ padding: '16px 16px 12px', borderBottom: '1px solid var(--border-light)' }}>
-        <span style={{ fontSize: 10, fontWeight: 700, color: '#37b3f2', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Humanoidná robotika</span>
+        <span style={{ fontSize: 10, fontWeight: 700, color: '#37b3f2', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Humanoidná umelá inteligencia</span>
         <p style={{ fontSize: 13, color: 'var(--text-secondary)', margin: '6px 0 0', lineHeight: 1.4 }}>
-          Najviac financované spoločnosti v humanoidnej robotike
+          Najviac financované spoločnosti v humanoidnej umelej inteligencii
         </p>
       </div>
       <div>

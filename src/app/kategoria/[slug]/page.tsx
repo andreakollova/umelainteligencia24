@@ -20,13 +20,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     return { title: 'Kategória nenájdená' };
   }
 
-  const title = `${category.name} - Články o robotike | robotika24`;
-  const description = `Najnovšie články z kategórie ${category.name}. Správy, novinky a analýzy zo sveta robotiky a moderných technológií na robotika24.`;
+  const title = `${category.name} - Články o umelej inteligencii | umelá inteligencia24`;
+  const description = `Najnovšie články z kategórie ${category.name}. Správy, novinky a analýzy zo sveta umelej inteligencie a moderných technológií na umelá inteligencia24.`;
 
   return {
     title,
     description,
-    keywords: [category.name.toLowerCase(), 'robotika', 'roboty', 'technológie', 'robotika Slovensko'],
+    keywords: [category.name.toLowerCase(), 'umelá inteligencia', 'AI technológie', 'technológie', 'umelá inteligencia Slovensko'],
     alternates: { canonical: `/kategoria/${slug}`, languages: { 'sk-SK': `/kategoria/${slug}` } },
     openGraph: {
       title, description,

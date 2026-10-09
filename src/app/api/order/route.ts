@@ -15,7 +15,7 @@ export async function POST(request: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: `*robotika24 ESHOP - Nová objednávka*\n\nProdukt: ${product}\nVeľkosť: ${size}\nMeno: ${name}\nEmail: ${email}\nTelefón: ${phone || '-'}\nPoznámka: ${note || '-'}`,
+          text: `*umelá inteligencia24 ESHOP - Nová objednávka*\n\nProdukt: ${product}\nVeľkosť: ${size}\nMeno: ${name}\nEmail: ${email}\nTelefón: ${phone || '-'}\nPoznámka: ${note || '-'}`,
         }),
       });
     } catch {}

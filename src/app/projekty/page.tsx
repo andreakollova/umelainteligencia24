@@ -2,9 +2,9 @@ import { supabase } from '@/lib/supabase';
 
 export const metadata = {
   title: 'Open Source Robotické Projekty',
-  description: 'Prehľad najlepších open source projektov z oblasti robotiky. Hardware, softvér, simulátory a datasety pre robotiku.',
+  description: 'Prehľad najlepších open source projektov z oblasti umelej inteligencie. Hardware, softvér, simulátory a datasety pre umelú inteligenciu.',
   alternates: { canonical: '/projekty' },
-  openGraph: { title: 'Open Source Robotické Projekty', description: 'Prehľad najlepších open source projektov z oblasti robotiky. Hardware, softvér, simulátory a datasety pre robotiku.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Open Source Robotické Projekty', description: 'Prehľad najlepších open source projektov z oblasti umelej inteligencie. Hardware, softvér, simulátory a datasety pre umelú inteligenciu.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 
@@ -40,7 +40,7 @@ export default async function ProjektyPage() {
       <div className="border-b-2 border-[#37b3f2] mb-6">
         <h1 className="text-2xl font-bold pb-2" style={{ color: 'var(--text-primary)' }}>Open Source Projekty</h1>
         <p className="text-sm pb-3" style={{ color: 'var(--text-tertiary)' }}>
-          {projects.length} projektov z komunity robotiky
+          {projects.length} projektov z komunity umelej inteligencie
         </p>
       </div>
 

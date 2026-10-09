@@ -2,13 +2,13 @@ const authors: Record<string, { name: string; photo: string; bio: string; email:
   'Martin Kováč': {
     name: 'Martin Kováč',
     photo: '/author.jpg',
-    bio: 'Martin je technologický novinár so zameraním na robotiku, umelú inteligenciu a automatizáciu. Po štúdiu informatiky na STU v Bratislave pracoval v niekoľkých technologických firmách, odkiaľ prináša praktický pohľad na najnovšie inovácie. Pre robotika24 pokrýva témy od priemyselných robotov až po spotrebiteľskú elektroniku a autonómne vozidlá.',
+    bio: 'Martin je technologický novinár so zameraním na umelú inteligenciu, umelú inteligenciu a automatizáciu. Po štúdiu informatiky na STU v Bratislave pracoval v niekoľkých technologických firmách, odkiaľ prináša praktický pohľad na najnovšie inovácie. Pre umelá inteligencia24 pokrýva témy od priemyselných AI systémov až po spotrebiteľskú elektroniku a autonómne vozidlá.',
     email: 'martin@umelainteligencia24.sk',
   },
   'Simona Hrušková': {
     name: 'Simona Hrušková',
     photo: '/author2.jpg',
-    bio: 'Simona je redaktorka robotika24 so zameraním na výskum, vývoj a nové technológie. Vyštudovala žurnalistiku na Univerzite Komenského v Bratislave a predtým pôsobila v technologickom médiu. Zaujíma sa o prepojenie robotiky so vzdelávaním, zdravotníctvom a udržateľnosťou.',
+    bio: 'Simona je redaktorka umelá inteligencia24 so zameraním na výskum, vývoj a nové technológie. Vyštudovala žurnalistiku na Univerzite Komenského v Bratislave a predtým pôsobila v technologickom médiu. Zaujíma sa o prepojenie umelej inteligencie so vzdelávaním, zdravotníctvom a udržateľnosťou.',
     email: 'simona@umelainteligencia24.sk',
   },
 };

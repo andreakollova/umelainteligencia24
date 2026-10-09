@@ -116,7 +116,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 url: 'https://umelainteligencia24.sk/logo.png',
               },
               sameAs: ['https://www.instagram.com/umelainteligencia24.sk/'],
-              description: 'Slovenský spravodajský portál o robotike, umelej inteligencii a moderných technológiách.',
+              description: 'Slovenský spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.',
               foundingDate: '2025',
               areaServed: {
                 '@type': 'Country',

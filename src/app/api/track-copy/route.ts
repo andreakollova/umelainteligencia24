@@ -16,7 +16,7 @@ export async function POST(request: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          text: `*robotika24 - Kopírovanie obsahu*\n\nNiekto skopíroval ${textLength} znakov z:\n${url}\n\nPrvých 100 znakov:\n_${firstWords}_`,
+          text: `*umelá inteligencia24 - Kopírovanie obsahu*\n\nNiekto skopíroval ${textLength} znakov z:\n${url}\n\nPrvých 100 znakov:\n_${firstWords}_`,
         }),
       });
     } catch {}

@@ -31,21 +31,21 @@ export async function generateMetadata({
   const article = await getArticle(slug);
 
   if (!article) {
-    return { title: 'Článok nenájdený | robotika24' };
+    return { title: 'Článok nenájdený | umelá inteligencia24' };
   }
 
   const canonicalUrl = `${BASE_URL}/clanok/${article.slug}`;
   const description = article.excerpt?.replace(/\*\*/g, '') || '';
 
-  const categoryName = (article as any).categories?.name || 'Robotika';
+  const categoryName = (article as any).categories?.name || 'Umelá inteligencia';
 
   return {
     title: article.title,
     description,
     authors: article.author ? [{ name: article.author }] : undefined,
     keywords: [
-      categoryName.toLowerCase(), 'robotika', 'roboty', 'umelá inteligencia',
-      'robotika Slovensko', 'technológie', article.source_name || '',
+      categoryName.toLowerCase(), 'umelá inteligencia', 'AI technológie', 'umelá inteligencia',
+      'umelá inteligencia Slovensko', 'technológie', article.source_name || '',
     ].filter(Boolean),
     openGraph: {
       title: article.title,
@@ -79,7 +79,7 @@ export async function generateMetadata({
       'content-language': 'sk',
       'article:section': categoryName,
       'article:published_time': article.published_at,
-      'article:author': article.author || 'robotika24',
+      'article:author': article.author || 'umelá inteligencia24',
     },
   };
 }
@@ -274,7 +274,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
                 >
                   {a.source_name}
                 </a>
-                . Preklad a úprava: {a.author}, robotika24.
+                . Preklad a úprava: {a.author}, umelá inteligencia24.
               </p>
             </div>
           )}

@@ -19,7 +19,7 @@ const supabase = createClient('https://fxnpgqsztiwqbhvyokgd.supabase.co', proces
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
-const ROBOT_KEYWORDS = ['robot', 'robotic', 'drone', 'humanoid', 'actuator', 'soft robot', 'gripper', 'manipulat', 'locomotion', 'exoskeleton', 'prosthe', 'walking robot', 'flying robot', 'flapping', 'motor'];
+const ROBOT_KEYWORDS = ['artificial intelligence', 'machine learning', 'deep learning', 'neural network', 'language model', 'AI', 'GPT', 'transformer', 'computer vision', 'natural language', 'reinforcement learning', 'generative', 'chatbot', 'foundation model', 'large language'];
 const LIMIT = parseInt(process.argv[2] || '15');
 const USER_AGENT = 'umelainteligencia24-bot/1.0 (+https://umelainteligencia24.sk; studio@drixton.com)';
 const REQUEST_DELAY = 3000; // 3s between requests - respectful crawling
@@ -133,7 +133,7 @@ async function main() {
   const articles = await fetchEPFLRoboticsArticles();
   console.log(`Found ${articles.length} robotics articles from EPFL\n`);
 
-  const categoryId = await getCategoryId('vyvoj') || await getCategoryId('roboty');
+  const categoryId = await getCategoryId('vyskum') || await getCategoryId('modely');
   let inserted = 0;
   const insertedArticles = [];
 
