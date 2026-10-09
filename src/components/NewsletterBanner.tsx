@@ -24,7 +24,7 @@ export default function NewsletterBanner() {
   }
 
   return (
-    <section style={{ backgroundColor: '#052136', padding: '48px 20px', marginBottom: 32 }}>
+    <section style={{ backgroundColor: '#051722', padding: '48px 20px', marginBottom: 32 }}>
       <div style={{ maxWidth: 700, margin: '0 auto', textAlign: 'center' }}>
         <img src="/newsletter-owl.png" alt="umelá inteligencia24" style={{ height: 120, margin: '0 auto 16px', display: 'block' }} />
         <h2 style={{ fontSize: 24, fontWeight: 700, color: '#ffffff', marginBottom: 8 }}>
@@ -48,7 +48,7 @@ export default function NewsletterBanner() {
               style={{
                 flex: 1, minWidth: 220, padding: '14px 20px', fontSize: 15,
                 border: '1px solid #2f3336', borderRadius: 24, outline: 'none',
-                backgroundColor: '#052136', color: '#ffffff',
+                backgroundColor: '#051722', color: '#ffffff',
               }}
             />
             <button

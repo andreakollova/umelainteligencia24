@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-bg-primary: #052136;
+  --color-bg-primary: #051722;
   --color-accent: #37b3f2;
   --color-accent-hover: #2da0e0;
 }
@@ -11,7 +11,7 @@
   --bg: #ffffff;
   --bg-secondary: #f9fafb;
   --bg-tertiary: #f3f4f6;
-  --text-primary: #052136;
+  --text-primary: #051722;
   --text-secondary: #374151;
   --text-tertiary: #6b7280;
   --text-muted: #9ca3af;
@@ -227,7 +227,7 @@ a {
 }
 
 /* Text colors */
-.dark [style*="color: '#052136'"],
+.dark [style*="color: '#051722'"],
 .dark [style*="color: '#1a1a1a'"] {
   color: var(--text-primary) !important;
 }
@@ -274,7 +274,7 @@ a {
 .dark .bg-white { background-color: var(--bg) !important; }
 .dark .bg-gray-50 { background-color: var(--bg-secondary) !important; }
 .dark .bg-gray-100 { background-color: var(--bg-tertiary) !important; }
-.dark .text-gray-900, .dark .text-\[\#052136\] { color: var(--text-primary) !important; }
+.dark .text-gray-900, .dark .text-\[\#051722\] { color: var(--text-primary) !important; }
 .dark .text-gray-700 { color: var(--text-secondary) !important; }
 .dark .text-gray-600 { color: var(--text-tertiary) !important; }
 .dark .text-gray-500 { color: var(--text-tertiary) !important; }

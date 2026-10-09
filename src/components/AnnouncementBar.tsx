@@ -5,7 +5,7 @@ export default function AnnouncementBar({ articles }: { articles: Article[] }) {
   if (!articles.length) return null;
 
   return (
-    <div style={{ backgroundColor: '#052136', overflow: 'hidden' }}>
+    <div style={{ backgroundColor: '#051722', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '12px 20px', overflow: 'hidden' }}>
         <div style={{ display: 'flex', gap: 24, overflowX: 'scroll', WebkitOverflowScrolling: 'touch', maxWidth: '100%' }} className="scrollbar-hide">
           {articles.map((article) => (

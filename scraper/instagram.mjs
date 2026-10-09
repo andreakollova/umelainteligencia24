@@ -68,8 +68,8 @@ function wrapText(text, maxChars) {
 // Slide 1: article image FULL HEIGHT as base layer, template on top, title on top of everything
 async function generateArticleSlide1(articleImageUrl, title, theme) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide1.png`);
-  const textColor = theme === 'modry' ? '#ffffff' : '#052136';
-  const bgColor = theme === 'modry' ? '#052136' : '#ffffff';
+  const textColor = theme === 'modry' ? '#ffffff' : '#051722';
+  const bgColor = theme === 'modry' ? '#051722' : '#ffffff';
 
   // Download article image
   let articleImg = null;
@@ -100,9 +100,9 @@ async function generateArticleSlide1(articleImageUrl, title, theme) {
   const svgOverlay = Buffer.from(`<svg width="${W}" height="${H}">
     <defs>
       <linearGradient id="fade-bottom" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0.45" stop-color="#052136" stop-opacity="0"/>
-        <stop offset="0.7" stop-color="#052136" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#052136" stop-opacity="0.95"/>
+        <stop offset="0.45" stop-color="#051722" stop-opacity="0"/>
+        <stop offset="0.7" stop-color="#051722" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#051722" stop-opacity="0.95"/>
       </linearGradient>
     </defs>
     <rect x="0" y="0" width="${W}" height="${H}" fill="url(#fade-bottom)"/>
@@ -196,7 +196,7 @@ function renderRichLine(wordSegments, x, y, size, color) {
 // Returns array of page buffers (1 or 2 pages)
 async function generateArticleExcerptPages(excerpt, theme, category) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide2.png`);
-  const textColor = theme === 'modry' ? '#ffffff' : '#052136';
+  const textColor = theme === 'modry' ? '#ffffff' : '#051722';
   const catLabel = category || '';
 
   const fontSize = 54;
@@ -420,7 +420,7 @@ async function generateCompanySlide1(logoPath) {
 // Slide 2+: company description pages - small logo + text
 async function generateCompanyDescPages(companyName, description, logoPath) {
   const templatePath = resolve(__dirname, 'templates/poznasfirmu/slide2.png');
-  const textColor = '#052136';
+  const textColor = '#051722';
 
   const fontSize = 46;
   const lineHeight = 60;

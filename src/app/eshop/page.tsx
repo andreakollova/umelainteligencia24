@@ -64,8 +64,8 @@ function ProductThumb({ product, onClick }: { product: typeof products[0]; onCli
           <img src={frontImg} alt={product.name} style={{ position: 'absolute', maxWidth: '80%', maxHeight: '80%', objectFit: 'contain', opacity: 0, transition: 'opacity 0.3s' }} className="group-hover:!opacity-100" />
         )}
       </div>
-      <h3 style={{ fontSize: 15, fontWeight: 700, color: '#052136', marginBottom: 4 }} className="group-hover:text-[#37b3f2] transition-colors">{product.name}</h3>
-      <p style={{ fontSize: 16, fontWeight: 700, color: '#052136' }}>{product.price}</p>
+      <h3 style={{ fontSize: 15, fontWeight: 700, color: '#051722', marginBottom: 4 }} className="group-hover:text-[#37b3f2] transition-colors">{product.name}</h3>
+      <p style={{ fontSize: 16, fontWeight: 700, color: '#051722' }}>{product.price}</p>
     </div>
   );
 }
@@ -96,8 +96,8 @@ function ProductDetail({ product, onOrder, onBack }: { product: typeof products[
 
         <div>
           <span style={{ fontSize: 11, fontWeight: 700, color: '#37b3f2', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Iba na objednávku</span>
-          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#052136', marginTop: 8, marginBottom: 8 }}>{product.name}</h2>
-          <p style={{ fontSize: 28, fontWeight: 700, color: '#052136', marginBottom: 16 }}>{product.price}</p>
+          <h2 style={{ fontSize: 24, fontWeight: 700, color: '#051722', marginTop: 8, marginBottom: 8 }}>{product.name}</h2>
+          <p style={{ fontSize: 28, fontWeight: 700, color: '#051722', marginBottom: 16 }}>{product.price}</p>
           <p style={{ fontSize: 15, color: '#6b7280', lineHeight: 1.6, marginBottom: 20 }}>{product.description}</p>
           <ul style={{ listStyle: 'none', padding: 0, marginBottom: 24 }}>
             {product.details.map((d) => (
@@ -153,7 +153,7 @@ function OrderModal({ product, onClose }: { product: typeof products[0]; onClose
           </div>
         ) : (
           <>
-            <h3 style={{ fontSize: 20, fontWeight: 700, color: '#052136', marginBottom: 4 }}>Objednávka</h3>
+            <h3 style={{ fontSize: 20, fontWeight: 700, color: '#051722', marginBottom: 4 }}>Objednávka</h3>
             <p style={{ fontSize: 14, color: '#6b7280', marginBottom: 20 }}>{product.name}</p>
             <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
               <input required placeholder="Meno a priezvisko *" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} style={{ padding: '12px 14px', border: '1px solid #e5e7eb', borderRadius: 8, fontSize: 14, outline: 'none' }} />
@@ -191,7 +191,7 @@ export default function EshopPage() {
   return (
     <div style={{ maxWidth: 1280, margin: '0 auto', padding: '32px 20px 80px' }}>
       <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 32 }}>
-        <h1 style={{ fontSize: 24, fontWeight: 700, color: '#052136', paddingBottom: 8 }}>E-shop</h1>
+        <h1 style={{ fontSize: 24, fontWeight: 700, color: '#051722', paddingBottom: 8 }}>E-shop</h1>
       </div>
 
       {selectedProduct ? (

@@ -66,7 +66,7 @@ export default function ArticleCard({
           />
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="text-[13px] font-bold text-[#052136] leading-tight group-hover:text-[#37b3f2] transition-colors line-clamp-3">
+          <h3 className="text-[13px] font-bold text-[#051722] leading-tight group-hover:text-[#37b3f2] transition-colors line-clamp-3">
             {article.title}
           </h3>
           <span className="text-[11px] text-gray-400 mt-1 block">{timeAgo(article.published_at)}</span>
@@ -91,7 +91,7 @@ export default function ArticleCard({
       {categoryName && (
         <span className="text-[#37b3f2] text-[11px] font-bold uppercase tracking-wider">{categoryName}</span>
       )}
-      <h3 className="text-[15px] font-bold text-[#052136] leading-snug mt-1 group-hover:text-[#37b3f2] transition-colors line-clamp-3">
+      <h3 className="text-[15px] font-bold text-[#051722] leading-snug mt-1 group-hover:text-[#37b3f2] transition-colors line-clamp-3">
         {article.title}
       </h3>
       <div className="flex items-center gap-2 mt-2 text-gray-400 text-[11px]">
