@@ -1,0 +1,44 @@
+name: Scrape Sources
+
+on:
+  schedule:
+    # 3x per day: 8:00, 14:00, 20:00 CET (6:00, 12:00, 18:00 UTC)
+    - cron: '0 6 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 18 * * *'
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Scrape EPFL News
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          IG_PUBLISH_SECRET: ${{ secrets.IG_PUBLISH_SECRET }}
+        run: node scraper/epfl-scrape.mjs 5
+
+      - name: Wait between sources
+        run: sleep 10
+
+      - name: Scrape 1X Technologies
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          IG_PUBLISH_SECRET: ${{ secrets.IG_PUBLISH_SECRET }}
+        run: node scraper/1x-scrape.mjs 3

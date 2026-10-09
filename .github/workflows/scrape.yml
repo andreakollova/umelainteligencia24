@@ -1,0 +1,30 @@
+name: Scrape Articles
+
+on:
+  # schedule:
+  #   - cron: '0 5 * * *'
+  #   - cron: '0 16 * * *'
+  workflow_dispatch:
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run scraper
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SITE_URL: ${{ secrets.SITE_URL }}
+          IG_PUBLISH_SECRET: ${{ secrets.IG_PUBLISH_SECRET }}
+        run: node scraper/scrape.mjs
