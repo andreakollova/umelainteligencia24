@@ -75,7 +75,7 @@ img, video, iframe {
 }
 
 /* Protect images from easy copying */
-img {
+img:not(a img) {
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
