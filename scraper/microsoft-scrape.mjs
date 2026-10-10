@@ -46,7 +46,7 @@ async function main() {
   console.log('=== Microsoft AI Scraper ===');
   console.log('Time:', new Date().toISOString());
 
-  const res = await fetch('https://news.microsoft.com/source/feed/', { headers: { 'User-Agent': USER_AGENT } });
+  const res = await fetch('https://news.microsoft.com/source/tag/ai/feed/', { headers: { 'User-Agent': USER_AGENT } });
   const xml = await res.text();
   const $ = load(xml, { xmlMode: true });
 
