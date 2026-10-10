@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CookieBanner from "@/components/CookieBanner";
 import { Analytics } from "@vercel/analytics/next";
+import LatestNewsBar from "@/components/LatestNewsBar";
 import PageTracker from "@/components/PageTracker";
 import CopyProtection from "@/components/CopyProtection";
 import AuthGate from "@/components/AuthGate";
@@ -134,6 +135,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="min-h-screen flex flex-col">
         
+        <LatestNewsBar />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
