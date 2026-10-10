@@ -1,8 +1,8 @@
 const models = [
-  { category: 'Inteligencia', name: 'Claude Opus 4.6', color: '#d97706' },
-  { category: 'Rýchlosť', name: 'Gemini 2.5 Flash', color: '#4285f4' },
-  { category: 'Latencia', name: 'Gemini Flash-Lite', color: '#4285f4' },
-  { category: 'Najlacnejší', name: 'GPT-6 Luna', color: '#10a37f' },
+  { category: 'Inteligencia', name: 'Claude Opus 4.6', domain: 'anthropic.com' },
+  { category: 'Rýchlosť', name: 'Gemini 2.5 Flash', domain: 'deepmind.google' },
+  { category: 'Latencia', name: 'Gemini Flash-Lite', domain: 'deepmind.google' },
+  { category: 'Najlacnejší', name: 'GPT-6 Luna', domain: 'openai.com' },
 ];
 
 export default function AIModelsWidget() {
@@ -15,8 +15,8 @@ export default function AIModelsWidget() {
       <div>
         {models.map((m) => (
           <div key={m.category} style={{ display: 'flex', alignItems: 'center', padding: '10px 14px', borderBottom: '1px solid var(--border-light)', gap: 12 }}>
-            <div style={{ width: 32, height: 32, borderRadius: '50%', flexShrink: 0, backgroundColor: m.color, display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 14, fontWeight: 700 }}>
-              {m.name[0]}
+            <div style={{ width: 32, height: 32, borderRadius: 8, overflow: 'hidden', flexShrink: 0, backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={`https://www.google.com/s2/favicons?domain=${m.domain}&sz=32`} alt={m.name} width={32} height={32} loading="lazy" style={{ objectFit: 'contain' }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{m.name}</div>
