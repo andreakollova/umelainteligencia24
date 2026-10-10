@@ -10,6 +10,7 @@ const categories = [
   { name: 'Výskum', slug: '/kategoria/vyskum', subs: [] },
   { name: 'Nástroje', slug: '/kategoria/nastroje', subs: [] },
   { name: 'Biznis', slug: '/kategoria/biznis', subs: [] },
+  { name: 'Šport', slug: '/kategoria/sport', subs: [] },
   { name: 'E-shop', slug: '/eshop', subs: [] },
   { name: 'Projekty', slug: '/projekty', subs: [] },
 ];
