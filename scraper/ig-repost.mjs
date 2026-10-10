@@ -1,15 +1,19 @@
 // IG Repost: Monitor Slack channel for photos + text, generate carousel, publish to IG
-// Usage: node scraper/ig-repost.mjs
+// Format in Slack:
+//   Line 1: Nadpis po slovensky
+//   (empty line)
+//   Rest: Text/caption (will be translated if in English)
+//
+// Photos: upload clean photos without text overlays
 import sharp from 'sharp';
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync, copyFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Load env
 try {
   const envFile = readFileSync(resolve(__dirname, '..', '.env.local'), 'utf8');
   envFile.split('\n').forEach(line => {
@@ -18,12 +22,13 @@ try {
   });
 } catch {}
 
-// Setup fonts
+// Fonts
 const fontsDir = resolve(__dirname, 'fonts');
 if (existsSync(fontsDir)) {
   const tmpFonts = '/tmp/fonts';
   if (!existsSync(tmpFonts)) mkdirSync(tmpFonts, { recursive: true });
-  try { require('fs').copyFileSync(resolve(fontsDir, 'Inter.ttf'), resolve(tmpFonts, 'Inter.ttf')); } catch {}
+  const fontFile = resolve(fontsDir, 'Inter.ttf');
+  if (existsSync(fontFile)) copyFileSync(fontFile, resolve(tmpFonts, 'Inter.ttf'));
   process.env.FONTCONFIG_PATH = tmpFonts;
 }
 
@@ -77,24 +82,21 @@ async function translateText(text) {
   return res.choices[0].message.content.trim();
 }
 
+// Slide 1: clean photo + template overlay + title text
 async function generateSlide1(photoPath, title) {
   const templatePath = resolve(__dirname, 'templates/carousel/slide1.png');
   const template = readFileSync(templatePath);
-
-  // Download photo
   const photoBuf = readFileSync(photoPath);
-  
   const photoResized = await sharp(photoBuf).resize(W, H, { fit: 'cover' }).toBuffer();
 
-  // Title overlay
-  const titleLines = wrapText(title, 22);
-  const lineHeight = 80;
-  const titleStartY = H - 260 - titleLines.length * lineHeight;
+  const titleLines = wrapText(title, 24);
+  const lineHeight = 76;
+  const titleStartY = H - 240 - titleLines.length * lineHeight;
   const titleSvg = titleLines.map((line, i) =>
-    `<text x="80" y="${titleStartY + i * lineHeight + 70}" font-family="Inter, sans-serif" font-size="72" font-weight="800" fill="#ffffff">${escapeXml(line)}</text>`
+    `<text x="80" y="${titleStartY + i * lineHeight + 66}" font-family="Inter, sans-serif" font-size="68" font-weight="800" fill="#ffffff">${escapeXml(line)}</text>`
   ).join('\n');
 
-  const gradientSvg = Buffer.from(`<svg width="${W}" height="${H}">
+  const overlaySvg = Buffer.from(`<svg width="${W}" height="${H}">
     <defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0.4" stop-color="#000" stop-opacity="0"/>
       <stop offset="0.75" stop-color="#000" stop-opacity="0.7"/>
@@ -104,20 +106,23 @@ async function generateSlide1(photoPath, title) {
     ${titleSvg}
   </svg>`);
 
+  // Layer order: photo → template → gradient+title on top
+  const titleOnlySvg = Buffer.from(`<svg width="${W}" height="${H}">${titleSvg}</svg>`);
+
   return sharp(photoResized)
     .composite([
-      { input: gradientSvg, top: 0, left: 0 },
       { input: template, top: 0, left: 0 },
+      { input: overlaySvg, top: 0, left: 0 },
+      { input: titleOnlySvg, top: 0, left: 0 },
     ])
     .png().toBuffer();
 }
 
-async function generateSlideNoText(photoPath) {
+// Slide 2+: clean photo + no-text template overlay
+async function generateSlidePhoto(photoPath) {
   const templatePath = resolve(__dirname, 'templates/carousel/slide-notext.png');
   const template = readFileSync(templatePath);
-
   const photoBuf = readFileSync(photoPath);
-  
   const photoResized = await sharp(photoBuf).resize(W, H, { fit: 'cover' }).toBuffer();
 
   return sharp(photoResized)
@@ -136,76 +141,71 @@ async function main() {
 
   const state = loadState();
 
-  // Get messages from channel since last check
   const res = await fetch(`https://slack.com/api/conversations.history?channel=${SLACK_CHANNEL}&oldest=${state.lastTs}&limit=5`, {
     headers: { 'Authorization': `Bearer ${SLACK_BOT_TOKEN}` },
   });
   const data = await res.json();
 
-  if (!data.ok) {
-    console.log('Slack error:', data.error);
-    return;
-  }
+  if (!data.ok) { console.log('Slack error:', data.error); return; }
 
-  const messages = (data.messages || []).filter(m => !m.bot_id && (m.files?.length > 0 || m.text));
+  // Only messages with photos from humans (not bots)
+  const messages = (data.messages || []).filter(m => !m.bot_id && m.files?.some(f => f.mimetype?.startsWith('image/')));
 
-  if (messages.length === 0) {
-    console.log('No new messages');
-    return;
-  }
+  if (messages.length === 0) { console.log('No new messages with photos'); return; }
 
   for (const msg of messages.reverse()) {
-    const files = (msg.files || []).filter(f => f.mimetype?.startsWith('image/'));
+    const files = msg.files.filter(f => f.mimetype?.startsWith('image/'));
     if (files.length === 0) continue;
 
-    console.log('Processing:', files.length, 'photos');
-    console.log('Text:', (msg.text || '').substring(0, 100));
+    // Parse text: first line = title, rest = caption
+    const rawText = (msg.text || '').replace(/<[^>]+>/g, '').trim();
+    const parts = rawText.split(/\n\n+/);
+    const title = parts[0] || 'Nový príspevok';
+    const captionText = parts.slice(1).join('\n\n') || title;
 
-    // Download all photos
-    const photoUrls = [];
+    console.log('Title:', title);
+    console.log('Photos:', files.length);
+
+    // Translate caption if needed
+    let skCaption = captionText;
+    if (/[a-z]{3,}/i.test(captionText) && !/[áéíóúýčďľňřšťžô]/i.test(captionText)) {
+      skCaption = await translateText(captionText);
+    }
+
+    // Download photos
+    const photoPaths = [];
+    const outputDir = '/tmp/repost-slides';
+    if (!existsSync(outputDir)) mkdirSync(outputDir, { recursive: true });
+
     for (const f of files) {
       const dlRes = await fetch(f.url_private_download || f.url_private, {
         headers: { 'Authorization': `Bearer ${SLACK_BOT_TOKEN}` },
       });
       const buf = Buffer.from(await dlRes.arrayBuffer());
-      const tmpPath = `/tmp/repost-${Date.now()}-${photoUrls.length}.png`;
-      writeFileSync(tmpPath, buf);
-      photoUrls.push(tmpPath);
+      const path = `${outputDir}/photo-${Date.now()}-${photoPaths.length}.jpg`;
+      writeFileSync(path, buf);
+      photoPaths.push(path);
     }
-
-    // Translate caption
-    const caption = msg.text || '';
-    let skCaption = caption;
-    if (caption.length > 10) {
-      skCaption = await translateText(caption);
-    }
-
-    // Generate title (first line of translation)
-    const title = skCaption.split('.')[0].replace(/\*\*/g, '') + '.';
 
     // Generate slides
-    const outputDir = '/tmp/repost-slides';
-    if (!existsSync(outputDir)) mkdirSync(outputDir, { recursive: true });
-
     const slides = [];
 
     // Slide 1: first photo + template + title
-    const slide1 = await generateSlide1(photoUrls[0], title);
-    const s1path = `${outputDir}/slide1.png`;
-    writeFileSync(s1path, slide1);
+    const s1 = await generateSlide1(photoPaths[0], title);
+    const s1path = `${outputDir}/s1-${Date.now()}.png`;
+    writeFileSync(s1path, s1);
     slides.push(s1path);
 
     // Slide 2+: remaining photos with no-text template
-    for (let i = 1; i < photoUrls.length; i++) {
-      const slide = await generateSlideNoText(photoUrls[i]);
-      const spath = `${outputDir}/slide${i + 1}.png`;
-      writeFileSync(spath, slide);
+    for (let i = 1; i < photoPaths.length; i++) {
+      const s = await generateSlidePhoto(photoPaths[i]);
+      const spath = `${outputDir}/s${i + 1}-${Date.now()}.png`;
+      writeFileSync(spath, s);
       slides.push(spath);
     }
 
-    // Last slide
-    const lastPath = resolve(__dirname, 'templates/carousel/slide-last.png');
-    slides.push(lastPath);
+    // Last slide: "posli kamosovi"
+    slides.push(resolve(__dirname, 'templates/carousel/slide-last.png'));
 
     console.log('Generated', slides.length, 'slides');
 
@@ -213,7 +213,7 @@ async function main() {
     const imageUrls = [];
     for (let i = 0; i < slides.length; i++) {
       const buf = readFileSync(slides[i]);
-      const name = `repost-${Date.now()}-${i + 1}.png`;
+      const name = `repost-${Date.now()}-${i}.png`;
       await supabase.storage.from('ig-assets').upload(name, buf, { contentType: 'image/png', upsert: true });
       const { data: urlData } = supabase.storage.from('ig-assets').getPublicUrl(name);
       imageUrls.push(urlData.publicUrl);
@@ -257,14 +257,26 @@ async function main() {
         if (SLACK_WEBHOOK) {
           await fetch(SLACK_WEBHOOK, {
             method: 'POST', headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ text: 'IG Repost publikovaný! ' + slides.length + ' slidov\n' + skCaption.substring(0, 100) }),
+            body: JSON.stringify({ text: 'IG Repost publikovaný! ' + slides.length + ' slidov\nNadpis: ' + title }),
           }).catch(() => {});
         }
+
+        // Reply in repost channel
+        await fetch('https://slack.com/api/chat.postMessage', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${SLACK_BOT_TOKEN}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ channel: SLACK_CHANNEL, thread_ts: msg.ts, text: '✅ Publikované na Instagram! ' + slides.length + ' slidov.' }),
+        }).catch(() => {});
+
       } catch (err) {
         console.error('IG error:', err.message);
+        // Notify error in channel
+        await fetch('https://slack.com/api/chat.postMessage', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${SLACK_BOT_TOKEN}`, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ channel: SLACK_CHANNEL, thread_ts: msg.ts, text: '❌ Chyba: ' + err.message }),
+        }).catch(() => {});
       }
-    } else {
-      console.log('[DRY RUN] Would publish', slides.length, 'slides');
     }
 
     state.lastTs = msg.ts;
