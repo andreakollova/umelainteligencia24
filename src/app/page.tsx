@@ -91,8 +91,6 @@ export default async function Home() {
       </div>
 
       {/* Newsletter CTA */}
-      <WordOfDay />
-
       <NewsletterBanner />
 
       <ProjectsSection />

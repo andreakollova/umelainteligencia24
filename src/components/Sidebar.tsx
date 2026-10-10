@@ -6,6 +6,7 @@ import type { Article } from '@/lib/supabase';
 import AdBlock from '@/components/AdBlock';
 import FundingWidget from '@/components/FundingWidget';
 import AIModelsWidget from '@/components/AIModelsWidget';
+import WordOfDayWidget from '@/components/WordOfDayWidget';
 
 function timeAgo(dateStr: string) {
   const diff = Date.now() - new Date(dateStr).getTime();
@@ -81,6 +82,7 @@ export default function Sidebar({ articles, latestArticles }: { articles: Articl
         <FundingWidget />
       </div>
       <AIModelsWidget />
+      <WordOfDayWidget />
 
       <div style={{ marginTop: 20 }}>
         <AdBlock format="rectangle" />
