@@ -16,8 +16,30 @@ const nextConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/api/ig-publish': ['./scraper/**/*', './scraper/fonts/**/*'],
   },
-  cacheComponents: false,
-  partialPrefetching: false,
+  compress: true,
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'DENY' },
+        ],
+      },
+      {
+        source: '/(.*)\\.(jpg|jpeg|png|webp|svg|ico|gif)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+    ];
+  },
   turbopack: {
     rules: {
       "*.css": {

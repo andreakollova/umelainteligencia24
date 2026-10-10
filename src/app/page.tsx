@@ -2,7 +2,6 @@ import { supabase } from '@/lib/supabase';
 import type { Article } from '@/lib/supabase';
 import ArticleCard from '@/components/ArticleCard';
 import Sidebar from '@/components/Sidebar';
-import AnnouncementBar from '@/components/AnnouncementBar';
 import ProjectsSection from '@/components/ProjectsSection';
 import NewsletterBanner from '@/components/NewsletterBanner';
 import WordOfDay from '@/components/WordOfDay';
@@ -34,7 +33,7 @@ async function getArticles() {
 
   const popular = allPopular.filter(a => !heroIds.has(a.id)).slice(0, 5);
   const latest = articles.filter(a => !heroIds.has(a.id)).slice(0, 5);
-  const grid = articles.filter(a => !heroIds.has(a.id)).slice(0, 20);
+  const grid = articles.filter(a => !heroIds.has(a.id)).slice(0, 12);
 
   return { announcement, hero, heroSide, grid, popular, latest };
 }
@@ -59,7 +58,6 @@ export default async function Home() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <AnnouncementBar articles={announcement} />
 
       <div style={{ maxWidth: 1280, margin: '0 auto' }} className="px-5 sm:px-5 pt-6">
         {/* Hero cards - full width, side by side */}
