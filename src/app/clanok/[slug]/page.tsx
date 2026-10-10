@@ -8,7 +8,7 @@ import AboutAuthor from '@/components/AboutAuthor';
 import type { Metadata } from 'next';
 import AdBlock from '@/components/AdBlock';
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 const BASE_URL = 'https://inteligencia24.sk';
 

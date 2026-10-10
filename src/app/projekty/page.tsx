@@ -8,7 +8,7 @@ export const metadata = {
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 type Project = {
   id: string;
