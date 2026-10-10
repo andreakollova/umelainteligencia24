@@ -21,7 +21,7 @@ const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 const ROBOT_KEYWORDS = ['artificial intelligence', 'machine learning', 'deep learning', 'neural network', 'language model', 'AI', 'GPT', 'transformer', 'computer vision', 'natural language', 'reinforcement learning', 'generative', 'chatbot', 'foundation model', 'large language'];
 const LIMIT = parseInt(process.argv[2] || '15');
-const USER_AGENT = 'umelainteligencia24-bot/1.0 (+https://umelainteligencia24.sk; studio@drixton.com)';
+const USER_AGENT = 'inteligencia24-bot/1.0 (+https://inteligencia.sk; studio@drixton.com)';
 const REQUEST_DELAY = 3000; // 3s between requests - respectful crawling
 
 function slugify(text) {
@@ -89,7 +89,7 @@ Na konci obsahu VŽDY pridaj tento blok:
 Autor pôvodného článku: ${originalAuthor}
 Zdroj: EPFL News
 Originál: ${sourceUrl}
-Preklad a úprava: Redakcia umelainteligencia24
+Preklad a úprava: Redakcia inteligencia24
 Licencia: CC BY-SA 4.0
 
 Vráť odpoveď v JSON formáte (bez markdown blokov):
@@ -222,7 +222,7 @@ async function main() {
 
   // Slack notification
   if (SLACK_WEBHOOK && insertedArticles.length > 0) {
-    const siteUrl = process.env.SITE_URL || 'https://umelainteligencia24.sk';
+    const siteUrl = process.env.SITE_URL || 'https://inteligencia.sk';
     const igSecret = process.env.IG_PUBLISH_SECRET || 'r24igpub2026';
 
     const blocks = [

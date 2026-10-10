@@ -47,7 +47,7 @@ async function main() {
   const diffStr = diff > 0 ? `+${diff}` : `${diff}`;
   const emoji = diff > 0 ? '📈' : diff < 0 ? '📉' : '➡️';
 
-  let text = `*umelainteligencia24 - Denná štatistika* ${emoji}\n${dateStr}\n\n`;
+  let text = `*inteligencia24 - Denná štatistika* ${emoji}\n${dateStr}\n\n`;
   text += `👁 Návštevy dnes: *${todayViews.toLocaleString('sk-SK')}* (${diffStr} oproti včera)\n`;
   text += `📰 Články dnes: *${todayArticles || 0}*\n`;
   text += `📚 Celkom článkov: *${totalArticles || 0}*\n`;

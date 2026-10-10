@@ -4,7 +4,7 @@ export const metadata = {
   title: 'Open Source Robotické Projekty',
   description: 'Prehľad najlepších open source projektov z oblasti umelej inteligencie. Hardware, softvér, simulátory a datasety pre umelú inteligenciu.',
   alternates: { canonical: '/projekty' },
-  openGraph: { title: 'Open Source Robotické Projekty', description: 'Prehľad najlepších open source projektov z oblasti umelej inteligencie. Hardware, softvér, simulátory a datasety pre umelú inteligenciu.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Open Source Robotické Projekty', description: 'Prehľad najlepších open source projektov z oblasti umelej inteligencie. Hardware, softvér, simulátory a datasety pre umelú inteligenciu.', locale: 'sk_SK', siteName: 'inteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 

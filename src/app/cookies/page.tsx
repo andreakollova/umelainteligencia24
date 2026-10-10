@@ -1,8 +1,8 @@
 export const metadata = {
   title: 'Cookies',
-  description: 'Informácie o používaní cookies na umelainteligencia24.sk. Zásady spracovania súborov cookies.',
+  description: 'Informácie o používaní cookies na inteligencia.sk. Zásady spracovania súborov cookies.',
   alternates: { canonical: '/cookies' },
-  openGraph: { title: 'Cookies', description: 'Informácie o používaní cookies na umelainteligencia24.sk. Zásady spracovania súborov cookies.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Cookies', description: 'Informácie o používaní cookies na inteligencia.sk. Zásady spracovania súborov cookies.', locale: 'sk_SK', siteName: 'inteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 

@@ -31,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title, description,
       url: `/kategoria/${slug}`,
-      siteName: 'umelainteligencia24',
+      siteName: 'inteligencia24',
       locale: 'sk_SK',
       type: 'website',
       countryName: 'Slovakia',

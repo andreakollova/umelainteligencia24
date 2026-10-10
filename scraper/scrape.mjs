@@ -281,7 +281,7 @@ async function scrapeSource(feedUrl, sourceName, limit) {
 }
 
 async function main() {
-  console.log('=== umelainteligencia24 Scraper ===');
+  console.log('=== inteligencia24 Scraper ===');
   console.log(`Time: ${new Date().toISOString()}`);
 
   const categoryIds = await getCategoryIds();
@@ -429,14 +429,14 @@ async function main() {
 
   // Send Slack notification with article previews + IG buttons
   const slackWebhook = process.env.SLACK_WEBHOOK_URL;
-  const siteUrl = process.env.SITE_URL || 'https://umelainteligencia24.vercel.app';
+  const siteUrl = process.env.SITE_URL || 'https://inteligencia24.vercel.app';
   const igSecret = process.env.IG_PUBLISH_SECRET || 'r24igpub';
 
   if (slackWebhook && insertedArticles.length > 0) {
     const blocks = [
       {
         type: 'header',
-        text: { type: 'plain_text', text: `umelainteligencia24 - ${inserted} nových článkov`, emoji: true },
+        text: { type: 'plain_text', text: `inteligencia24 - ${inserted} nových článkov`, emoji: true },
       },
       {
         type: 'section',

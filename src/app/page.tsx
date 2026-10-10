@@ -44,14 +44,14 @@ export default async function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'umelainteligencia24',
-    url: 'https://umelainteligencia24.sk',
+    name: 'inteligencia24',
+    url: 'https://inteligencia.sk',
     description: 'Slovenský spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.',
     inLanguage: 'sk',
     publisher: {
       '@type': 'Organization',
-      name: 'umelainteligencia24',
-      logo: { '@type': 'ImageObject', url: 'https://umelainteligencia24.sk/logo.png' },
+      name: 'inteligencia24',
+      logo: { '@type': 'ImageObject', url: 'https://inteligencia.sk/logo.png' },
     },
   };
 

@@ -50,7 +50,7 @@ function LangSelector() {
           <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-primary)', fontWeight: 600, fontSize: 13, borderBottom: '1px solid var(--border-light)', backgroundColor: 'var(--bg-secondary)' }}>
             <FlagSK /> Slovenská verzia
           </div>
-          <a href="https://umelainteligencia24.cz" style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-tertiary)', fontSize: 13, textDecoration: 'none' }} className="hover:bg-[var(--bg-tertiary)]">
+          <a href="https://inteligencia.cz" style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-tertiary)', fontSize: 13, textDecoration: 'none' }} className="hover:bg-[var(--bg-tertiary)]">
             <FlagCZ /> Prejsť na českú verziu
           </a>
         </div>

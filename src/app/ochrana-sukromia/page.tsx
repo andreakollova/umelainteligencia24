@@ -1,8 +1,8 @@
 export const metadata = {
   title: 'Ochrana súkromia',
-  description: 'Ochrana súkromia a spracovanie osobných údajov na umelainteligencia24.sk v súlade s GDPR.',
+  description: 'Ochrana súkromia a spracovanie osobných údajov na inteligencia.sk v súlade s GDPR.',
   alternates: { canonical: '/ochrana-sukromia' },
-  openGraph: { title: 'Ochrana súkromia', description: 'Ochrana súkromia a spracovanie osobných údajov na umelainteligencia24.sk v súlade s GDPR.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Ochrana súkromia', description: 'Ochrana súkromia a spracovanie osobných údajov na inteligencia.sk v súlade s GDPR.', locale: 'sk_SK', siteName: 'inteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 
@@ -14,7 +14,7 @@ export default function PrivacyPage() {
 
       <div style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.8 }}>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 32, marginBottom: 12 }}>1. Prevádzkovateľ</h2>
-        <p>Prevádzkovateľom webovej stránky umelainteligencia24.sk je spoločnosť <strong>DRIXTON s.r.o.</strong></p>
+        <p>Prevádzkovateľom webovej stránky inteligencia.sk je spoločnosť <strong>DRIXTON s.r.o.</strong></p>
         <p>E-mail: studio@drixton.com</p>
 
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 32, marginBottom: 12 }}>2. Aké údaje zhromažďujeme</h2>

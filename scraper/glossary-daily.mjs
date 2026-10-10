@@ -42,7 +42,7 @@ function saveState(state) {
 }
 
 async function main() {
-  console.log('=== umelainteligencia24 Daily Glossary ===');
+  console.log('=== inteligencia24 Daily Glossary ===');
   console.log(`Time: ${new Date().toISOString()}`);
 
   const state = loadState();

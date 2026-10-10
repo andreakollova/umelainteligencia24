@@ -4,7 +4,7 @@ export const metadata = {
   title: 'Kontakt',
   description: 'Kontaktujte redakciu Umelá inteligencia24. Tip na článok, spolupráca, tlačové správy.',
   alternates: { canonical: '/kontakt' },
-  openGraph: { title: 'Kontakt', description: 'Kontaktujte redakciu Umelá inteligencia24. Tip na článok, spolupráca, tlačové správy.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Kontakt', description: 'Kontaktujte redakciu Umelá inteligencia24. Tip na článok, spolupráca, tlačové správy.', locale: 'sk_SK', siteName: 'inteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 
@@ -21,7 +21,7 @@ export default function KontaktPage() {
       <div style={{ marginTop: 40, color: 'var(--text-tertiary)', fontSize: 14, lineHeight: 1.8 }}>
         <p>E-mail: <a href="mailto:studio@drixton.com" style={{ color: '#37b3f2' }}>studio@drixton.com</a></p>
         <p style={{ marginTop: 8 }}>
-          <a href="https://umelainteligencia24.sk" style={{ color: '#37b3f2' }}>umelainteligencia24.sk</a> | <a href="https://umelainteligencia24.cz" style={{ color: '#37b3f2' }}>umelainteligencia24.cz</a>
+          <a href="https://inteligencia.sk" style={{ color: '#37b3f2' }}>inteligencia.sk</a> | <a href="https://inteligencia.cz" style={{ color: '#37b3f2' }}>inteligencia.cz</a>
         </p>
       </div>
     </div>

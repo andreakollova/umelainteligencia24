@@ -13,7 +13,7 @@ export default function robots(): MetadataRoute.Robots {
         allow: '/',
       },
     ],
-    sitemap: 'https://umelainteligencia24.sk/sitemap.xml',
-    host: 'https://umelainteligencia24.sk',
+    sitemap: 'https://inteligencia.sk/sitemap.xml',
+    host: 'https://inteligencia.sk',
   };
 }

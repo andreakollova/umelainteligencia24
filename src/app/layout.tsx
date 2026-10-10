@@ -13,8 +13,8 @@ const inter = Inter({ subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'umelainteligencia24.sk - Správy zo sveta umelej inteligencie a AI na Slovensku',
-    template: '%s | umelainteligencia24.sk',
+    default: 'inteligencia.sk - Správy zo sveta umelej inteligencie a AI na Slovensku',
+    template: '%s | inteligencia.sk',
   },
   description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch, strojovom učení a AI technológiách v slovenčine. Denne prinášame novinky, analýzy a rozhovory zo sveta AI pre slovenských čitateľov.',
   keywords: [
@@ -24,29 +24,29 @@ export const metadata: Metadata = {
     'počítačové videnie', 'NLP', 'AI nástroje', 'AI výskum',
     'OpenAI', 'Google DeepMind', 'Anthropic', 'Meta AI',
   ],
-  authors: [{ name: 'umelainteligencia24' }],
-  creator: 'umelainteligencia24',
-  publisher: 'umelainteligencia24',
-  metadataBase: new URL('https://umelainteligencia24.sk'),
+  authors: [{ name: 'inteligencia24' }],
+  creator: 'inteligencia24',
+  publisher: 'inteligencia24',
+  metadataBase: new URL('https://inteligencia.sk'),
   alternates: {
     canonical: '/',
     languages: {
-      'sk-SK': 'https://umelainteligencia24.sk',
+      'sk-SK': 'https://inteligencia.sk',
     },
   },
   openGraph: {
     type: 'website',
     locale: 'sk_SK',
-    url: 'https://umelainteligencia24.sk',
-    siteName: 'umelainteligencia24',
-    title: 'umelainteligencia24.sk - Správy zo sveta umelej inteligencie',
+    url: 'https://inteligencia.sk',
+    siteName: 'inteligencia24',
+    title: 'inteligencia.sk - Správy zo sveta umelej inteligencie',
     description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch a AI technológiách v slovenčine.',
     images: [{ url: '/logo.png', width: 1200, height: 630 }],
     countryName: 'Slovakia',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'umelainteligencia24.sk - Správy zo sveta umelej inteligencie',
+    title: 'inteligencia.sk - Správy zo sveta umelej inteligencie',
     description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch a AI technológiách v slovenčine.',
   },
   robots: {
@@ -102,20 +102,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})()` }} />
         <meta name="geo.region" content="SK" />
         <meta name="geo.placename" content="Slovensko" />
-        <link rel="alternate" hrefLang="sk" href="https://umelainteligencia24.sk" />
+        <link rel="alternate" hrefLang="sk" href="https://inteligencia.sk" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'NewsMediaOrganization',
-              name: 'umelainteligencia24',
-              url: 'https://umelainteligencia24.sk',
+              name: 'inteligencia24',
+              url: 'https://inteligencia.sk',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://umelainteligencia24.sk/logo.png',
+                url: 'https://inteligencia.sk/logo.png',
               },
-              sameAs: ['https://www.instagram.com/umelainteligencia24.sk/'],
+              sameAs: ['https://www.instagram.com/inteligencia.sk/'],
               description: 'Slovenský spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.',
               foundingDate: '2025',
               areaServed: {

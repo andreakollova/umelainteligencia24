@@ -1,8 +1,8 @@
 export const metadata = {
   title: 'Podmienky používania',
-  description: 'Podmienky používania spravodajského portálu umelainteligencia24.sk o umelej inteligencii a technológiách.',
+  description: 'Podmienky používania spravodajského portálu inteligencia.sk o umelej inteligencii a technológiách.',
   alternates: { canonical: '/podmienky' },
-  openGraph: { title: 'Podmienky používania', description: 'Podmienky používania spravodajského portálu umelainteligencia24.sk o umelej inteligencii a technológiách.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'Podmienky používania', description: 'Podmienky používania spravodajského portálu inteligencia.sk o umelej inteligencii a technológiách.', locale: 'sk_SK', siteName: 'inteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 
@@ -14,11 +14,11 @@ export default function PodmienkyPage() {
 
       <div style={{ color: 'var(--text-secondary)', fontSize: 15, lineHeight: 1.8 }}>
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 32, marginBottom: 12 }}>1. Prevádzkovateľ</h2>
-        <p>Webovú stránku umelainteligencia24.sk prevádzkuje spoločnosť <strong>DRIXTON s.r.o.</strong></p>
+        <p>Webovú stránku inteligencia.sk prevádzkuje spoločnosť <strong>DRIXTON s.r.o.</strong></p>
         <p>E-mail: studio@drixton.com</p>
 
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 32, marginBottom: 12 }}>2. Obsah stránky</h2>
-        <p>Obsah na umelainteligencia24.sk je určený na informačné účely. Články sú prekladmi a úpravami pôvodných článkov zo zahraničných zdrojov. Originálne zdroje sú vždy uvedené pri každom článku.</p>
+        <p>Obsah na inteligencia.sk je určený na informačné účely. Články sú prekladmi a úpravami pôvodných článkov zo zahraničných zdrojov. Originálne zdroje sú vždy uvedené pri každom článku.</p>
 
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 32, marginBottom: 12 }}>3. Duševné vlastníctvo</h2>
         <p>Logo, dizajn a grafické prvky stránky sú majetkom DRIXTON s.r.o. Obsah článkov je prekladom zo zdrojov, ktoré sú riadne citované. Obrázky v článkoch patria ich pôvodným autorom.</p>

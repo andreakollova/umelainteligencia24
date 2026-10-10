@@ -1,4 +1,4 @@
-// Instagram Graph API publisher for umelainteligencia24
+// Instagram Graph API publisher for inteligencia24
 // Posts carousels (articles + glossary) to Instagram Business Account
 //
 // Required env vars:
@@ -265,7 +265,7 @@ const args = process.argv.slice(2);
 const generateOnly = args.includes('--generate-only');
 const glossaryOnly = args.includes('--glossary-only');
 
-console.log('=== umelainteligencia24 Instagram Publisher ===');
+console.log('=== inteligencia24 Instagram Publisher ===');
 console.log(`Time: ${new Date().toISOString()}`);
 console.log(`Mode: ${IG_ENABLED ? 'LIVE' : 'DRY RUN'}`);
 

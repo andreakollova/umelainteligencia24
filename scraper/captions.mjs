@@ -1,4 +1,4 @@
-// Instagram caption templates for umelainteligencia24 posts
+// Instagram caption templates for inteligencia24 posts
 // Format: Kategoria | Nazov clanku + rotujuci popis + hashtags
 
 const descriptions = [
@@ -6,7 +6,7 @@ const descriptions = [
 Celý článok nájdete na našom webe, odkaz je v profile.`,
 
   `Aktuálny pohľad na vývoj v oblasti robotiky a umelej inteligencie.
-Podrobnosti si prečítajte na umelainteligencia24.sk, odkaz nájdete v profile.`,
+Podrobnosti si prečítajte na inteligencia.sk, odkaz nájdete v profile.`,
 
   `Technológie, ktoré menia spôsob, akým pracujeme a žijeme.
 Viac informácií nájdete v článku na našom webe, odkaz je v profile.`,
@@ -24,18 +24,18 @@ Viac sa dozviete v článku na našom webe, odkaz je v profile.`,
 Podrobnosti nájdete na našom webe, odkaz je dostupný v profile.`,
 
   `Zostaň informovaný o vývoji, ktorý formuje technologickú budúcnosť.
-Celý článok nájdete na umelainteligencia24.sk, odkaz je v profile.`,
+Celý článok nájdete na inteligencia.sk, odkaz je v profile.`,
 ];
 
 const hashtags = [
-  '#umelainteligencia24 #robotika #automatizácia #technológie #inovácie',
-  '#umelainteligencia24 #umeláinteligencia #robotika #technológie #priemysel',
-  '#umelainteligencia24 #inovácie #automatizácia #AI #budúcnosť',
-  '#umelainteligencia24 #robotika #technológie #trendy #inovácie',
-  '#umelainteligencia24 #robotika #novinky #technológie #automatizácia',
-  '#umelainteligencia24 #inovácie #robotika #AI #výskum',
-  '#umelainteligencia24 #umeláinteligencia #priemysel #technológie #digitalizácia',
-  '#umelainteligencia24 #technológie #robotika #budúcnosť #inovácie',
+  '#inteligencia24 #robotika #automatizácia #technológie #inovácie',
+  '#inteligencia24 #umeláinteligencia #robotika #technológie #priemysel',
+  '#inteligencia24 #inovácie #automatizácia #AI #budúcnosť',
+  '#inteligencia24 #robotika #technológie #trendy #inovácie',
+  '#inteligencia24 #robotika #novinky #technológie #automatizácia',
+  '#inteligencia24 #inovácie #robotika #AI #výskum',
+  '#inteligencia24 #umeláinteligencia #priemysel #technológie #digitalizácia',
+  '#inteligencia24 #technológie #robotika #budúcnosť #inovácie',
 ];
 
 // Category slug to display name
@@ -56,13 +56,13 @@ export function getArticleCaption(index, title, categorySlug) {
 // Glossary post captions
 export const glossaryCaptions = [
   `Nový pojem z nášho slovníčka robotiky! Ulož si to na neskôr alebo pošli kamošovi.
-#umelainteligencia24 #robotika #vzdelávanie #technológie #slovníček`,
+#inteligencia24 #robotika #vzdelávanie #technológie #slovníček`,
 
   `Vieš čo to znamená? Pozri naše vysvetlenie!
-#umelainteligencia24 #robotika #slovníček #technológie #učímesa`,
+#inteligencia24 #robotika #slovníček #technológie #učímesa`,
 
   `Dnešný pojem zo sveta robotiky. Vedel si to?
-#umelainteligencia24 #robotika #vzdelávanie #pojmy #technológie`,
+#inteligencia24 #robotika #vzdelávanie #pojmy #technológie`,
 ];
 
 // Get caption for glossary post: "Vieš, čo je to... Term?" + rotujúci popis

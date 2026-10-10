@@ -4,7 +4,7 @@ export const metadata = {
   title: 'O nás',
   description: 'Umelá inteligencia24 je nezávislý slovenský spravodajský portál zameraný na umelú inteligenciu, umelú inteligenciu a moderné technológie.',
   alternates: { canonical: '/o-nas' },
-  openGraph: { title: 'O nás', description: 'Umelá inteligencia24 je nezávislý slovenský spravodajský portál zameraný na umelú inteligenciu, umelú inteligenciu a moderné technológie.', locale: 'sk_SK', siteName: 'umelainteligencia24', countryName: 'Slovakia' },
+  openGraph: { title: 'O nás', description: 'Umelá inteligencia24 je nezávislý slovenský spravodajský portál zameraný na umelú inteligenciu, umelú inteligenciu a moderné technológie.', locale: 'sk_SK', siteName: 'inteligencia24', countryName: 'Slovakia' },
   other: { 'geo.region': 'SK', 'content-language': 'sk' },
 };
 
@@ -64,7 +64,7 @@ export default function AboutPage() {
 
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 40, marginBottom: 12 }}>Kontakt</h2>
         <p>E-mail: <a href="mailto:studio@drixton.com" style={{ color: '#37b3f2' }}>studio@drixton.com</a></p>
-        <p><a href="https://umelainteligencia24.sk" style={{ color: '#37b3f2' }}>umelainteligencia24.sk</a> | <a href="https://umelainteligencia24.cz" style={{ color: '#37b3f2' }}>umelainteligencia24.cz</a></p>
+        <p><a href="https://inteligencia.sk" style={{ color: '#37b3f2' }}>inteligencia.sk</a> | <a href="https://inteligencia.cz" style={{ color: '#37b3f2' }}>inteligencia.cz</a></p>
       </div>
 
       <ContactForm />
