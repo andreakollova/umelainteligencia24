@@ -70,7 +70,7 @@ export default function SpolupracaPage() {
 
         <h2 style={{ fontSize: 20, fontWeight: 700, color: 'var(--text-primary)', marginTop: 40, marginBottom: 12 }}>Kontakt pre spoluprácu</h2>
         <p>E-mail: <a href="mailto:studio@drixton.com" style={{ color: '#37b3f2' }}>studio@drixton.com</a></p>
-        <p><a href="https://inteligencia.sk" style={{ color: '#37b3f2' }}>inteligencia.sk</a> | <a href="https://inteligencia.cz" style={{ color: '#37b3f2' }}>inteligencia.cz</a></p>
+        <p><a href="https://inteligencia24.sk" style={{ color: '#37b3f2' }}>inteligencia24.sk</a> | <a href="https://inteligencia.cz" style={{ color: '#37b3f2' }}>inteligencia.cz</a></p>
         <p style={{ marginTop: 8 }}>Digitálny a kreatívny partner projektu: <a href="https://drixton.com" target="_blank" rel="noopener noreferrer" style={{ color: '#37b3f2' }}>Drixton Creative Studio</a></p>
       </div>
 

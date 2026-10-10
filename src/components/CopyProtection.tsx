@@ -26,7 +26,7 @@ export default function CopyProtection() {
       if (selection.length > 50) {
         // Append source attribution to copied text
         const url = window.location.href;
-        const attribution = `\n\nZdroj: inteligencia.sk\n${url}\n© inteligencia.sk - Všetky práva vyhradené.`;
+        const attribution = `\n\nZdroj: inteligencia24.sk\n${url}\n© inteligencia24.sk - Všetky práva vyhradené.`;
         e.clipboardData?.setData('text/plain', selection + attribution);
         e.preventDefault();
 

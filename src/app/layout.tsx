@@ -13,8 +13,8 @@ const inter = Inter({ subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'inteligencia.sk - Správy zo sveta umelej inteligencie a AI na Slovensku',
-    template: '%s | inteligencia.sk',
+    default: 'inteligencia24.sk - Správy zo sveta umelej inteligencie a AI na Slovensku',
+    template: '%s | inteligencia24.sk',
   },
   description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch, strojovom učení a AI technológiách v slovenčine. Denne prinášame novinky, analýzy a rozhovory zo sveta AI pre slovenských čitateľov.',
   keywords: [
@@ -27,26 +27,26 @@ export const metadata: Metadata = {
   authors: [{ name: 'inteligencia24' }],
   creator: 'inteligencia24',
   publisher: 'inteligencia24',
-  metadataBase: new URL('https://inteligencia.sk'),
+  metadataBase: new URL('https://inteligencia24.sk'),
   alternates: {
     canonical: '/',
     languages: {
-      'sk-SK': 'https://inteligencia.sk',
+      'sk-SK': 'https://inteligencia24.sk',
     },
   },
   openGraph: {
     type: 'website',
     locale: 'sk_SK',
-    url: 'https://inteligencia.sk',
+    url: 'https://inteligencia24.sk',
     siteName: 'inteligencia24',
-    title: 'inteligencia.sk - Správy zo sveta umelej inteligencie',
+    title: 'inteligencia24.sk - Správy zo sveta umelej inteligencie',
     description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch a AI technológiách v slovenčine.',
     images: [{ url: '/logo.png', width: 1200, height: 630 }],
     countryName: 'Slovakia',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'inteligencia.sk - Správy zo sveta umelej inteligencie',
+    title: 'inteligencia24.sk - Správy zo sveta umelej inteligencie',
     description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch a AI technológiách v slovenčine.',
   },
   robots: {
@@ -102,7 +102,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'){document.documentElement.classList.add('dark')}}catch(e){}})()` }} />
         <meta name="geo.region" content="SK" />
         <meta name="geo.placename" content="Slovensko" />
-        <link rel="alternate" hrefLang="sk" href="https://inteligencia.sk" />
+        <link rel="alternate" hrefLang="sk" href="https://inteligencia24.sk" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -110,12 +110,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               '@context': 'https://schema.org',
               '@type': 'NewsMediaOrganization',
               name: 'inteligencia24',
-              url: 'https://inteligencia.sk',
+              url: 'https://inteligencia24.sk',
               logo: {
                 '@type': 'ImageObject',
-                url: 'https://inteligencia.sk/logo.png',
+                url: 'https://inteligencia24.sk/logo.png',
               },
-              sameAs: ['https://www.instagram.com/inteligencia.sk/'],
+              sameAs: ['https://www.instagram.com/inteligencia24.sk/'],
               description: 'Slovenský spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.',
               foundingDate: '2025',
               areaServed: {

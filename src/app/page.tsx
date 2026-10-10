@@ -45,13 +45,13 @@ export default async function Home() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'inteligencia24',
-    url: 'https://inteligencia.sk',
+    url: 'https://inteligencia24.sk',
     description: 'Slovenský spravodajský portál o umelej inteligencii, umelej inteligencii a moderných technológiách.',
     inLanguage: 'sk',
     publisher: {
       '@type': 'Organization',
       name: 'inteligencia24',
-      logo: { '@type': 'ImageObject', url: 'https://inteligencia.sk/logo.png' },
+      logo: { '@type': 'ImageObject', url: 'https://inteligencia24.sk/logo.png' },
     },
   };
 

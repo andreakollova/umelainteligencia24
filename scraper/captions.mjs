@@ -6,7 +6,7 @@ const descriptions = [
 Celý článok nájdete na našom webe, odkaz je v profile.`,
 
   `Aktuálny pohľad na vývoj v oblasti robotiky a umelej inteligencie.
-Podrobnosti si prečítajte na inteligencia.sk, odkaz nájdete v profile.`,
+Podrobnosti si prečítajte na inteligencia24.sk, odkaz nájdete v profile.`,
 
   `Technológie, ktoré menia spôsob, akým pracujeme a žijeme.
 Viac informácií nájdete v článku na našom webe, odkaz je v profile.`,
@@ -24,7 +24,7 @@ Viac sa dozviete v článku na našom webe, odkaz je v profile.`,
 Podrobnosti nájdete na našom webe, odkaz je dostupný v profile.`,
 
   `Zostaň informovaný o vývoji, ktorý formuje technologickú budúcnosť.
-Celý článok nájdete na inteligencia.sk, odkaz je v profile.`,
+Celý článok nájdete na inteligencia24.sk, odkaz je v profile.`,
 ];
 
 const hashtags = [

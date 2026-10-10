@@ -10,7 +10,7 @@ import AdBlock from '@/components/AdBlock';
 
 export const revalidate = 60;
 
-const BASE_URL = 'https://inteligencia.sk';
+const BASE_URL = 'https://inteligencia24.sk';
 
 async function getArticle(slug: string) {
   const { data } = await supabase
@@ -117,7 +117,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
   const a = article as Article;
   const categoryName = a.categories?.name;
-  const articleUrl = `https://inteligencia.sk/clanok/${a.slug}`;
+  const articleUrl = `https://inteligencia24.sk/clanok/${a.slug}`;
 
   const jsonLd = [
     {
@@ -225,7 +225,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
           {/* Hidden watermark for copy detection */}
           <span style={{ position: 'absolute', opacity: 0, fontSize: 0, pointerEvents: 'none' }} aria-hidden="true">
-            {`©inteligencia.sk/${a.slug}`}
+            {`©inteligencia24.sk/${a.slug}`}
           </span>
 
           {a.content && (
