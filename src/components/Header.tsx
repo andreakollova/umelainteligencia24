@@ -160,8 +160,8 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    fetch('/api/latest-title')
-      .then(r => r.json())
+    fetch('/api/latest-title', { redirect: 'follow' })
+      .then(r => { if (r.ok) return r.json(); throw new Error('not ok'); })
       .then(d => { if (d.title) setLatestTitle(d.title); })
       .catch(() => {});
   }, []);
