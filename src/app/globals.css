@@ -336,3 +336,8 @@ a {
 .dark .from-black\/80 {
   --tw-gradient-from: rgba(0, 0, 0, 0.9);
 }
+
+/* Overflow hidden on main only, not body (allows position:fixed sticky bar) */
+main {
+  overflow-x: hidden;
+}
