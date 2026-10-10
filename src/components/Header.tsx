@@ -187,7 +187,7 @@ export default function Header() {
         {searchOpen && (
           <div style={{ borderTop: '1px solid #f3f4f6', padding: '12px 20px', maxWidth: 1280, margin: '0 auto' }}>
             <form action="/hladanie" method="GET" style={{ display: 'flex', gap: 8 }}>
-              <input name="q" type="text" placeholder="Hľadať články..." style={{ flex: 1, padding: '10px 16px', border: '1px solid var(--border)', borderRadius: 4, fontSize: 14, outline: 'none', backgroundColor: 'var(--input-bg)', color: 'var(--text-primary)' }} autoFocus />
+              <input name="q" type="text" placeholder="Hľadať články..." style={{ flex: 1, padding: '10px 16px', border: '1px solid var(--border)', borderRadius: 4, fontSize: 16, outline: 'none', backgroundColor: 'var(--input-bg)', color: 'var(--text-primary)' }} autoFocus />
               <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#37b3f2', color: '#fff', border: 'none', borderRadius: 24, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Hľadať</button>
             </form>
           </div>
@@ -219,7 +219,7 @@ export default function Header() {
         {searchOpen && (
           <div style={{ padding: '8px 16px', borderTop: '1px solid #f3f4f6' }}>
             <form action="/hladanie" method="GET" style={{ display: 'flex', gap: 8 }}>
-              <input name="q" type="text" placeholder="Hľadať..." style={{ flex: 1, padding: '10px 14px', border: '1px solid #e5e7eb', borderRadius: 24, fontSize: 14, outline: 'none' }} autoFocus />
+              <input name="q" type="text" placeholder="Hľadať..." style={{ flex: 1, padding: '10px 14px', border: '1px solid #e5e7eb', borderRadius: 24, fontSize: 16, outline: 'none' }} autoFocus />
             </form>
           </div>
         )}
