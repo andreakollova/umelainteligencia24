@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import type { Article } from '@/lib/supabase';
 
 function timeAgo(dateStr: string) {
@@ -27,12 +26,11 @@ export default function ArticleCard({
       <Link href={`/clanok/${article.slug}`} className="group block relative">
         <div className="relative overflow-hidden rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)', paddingBottom: '62.5%' }}>
           {article.image_url && (
-            <Image
+            <img
               src={article.image_url}
               alt={article.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              style={{ objectFit: 'cover' }}
+              loading="lazy"
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               className="group-hover:scale-105 transition-transform duration-500"
             />
           )}
@@ -62,9 +60,10 @@ export default function ArticleCard({
     return (
       <Link href={`/clanok/${article.slug}`} className="group flex gap-3 items-start py-3 border-b border-gray-100 last:border-0">
         {article.image_url && (
-          <Image
+          <img
             src={article.image_url}
             alt={article.title}
+            loading="lazy"
             width={100}
             height={66}
             className="rounded object-cover shrink-0 group-hover:opacity-80 transition-opacity"
@@ -85,12 +84,11 @@ export default function ArticleCard({
     <Link href={`/clanok/${article.slug}`} className="group block">
       <div className="overflow-hidden rounded-lg mb-3 relative" style={{ backgroundColor: 'var(--bg-tertiary)', paddingBottom: '62.5%' }}>
         {article.image_url && (
-          <Image
+          <img
             src={article.image_url}
             alt={article.title}
-            fill
-            sizes="(max-width: 640px) 100vw, 50vw"
-            style={{ objectFit: 'cover' }}
+            loading="lazy"
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
             className="group-hover:scale-105 transition-transform duration-500"
           />
         )}

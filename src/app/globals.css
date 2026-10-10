@@ -66,11 +66,6 @@ html {
 }
 
 /* Force page width constraint */
-#page-wrapper {
-  width: 100%;
-  overflow-x: clip;
-  
-}
 
 img, video, iframe {
   max-width: 100%;
