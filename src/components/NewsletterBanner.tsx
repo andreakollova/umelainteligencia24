@@ -47,7 +47,7 @@ export default function NewsletterBanner() {
               required
               style={{
                 flex: 1, minWidth: 220, padding: '14px 20px', fontSize: 15,
-                border: '1px solid #2f3336', borderRadius: 24, outline: 'none',
+                border: '1px solid #ffffff', borderRadius: 24, outline: 'none',
                 backgroundColor: '#051722', color: '#ffffff',
               }}
             />
