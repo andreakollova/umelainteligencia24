@@ -8,6 +8,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'actu.epfl.ch' },
       { protocol: 'https', hostname: 'www.media.mit.edu' },
       { protocol: 'https', hostname: 'www.eurekalert.org' },
+      { protocol: 'https', hostname: 'cdn.sanity.io' },
+      { protocol: 'https', hostname: '*.microsoft.com' },
     ],
   },
   serverExternalPackages: ['sharp'],

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import type { Article } from '@/lib/supabase';
 
 function timeAgo(dateStr: string) {
@@ -26,10 +27,12 @@ export default function ArticleCard({
       <Link href={`/clanok/${article.slug}`} className="group block relative">
         <div className="relative overflow-hidden rounded-lg" style={{ backgroundColor: 'var(--bg-tertiary)', paddingBottom: '62.5%' }}>
           {article.image_url && (
-            <img
+            <Image
               src={article.image_url}
               alt={article.title}
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              style={{ objectFit: 'cover' }}
               className="group-hover:scale-105 transition-transform duration-500"
             />
           )}
@@ -59,14 +62,16 @@ export default function ArticleCard({
     return (
       <Link href={`/clanok/${article.slug}`} className="group flex gap-3 items-start py-3 border-b border-gray-100 last:border-0">
         {article.image_url && (
-          <img
+          <Image
             src={article.image_url}
             alt={article.title}
-            className="w-[100px] h-[66px] rounded object-cover shrink-0 group-hover:opacity-80 transition-opacity"
+            width={100}
+            height={66}
+            className="rounded object-cover shrink-0 group-hover:opacity-80 transition-opacity"
           />
         )}
         <div className="min-w-0 flex-1">
-          <h3 className="text-[13px] font-bold text-[#051722] leading-tight group-hover:text-[#37b3f2] transition-colors line-clamp-3">
+          <h3 className="text-[13px] font-bold text-[#0c1a26] leading-tight group-hover:text-[#37b3f2] transition-colors line-clamp-3">
             {article.title}
           </h3>
           <span className="text-[11px] text-gray-400 mt-1 block">{timeAgo(article.published_at)}</span>
@@ -80,10 +85,12 @@ export default function ArticleCard({
     <Link href={`/clanok/${article.slug}`} className="group block">
       <div className="overflow-hidden rounded-lg mb-3 relative" style={{ backgroundColor: 'var(--bg-tertiary)', paddingBottom: '62.5%' }}>
         {article.image_url && (
-          <img
+          <Image
             src={article.image_url}
             alt={article.title}
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+            fill
+            sizes="(max-width: 640px) 100vw, 50vw"
+            style={{ objectFit: 'cover' }}
             className="group-hover:scale-105 transition-transform duration-500"
           />
         )}
@@ -91,7 +98,7 @@ export default function ArticleCard({
       {categoryName && (
         <span className="text-[#37b3f2] text-[11px] font-bold uppercase tracking-wider">{categoryName}</span>
       )}
-      <h3 className="text-[15px] font-bold text-[#051722] leading-snug mt-1 group-hover:text-[#37b3f2] transition-colors line-clamp-3">
+      <h3 className="text-[15px] font-bold text-[#0c1a26] leading-snug mt-1 group-hover:text-[#37b3f2] transition-colors line-clamp-3">
         {article.title}
       </h3>
       <div className="flex items-center gap-2 mt-2 text-gray-400 text-[11px]">
