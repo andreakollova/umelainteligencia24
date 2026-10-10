@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   const hostname = request.headers.get('host') || '';
 
   // If accessing via inteligencia.cz, redirect to Google Translate Czech version
-  if (hostname.includes('inteligencia24.cz')) {
+  if (hostname.includes('inteligence24.cz')) {
     const path = request.nextUrl.pathname + request.nextUrl.search;
     const skUrl = `https://inteligencia24.sk${path}`;
     const translateUrl = skUrl
