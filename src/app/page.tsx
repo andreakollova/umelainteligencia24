@@ -6,25 +6,25 @@ import ProjectsSection from '@/components/ProjectsSection';
 import NewsletterBanner from '@/components/NewsletterBanner';
 import WordOfDay from '@/components/WordOfDay';
 
-export const revalidate = 300;
+export const revalidate = 600;
 
 async function getArticles() {
   const { data: all } = await supabase
     .from('articles')
-    .select('*, categories(*)')
+    .select('id, title, slug, excerpt, image_url, author, views, published_at, categories(name, slug)')
     .eq('is_published', true)
     .order('published_at', { ascending: false })
-    .limit(30);
+    .limit(20);
 
   const { data: popularRaw } = await supabase
     .from('articles')
-    .select('*, categories(*)')
+    .select('id, title, slug, excerpt, image_url, author, views, published_at, categories(name, slug)')
     .eq('is_published', true)
     .order('views', { ascending: false })
     .limit(10);
 
-  const articles = (all || []) as Article[];
-  const allPopular = (popularRaw || []) as Article[];
+  const articles = (all || []) as unknown as Article[];
+  const allPopular = (popularRaw || []) as unknown as Article[];
 
   const announcement = articles.slice(0, 4);
   const hero = articles[4] || articles[0];

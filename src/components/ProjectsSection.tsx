@@ -18,10 +18,10 @@ type Project = {
 export default async function ProjectsSection() {
   const { data } = await supabase
     .from('projects')
-    .select('*')
+    .select('id, title, description, category, tags, stars, license, external_url, image_url, is_new')
     .eq('is_published', true)
     .order('stars', { ascending: false })
-    .limit(6);
+    .limit(3);
 
   const projects = (data || []) as Project[];
   if (!projects.length) return null;

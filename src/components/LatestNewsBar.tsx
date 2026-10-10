@@ -7,7 +7,7 @@ export default async function LatestNewsBar() {
     .eq('is_published', true)
     .order('published_at', { ascending: false })
     .limit(1)
-    .single();
+    .maybeSingle();
 
   if (!data?.title) return null;
 

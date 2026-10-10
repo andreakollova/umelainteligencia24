@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default async function WordOfDayWidget() {
   const { data: terms } = await supabase
     .from('glossary')
-    .select('*')
+    .select('term_en, term_sk, slug, explanation')
     .eq('is_published', true);
 
   if (!terms || terms.length === 0) return null;
