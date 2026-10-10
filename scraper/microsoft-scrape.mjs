@@ -33,7 +33,7 @@ async function articleExists(url) {
 async function writeArticle(title, content, source) {
   const res = await openai.chat.completions.create({
     model: 'gpt-4o',
-    messages: [{ role: 'user', content: 'Na základe faktov napíš VLASTNÝ slovenský článok. Nadpis 10-14 slov, zaujímavý, s faktom. Excerpt 6-8 viet s **bold**. Content s ## nadpismi. Na konci: ## Zdroj\nZdroj: ' + source + '\nSpracovanie: Redakcia inteligencia24\n\nVráť JSON: {"title":"...","excerpt":"...","content":"..."}\n\nFakty:\n' + title + '\n' + content }],
+    messages: [{ role: 'user', content: 'Na základe faktov napíš VLASTNÝ slovenský článok. V texte vždy jasne uveď akú firmu alebo inštitúciu sa článok týka. Nadpis 10-14 slov, zaujímavý, s faktom. Excerpt 6-8 viet s **bold**. Content s ## nadpismi. Na konci: ## Zdroj\nZdroj: ' + source + '\nSpracovanie: Redakcia inteligencia24\n\nVráť JSON: {"title":"...","excerpt":"...","content":"..."}\n\nFakty:\n' + title + '\n' + content }],
     temperature: 0.4, max_tokens: 4000,
   });
   const text = res.choices[0].message.content.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '');
