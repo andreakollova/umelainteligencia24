@@ -225,7 +225,7 @@ export default function Header() {
           </button>
 
           {/* Logo center */}
-          <Link href="/" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <Link href="/" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}>
             <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="umelá inteligencia24" width={200} height={48} style={{ height: 48, width: 'auto' }} priority />
           </Link>
 
