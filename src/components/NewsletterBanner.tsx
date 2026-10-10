@@ -30,7 +30,7 @@ export default function NewsletterBanner() {
         <h2 style={{ fontSize: 24, fontWeight: 700, color: '#ffffff', marginBottom: 8 }}>
           Nepremeškajte žiadnu novinku zo sveta umelej inteligencie
         </h2>
-        <p style={{ fontSize: 15, color: '#9ca3af', marginBottom: 24, lineHeight: 1.5 }}>
+        <p style={{ fontSize: 15, color: '#ffffff', marginBottom: 24, opacity: 0.8, lineHeight: 1.5 }}>
           Pridajte sa k odberateľom a dostávajte najzaujímavejšie správy o AI systémoch, AI a technológiách priamo do schránky.
         </p>
 
