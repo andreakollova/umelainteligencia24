@@ -89,30 +89,20 @@ async function generateSlide1(photoPath, title) {
   const photoBuf = readFileSync(photoPath);
   const photoResized = await sharp(photoBuf).resize(W, H, { fit: 'cover' }).toBuffer();
 
-  const titleLines = wrapText(title, 24);
+  const titleLines = wrapText(title, 26);
   const lineHeight = 76;
-  const titleStartY = H - 240 - titleLines.length * lineHeight;
+  const titleBlockHeight = titleLines.length * lineHeight;
+  const titleStartY = H - 180 - titleBlockHeight;
   const titleSvg = titleLines.map((line, i) =>
-    `<text x="80" y="${titleStartY + i * lineHeight + 66}" font-family="Inter, sans-serif" font-size="68" font-weight="800" fill="#ffffff">${escapeXml(line)}</text>`
+    `<text x="${W / 2}" y="${titleStartY + i * lineHeight + 66}" font-family="Inter, sans-serif" font-size="64" font-weight="800" fill="#ffffff" text-anchor="middle">${escapeXml(line)}</text>`
   ).join('\n');
 
-  const overlaySvg = Buffer.from(`<svg width="${W}" height="${H}">
-    <defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0.4" stop-color="#000" stop-opacity="0"/>
-      <stop offset="0.75" stop-color="#000" stop-opacity="0.7"/>
-      <stop offset="1" stop-color="#000" stop-opacity="0.9"/>
-    </linearGradient></defs>
-    <rect width="${W}" height="${H}" fill="url(#fade)"/>
-    ${titleSvg}
-  </svg>`);
-
-  // Layer order: photo → template → gradient+title on top
   const titleOnlySvg = Buffer.from(`<svg width="${W}" height="${H}">${titleSvg}</svg>`);
 
+  // Layer order: photo → template → title on top (no gradient)
   return sharp(photoResized)
     .composite([
       { input: template, top: 0, left: 0 },
-      { input: overlaySvg, top: 0, left: 0 },
       { input: titleOnlySvg, top: 0, left: 0 },
     ])
     .png().toBuffer();
