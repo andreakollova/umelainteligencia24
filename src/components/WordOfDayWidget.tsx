@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default async function WordOfDayWidget() {
   const { data: terms } = await supabase
@@ -13,8 +14,9 @@ export default async function WordOfDayWidget() {
 
   return (
     <div style={{ border: '1px solid var(--border)', borderRadius: 8, overflow: 'hidden', marginTop: 20 }}>
-      <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--border-light)' }}>
+      <div style={{ padding: '14px 16px 10px', borderBottom: '1px solid var(--border-light)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontSize: 10, fontWeight: 700, color: '#37b3f2', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Slovo dňa</span>
+        <Link href={`/slovnik#${term.slug}`} style={{ fontSize: 11, color: '#37b3f2', textDecoration: 'none', fontWeight: 600 }}>Viac →</Link>
       </div>
       <div style={{ padding: '14px 16px' }}>
         <div style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 4 }}>{term.term_en}</div>
