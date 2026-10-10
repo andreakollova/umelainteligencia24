@@ -48,8 +48,10 @@ export async function GET(req: NextRequest) {
 
     // If excerpt has no bold markers, add them to key terms (names, numbers)
     let excerpt = article.excerpt || article.title;
+    // Fix: if bold covers entire sentence (>60 chars bold), remove it and re-bold just key words
+    excerpt = excerpt.replace(/\*\*([^*]{60,})\*\*/g, '$1');
     if (!excerpt.includes('**')) {
-      // Bold proper nouns (capitalized words 2+ chars not at sentence start) and numbers
+      // Bold proper nouns and numbers
       excerpt = excerpt.replace(/(?<=[.!?]\s+|\b)(\d[\d\s,.]*\d|\d+)(?=\s|[.,]|$)/g, '**$1**');
       excerpt = excerpt.replace(/(?<=\s)([A-Z][a-zA-Z]{2,}(?:\s[A-Z][a-zA-Z]+)*)/g, '**$1**');
     }
