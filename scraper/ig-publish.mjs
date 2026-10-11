@@ -208,7 +208,7 @@ async function publishArticlePosts(count = 4) {
   // Get recent unpublished articles with category
   const { data: articles } = await supabase
     .from('articles')
-    .select('title, slug, excerpt, image_url, category_id, categories(slug)')
+    .select('title, slug, excerpt, image_url, category_id, categories(name, slug)')
     .eq('is_published', true)
     .order('published_at', { ascending: false })
     .limit(20);
