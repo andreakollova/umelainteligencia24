@@ -205,11 +205,11 @@ async function generateArticleExcerptPages(excerpt, theme, category) {
   const maxContentHeight = H - 350;
   const contentStartY = 130;
 
-  // Split into sentences, wrap each with bold preservation - wider lines
+  // Split into sentences, wrap each with bold preservation - shorter lines for readability
   const sentences = excerpt.split(/(?<=\.)\s+/).filter(s => s.trim());
 
   // Each sentence group = array of lines, each line = array of {text, bold} segments
-  const sentenceGroups = sentences.map(s => wrapTextWithBold(s, 34));
+  const sentenceGroups = sentences.map(s => wrapTextWithBold(s, 26));
 
   // Category label - to the right of red bar (bar at x:85-99, y:89-174, center y:132)
   const catSvg = catLabel
@@ -221,10 +221,15 @@ async function generateArticleExcerptPages(excerpt, theme, category) {
     return h + group.length * lineHeight + (i > 0 ? sentenceGap : 0);
   }, 0);
 
-  // Always split across 3 pages
+  // Split across 4 pages for shorter, more readable text per slide
   const totalSentences = sentenceGroups.length;
   const pageGroupsList = [];
-  if (totalSentences >= 3) {
+  if (totalSentences >= 4) {
+    const t1 = Math.ceil(totalSentences / 4);
+    const t2 = Math.ceil((totalSentences * 2) / 4);
+    const t3 = Math.ceil((totalSentences * 3) / 4);
+    pageGroupsList.push(sentenceGroups.slice(0, t1), sentenceGroups.slice(t1, t2), sentenceGroups.slice(t2, t3), sentenceGroups.slice(t3));
+  } else if (totalSentences >= 3) {
     const t1 = Math.ceil(totalSentences / 3);
     const t2 = Math.ceil((totalSentences * 2) / 3);
     pageGroupsList.push(sentenceGroups.slice(0, t1), sentenceGroups.slice(t1, t2), sentenceGroups.slice(t2));
