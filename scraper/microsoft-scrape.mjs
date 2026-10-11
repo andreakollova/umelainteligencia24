@@ -39,7 +39,7 @@ async function writeArticle(title, content, source) {
   });
   const text = res.choices[0].message.content.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '');
   const parsed = JSON.parse(text);
-  parsed.title = parsed.title.replace(/[—–:]/g, '');
+  parsed.title = parsed.title.replace(/[—–]/g, '-');
   return parsed;
 }
 

@@ -72,7 +72,7 @@ async function translateArticle(title, summary, content, originalAuthor, sourceU
   const prompt = `Prelož nasledujúci článok z angličtiny do slovenčiny. Prepíš ho tak, aby to znelo ako profesionálny slovenský technologický článok.
 
 KRITICKÉ PRAVIDLÁ:
-- NADPIS: Zaujímavý, konkrétny, novinársky - 10-14 slov. Musí obsahovať konkrétny fakt, číslo alebo zaujímavosť z článku. Píš ako novinár denníka SME. NIKDY nepoužívaj: revolúcia, nová éra, budúcnosť, prelomový, inovatívny. NIKDY nedávaj názov inštitúcie na začiatok. Žiadne dvojbodky. Príklady dobrých nadpisov: "Motor hrubý len niekoľko milimetrov zdvihne 46-gramovú čokoládu", "Farebná spätná väzba zlepšila ovládanie protéz už po 20 pokusoch".
+- NADPIS: Zaujímavý, konkrétny, novinársky - 10-14 slov. Musí obsahovať konkrétny fakt, číslo alebo zaujímavosť z článku. Píš ako novinár denníka SME. NIKDY nepoužívaj: revolúcia, nová éra, budúcnosť, prelomový, inovatívny. NIKDY nedávaj názov inštitúcie na začiatok. Dvojbodku použi ak je v nadpise názov firmy/produktu a za ním popis. Príklady dobrých nadpisov: "Motor hrubý len niekoľko milimetrov zdvihne 46-gramovú čokoládu", "Farebná spätná väzba zlepšila ovládanie protéz už po 20 pokusoch".
 - EXCERPT: 6-8 viet, do 800 znakov. Každá veta musí končiť bodkou. Dôležité slová a názvy (firmy, roboty, technológie, čísla) VŽDY označ **boldom**.
 - CONTENT: Plný preklad s ## nadpismi pre sekcie. Kľúčové pojmy boldni.
 - NIKDY NEPREKLADAJ mená ľudí a názvy firiem/technológií.
