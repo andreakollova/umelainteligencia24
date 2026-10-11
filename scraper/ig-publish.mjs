@@ -162,6 +162,36 @@ async function publishCarousel(slides, caption, slugPrefix) {
   return postId;
 }
 
+// Publish a story to Instagram
+async function publishStory(storyPath, slugPrefix) {
+  if (!storyPath || !existsSync(storyPath)) return;
+  console.log(`  Publishing story...`);
+
+  const fileName = `${slugPrefix}-story-${Date.now()}.png`;
+  const url = await uploadToSupabaseStorage(storyPath, fileName);
+
+  const res = await fetch(
+    `https://graph.facebook.com/v21.0/${IG_ACCOUNT}/media`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        image_url: url,
+        media_type: 'STORIES',
+        access_token: IG_TOKEN,
+      }),
+    }
+  );
+  const data = await res.json();
+  if (data.error) throw new Error(`IG story error: ${data.error.message}`);
+
+  await new Promise(r => setTimeout(r, 5000));
+
+  const postId = await publishContainer(data.id);
+  console.log(`    Story published! Post ID: ${postId}`);
+  return postId;
+}
+
 // ============================================================
 // MAIN FLOWS
 // ============================================================
@@ -213,6 +243,10 @@ async function publishArticlePosts(count = 4) {
     if (IG_ENABLED) {
       try {
         await publishCarousel(result.slides, caption, result.slug);
+        // Publish story
+        if (result.storyPath) {
+          try { await publishStory(result.storyPath, result.slug); } catch (e) { console.error(`  Story error: ${e.message}`); }
+        }
         state.postedSlugs.push(article.slug);
         state.lastArticleIndex++;
         saveState(state);
@@ -264,6 +298,7 @@ async function publishGlossaryPost() {
 const args = process.argv.slice(2);
 const generateOnly = args.includes('--generate-only');
 const glossaryOnly = args.includes('--glossary-only');
+const articlesOnly = args.includes('--articles-only');
 
 console.log('=== inteligencia24 Instagram Publisher ===');
 console.log(`Time: ${new Date().toISOString()}`);
@@ -278,6 +313,8 @@ if (generateOnly) {
   console.log('\nDone! Check /public/ig/glossary/');
 } else if (glossaryOnly) {
   await publishGlossaryPost();
+} else if (articlesOnly) {
+  await publishArticlePosts(4);
 } else {
   // Default: 4 articles + 1 glossary
   await publishArticlePosts(4);

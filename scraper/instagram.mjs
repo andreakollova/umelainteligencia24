@@ -68,7 +68,7 @@ function wrapText(text, maxChars) {
 // Slide 1: article image FULL HEIGHT as base layer, template on top, title on top of everything
 async function generateArticleSlide1(articleImageUrl, title, theme) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide1.png`);
-  const textColor = theme === 'modry' ? '#ffffff' : '#051722';
+  const textColor = '#ffffff';
   const bgColor = theme === 'modry' ? '#051722' : '#ffffff';
 
   // Download article image
@@ -196,7 +196,7 @@ function renderRichLine(wordSegments, x, y, size, color) {
 // Returns array of page buffers (1 or 2 pages)
 async function generateArticleExcerptPages(excerpt, theme, category) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide2.png`);
-  const textColor = theme === 'modry' ? '#ffffff' : '#051722';
+  const textColor = '#ffffff';
   const catLabel = category || '';
 
   const fontSize = 54;
