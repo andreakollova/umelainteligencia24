@@ -15,7 +15,8 @@ try {
   });
 } catch {}
 
-const supabase = createClient('https://fxnpgqsztiwqbhvyokgd.supabase.co', process.env.SUPABASE_SERVICE_ROLE_KEY);
+const SUPABASE_URL = 'https://fxnpgqsztiwqbhvyokgd.supabase.co';
+const supabase = createClient(SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 const LIMIT = parseInt(process.argv[2] || '10');
@@ -86,6 +87,23 @@ async function main() {
     try {
       const article = await writeArticle(item.title, item.desc, 'Microsoft');
       const slug = slugify(article.title) + '-' + Date.now().toString(36);
+
+      // Upload image to Supabase Storage
+      try {
+        const imgRes = await fetch(imageUrl, { redirect: 'follow' });
+        if (imgRes.ok) {
+          const ct = imgRes.headers.get('content-type') || 'image/jpeg';
+          const ext = ct.includes('webp') ? 'webp' : ct.includes('png') ? 'png' : 'jpg';
+          const buf = Buffer.from(await imgRes.arrayBuffer());
+          const storagePath = slug.substring(0, 80) + '.' + ext;
+          const { error: upErr } = await supabase.storage.from('article-images').upload(storagePath, buf, { contentType: ct, upsert: true });
+          if (!upErr) {
+            imageUrl = `${SUPABASE_URL}/storage/v1/object/public/article-images/${storagePath}`;
+            console.log('  Image uploaded to Storage');
+          }
+        }
+      } catch (imgErr) { console.error('  Image upload error:', imgErr.message); }
+
       await supabase.from('articles').insert({
         title: article.title, slug, excerpt: article.excerpt, content: article.content,
         image_url: imageUrl, category_id: categoryId,

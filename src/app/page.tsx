@@ -13,8 +13,7 @@ async function getArticles() {
     .from('articles')
     .select('id, title, slug, excerpt, image_url, author, views, published_at, categories(name, slug)')
     .eq('is_published', true)
-    .order('published_at', { ascending: false })
-    .limit(20);
+    .order('published_at', { ascending: false });
 
   const { data: popularRaw } = await supabase
     .from('articles')
@@ -33,7 +32,7 @@ async function getArticles() {
 
   const popular = allPopular.filter(a => !heroIds.has(a.id)).slice(0, 5);
   const latest = articles.filter(a => !heroIds.has(a.id)).slice(0, 5);
-  const grid = articles.filter(a => !heroIds.has(a.id)).slice(0, 12);
+  const grid = articles.filter(a => !heroIds.has(a.id));
 
   return { announcement, hero, heroSide, grid, popular, latest };
 }

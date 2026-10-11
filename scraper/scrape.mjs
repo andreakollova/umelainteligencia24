@@ -364,12 +364,12 @@ async function main() {
     }
 
     // Extract image and video
-    const imageUrl = extractImageFromContent(item.contentHtml);
+    const originalImageUrl = extractImageFromContent(item.contentHtml);
     const videoUrl = extractVideoFromContent(item.contentHtml);
     const textContent = extractTextFromHtml(item.contentHtml);
 
     // Skip if no image
-    if (!imageUrl) {
+    if (!originalImageUrl) {
       console.log(`  SKIP (no image): ${item.title.substring(0, 60)}...`);
       skipped++;
       continue;
@@ -398,6 +398,27 @@ async function main() {
     }
 
     const slug = slugify(translated.title) + '-' + Date.now().toString(36);
+
+    // Download image and upload to Supabase Storage
+    let imageUrl = originalImageUrl;
+    try {
+      const imgRes = await fetch(originalImageUrl, { redirect: 'follow' });
+      if (imgRes.ok) {
+        const ct = imgRes.headers.get('content-type') || 'image/jpeg';
+        const ext = ct.includes('webp') ? 'webp' : ct.includes('png') ? 'png' : 'jpg';
+        const buf = Buffer.from(await imgRes.arrayBuffer());
+        const storagePath = slug.substring(0, 80) + '.' + ext;
+        const { error: upErr } = await supabase.storage.from('article-images').upload(storagePath, buf, { contentType: ct, upsert: true });
+        if (!upErr) {
+          imageUrl = `${SUPABASE_URL}/storage/v1/object/public/article-images/${storagePath}`;
+          console.log(`  Image uploaded to Storage`);
+        } else {
+          console.error(`  Image upload error: ${upErr.message}`);
+        }
+      }
+    } catch (imgErr) {
+      console.error(`  Image download error: ${imgErr.message}`);
+    }
 
     // Insert into Supabase
     const { error } = await supabase.from('articles').insert({
