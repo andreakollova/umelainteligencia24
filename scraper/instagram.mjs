@@ -593,7 +593,7 @@ export async function generateStory(articleImageUrl, title) {
 
 // Generate article carousel (3 slides: image+title, excerpt, CTA)
 export async function generateCarousel(article, postIndex) {
-  const theme = postIndex % 2 === 0 ? 'modry' : 'biely';
+  const theme = 'modry';
   const outputDir = getOutputDir();
 
   const slug = article.slug || 'post';
