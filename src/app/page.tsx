@@ -106,9 +106,16 @@ export default async function Home() {
                 <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>{name}</h2>
                 <Link href={`/kategoria/${slug}`} style={{ fontSize: 13, fontWeight: 600, color: '#37b3f2', textDecoration: 'none' }}>Zobraziť všetky</Link>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+              <div className="scrollbar-hide" style={{ display: 'flex', gap: 16, overflowX: 'auto', paddingBottom: 8 }}>
                 {articles.map((article) => (
-                  <ArticleCard key={article.id} article={article} size="small" />
+                  <Link key={article.id} href={`/clanok/${article.slug}`} className="group" style={{ flexShrink: 0, width: 220, textDecoration: 'none' }}>
+                    <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 8, backgroundColor: 'var(--bg-tertiary)', position: 'relative', paddingBottom: '62.5%' }}>
+                      {article.image_url && (
+                        <img src={article.image_url} alt={article.title} loading="lazy" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                      )}
+                    </div>
+                    <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }} className="group-hover:text-[#37b3f2] transition-colors">{article.title}</h3>
+                  </Link>
                 ))}
               </div>
             </section>
