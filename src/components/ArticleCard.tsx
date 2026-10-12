@@ -64,9 +64,8 @@ export default function ArticleCard({
             src={article.image_url}
             alt={article.title}
             loading="lazy"
-            width={100}
-            height={66}
-            className="rounded object-cover shrink-0 group-hover:opacity-80 transition-opacity"
+            style={{ width: 100, height: 66, objectFit: 'cover', borderRadius: 6, flexShrink: 0 }}
+            className="group-hover:opacity-80 transition-opacity"
           />
         )}
         <div className="min-w-0 flex-1">
