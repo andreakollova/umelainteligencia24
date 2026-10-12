@@ -75,7 +75,7 @@ export default function Sidebar({ articles, latestArticles }: { articles: Articl
       </aside>
 
       <Link href="/eshop" style={{ display: 'block', marginTop: 20, borderRadius: 8, overflow: 'hidden' }}>
-        <img src="/eshop-banner.png" alt="E-shop - Merch pre fanúšikov AI" style={{ width: '100%', height: 'auto', display: 'block' }} />
+        <img src="/eshop-banner.jpg" alt="E-shop - Merch pre fanúšikov AI" style={{ width: '100%', height: 'auto', display: 'block' }} />
       </Link>
 
       <div style={{ marginTop: 20 }}>

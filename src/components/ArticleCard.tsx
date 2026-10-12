@@ -14,9 +14,11 @@ function timeAgo(dateStr: string) {
 export default function ArticleCard({
   article,
   size = 'normal',
+  priority = false,
 }: {
   article: Article;
   size?: 'hero' | 'normal' | 'small';
+  priority?: boolean;
 }) {
   const categoryName = article.categories?.name;
 
@@ -29,7 +31,7 @@ export default function ArticleCard({
             <img
               src={article.image_url}
               alt={article.title}
-              loading="lazy"
+              loading={priority ? "eager" : "lazy"}
               style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }}
               className="group-hover:scale-105 transition-transform duration-500"
             />

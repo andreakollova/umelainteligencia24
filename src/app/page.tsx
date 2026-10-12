@@ -75,8 +75,8 @@ export default async function Home() {
         {hero && (
           <section style={{ marginBottom: 24 }}>
             <div className="hero-cards">
-              <ArticleCard article={hero} size="hero" />
-              {heroSide && <ArticleCard article={heroSide} size="hero" />}
+              <ArticleCard article={hero} size="hero" priority />
+              {heroSide && <ArticleCard article={heroSide} size="hero" priority />}
             </div>
           </section>
         )}
