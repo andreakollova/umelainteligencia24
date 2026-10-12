@@ -142,7 +142,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <CookieBanner />
         <CopyProtection />
         <PageTracker />
-        <Analytics />
+        <Analytics mode="production" />
 
       </body>
     </html>
