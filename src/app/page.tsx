@@ -109,9 +109,9 @@ export default async function Home() {
               <div className="scrollbar-hide" style={{ display: 'flex', gap: 16, overflowX: 'auto', paddingBottom: 8 }}>
                 {articles.map((article) => (
                   <Link key={article.id} href={`/clanok/${article.slug}`} className="group" style={{ flexShrink: 0, width: 220, textDecoration: 'none' }}>
-                    <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 8, backgroundColor: 'var(--bg-tertiary)', position: 'relative', paddingBottom: '62.5%' }}>
+                    <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 8, backgroundColor: 'var(--bg-tertiary)', width: 220, height: 138 }}>
                       {article.image_url && (
-                        <img src={article.image_url} alt={article.title} loading="lazy" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={article.image_url} alt={article.title} loading="lazy" style={{ width: 220, height: 138, objectFit: 'cover', display: 'block' }} />
                       )}
                     </div>
                     <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }} className="group-hover:text-[#37b3f2] transition-colors">{article.title}</h3>
