@@ -26,7 +26,7 @@ async function getArticles() {
   const heroSide = articles[1];
   const heroIds = new Set([hero?.id, heroSide?.id]);
 
-  const grid = articles.filter(a => !heroIds.has(a.id)).slice(0, 12);
+  const grid = articles.filter(a => !heroIds.has(a.id)).slice(0, 8);
   const gridIds = new Set([...heroIds, ...grid.map(a => a.id)]);
 
   const popular = allPopular.filter(a => !heroIds.has(a.id)).slice(0, 5);
@@ -38,7 +38,7 @@ async function getArticles() {
   for (const a of remaining) {
     const catSlug = (a as any).categories?.slug || 'ostatne';
     if (!byCategory[catSlug]) byCategory[catSlug] = [];
-    if (byCategory[catSlug].length < 6) byCategory[catSlug].push(a);
+    if (byCategory[catSlug].length < 4) byCategory[catSlug].push(a);
   }
 
   return { hero, heroSide, grid, popular, latest, byCategory, videoArticles };
