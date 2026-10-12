@@ -137,13 +137,6 @@ export default async function Home() {
         )}
       </div>
 
-      {/* Eshop Banner */}
-      <section style={{ maxWidth: 1280, margin: '32px auto 0', padding: '0 20px' }}>
-        <Link href="/eshop" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px 24px', borderRadius: 12, backgroundColor: '#37b3f2', color: '#fff', fontSize: 18, fontWeight: 700, textDecoration: 'none', textAlign: 'center' }}>
-          E-shop - Merch pre fanúšikov AI
-        </Link>
-      </section>
-
       <NewsletterBanner />
       <ProjectsSection />
     </>
