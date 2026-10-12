@@ -80,61 +80,66 @@ export default async function Home() {
           </section>
         )}
 
-        {/* Najnovšie správy - 12 articles grid + sidebar */}
-        <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 24 }}>
-          <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', paddingBottom: 8 }}>Najnovšie správy</h2>
-        </div>
-
+        {/* Main content + sticky sidebar */}
         <div className="content-layout">
-          <section className="articles-grid">
-            {grid.map((article) => (
-              <ArticleCard key={article.id} article={article} />
-            ))}
-          </section>
-          <aside>
+          <div>
+            {/* Najnovšie správy */}
+            <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 24 }}>
+              <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', paddingBottom: 8 }}>Najnovšie správy</h2>
+            </div>
+
+            <section className="articles-grid">
+              {grid.map((article) => (
+                <ArticleCard key={article.id} article={article} />
+              ))}
+            </section>
+
+            {/* Category sections */}
+            {Object.entries(byCategory).map(([slug, articles]) => {
+              const name = categoryNames[slug] || slug;
+              if (articles.length < 3) return null;
+              return (
+                <section key={slug} style={{ marginTop: 40, marginBottom: 20 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #37b3f2', marginBottom: 16, paddingBottom: 8 }}>
+                    <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>{name}</h2>
+                    <Link href={`/kategoria/${slug}`} style={{ fontSize: 13, fontWeight: 600, color: '#37b3f2', textDecoration: 'none' }}>Zobraziť všetky</Link>
+                  </div>
+                  <div className="scrollbar-hide" style={{ display: 'flex', gap: 16, overflowX: 'auto', paddingBottom: 8 }}>
+                    {articles.map((article) => (
+                      <Link key={article.id} href={`/clanok/${article.slug}`} className="group" style={{ flexShrink: 0, width: 220, textDecoration: 'none' }}>
+                        <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 8, backgroundColor: 'var(--bg-tertiary)', width: 220, height: 138 }}>
+                          {article.image_url && (
+                            <img src={article.image_url} alt={article.title} loading="lazy" style={{ width: 220, height: 138, objectFit: 'cover', display: 'block' }} />
+                          )}
+                        </div>
+                        <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }} className="group-hover:text-[#37b3f2] transition-colors">{article.title}</h3>
+                      </Link>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+
+            {/* Články s videom */}
+            {videoArticles.length > 0 && (
+              <section style={{ marginTop: 40 }}>
+                <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 16, paddingBottom: 8 }}>
+                  <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>Články s videom</h2>
+                </div>
+                <div className="articles-grid">
+                  {videoArticles.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+
+          {/* Sticky sidebar */}
+          <aside style={{ position: 'sticky', top: 80, alignSelf: 'start' }}>
             <Sidebar articles={popular} latestArticles={latest} />
           </aside>
         </div>
-
-        {/* Category sections */}
-        {Object.entries(byCategory).map(([slug, articles]) => {
-          const name = categoryNames[slug] || slug;
-          if (articles.length < 3) return null;
-          return (
-            <section key={slug} style={{ marginTop: 40 }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #37b3f2', marginBottom: 16, paddingBottom: 8 }}>
-                <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>{name}</h2>
-                <Link href={`/kategoria/${slug}`} style={{ fontSize: 13, fontWeight: 600, color: '#37b3f2', textDecoration: 'none' }}>Zobraziť všetky</Link>
-              </div>
-              <div className="scrollbar-hide" style={{ display: 'flex', gap: 16, overflowX: 'auto', paddingBottom: 8 }}>
-                {articles.map((article) => (
-                  <Link key={article.id} href={`/clanok/${article.slug}`} className="group" style={{ flexShrink: 0, width: 220, textDecoration: 'none' }}>
-                    <div style={{ borderRadius: 8, overflow: 'hidden', marginBottom: 8, backgroundColor: 'var(--bg-tertiary)', width: 220, height: 138 }}>
-                      {article.image_url && (
-                        <img src={article.image_url} alt={article.title} loading="lazy" style={{ width: 220, height: 138, objectFit: 'cover', display: 'block' }} />
-                      )}
-                    </div>
-                    <h3 style={{ fontSize: 13, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.35, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' as const }} className="group-hover:text-[#37b3f2] transition-colors">{article.title}</h3>
-                  </Link>
-                ))}
-              </div>
-            </section>
-          );
-        })}
-
-        {/* Články s videom */}
-        {videoArticles.length > 0 && (
-          <section style={{ marginTop: 40 }}>
-            <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 16, paddingBottom: 8 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>Články s videom</h2>
-            </div>
-            <div className="articles-grid">
-              {videoArticles.map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-            </div>
-          </section>
-        )}
       </div>
 
       <NewsletterBanner />
