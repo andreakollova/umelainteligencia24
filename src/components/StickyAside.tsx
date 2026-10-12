@@ -9,27 +9,43 @@ export default function StickyAside({ children }: { children: React.ReactNode })
   useEffect(() => {
     function calc() {
       if (!ref.current) return;
-      const h = ref.current.offsetHeight;
+      const h = ref.current.scrollHeight;
       const vh = window.innerHeight;
-      // If sidebar is taller than viewport, stick when bottom reaches viewport bottom
       if (h > vh - 100) {
-        setStickyTop(vh - h - 20);
+        setStickyTop(-(h - vh + 40));
       } else {
         setStickyTop(80);
       }
     }
-    calc();
+
+    // Recalculate on resize
     window.addEventListener('resize', calc);
-    return () => window.removeEventListener('resize', calc);
+
+    // Recalculate when sidebar content changes size (images load etc.)
+    const observer = new ResizeObserver(calc);
+    if (ref.current) observer.observe(ref.current);
+
+    // Also recalculate after images load
+    const timer1 = setTimeout(calc, 500);
+    const timer2 = setTimeout(calc, 1500);
+    const timer3 = setTimeout(calc, 3000);
+
+    return () => {
+      window.removeEventListener('resize', calc);
+      observer.disconnect();
+      clearTimeout(timer1);
+      clearTimeout(timer2);
+      clearTimeout(timer3);
+    };
   }, []);
 
   return (
-    <aside
+    <div
       ref={ref}
       className="sidebar-sticky"
       style={{ position: 'sticky', top: stickyTop }}
     >
       {children}
-    </aside>
+    </div>
   );
 }
