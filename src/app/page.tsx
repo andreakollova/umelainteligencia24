@@ -37,7 +37,7 @@ async function getArticles() {
   for (const a of remaining) {
     const catSlug = (a as any).categories?.slug || 'ostatne';
     if (!byCategory[catSlug]) byCategory[catSlug] = [];
-    if (byCategory[catSlug].length < 4) byCategory[catSlug].push(a);
+    if (byCategory[catSlug].length < 6) byCategory[catSlug].push(a);
   }
 
   return { hero, heroSide, grid, popular, latest, byCategory, videoArticles };
@@ -99,7 +99,7 @@ export default async function Home() {
         {/* Category sections */}
         {Object.entries(byCategory).map(([slug, articles]) => {
           const name = categoryNames[slug] || slug;
-          if (articles.length === 0) return null;
+          if (articles.length < 3) return null;
           return (
             <section key={slug} style={{ marginTop: 40 }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #37b3f2', marginBottom: 16, paddingBottom: 8 }}>
