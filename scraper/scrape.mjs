@@ -1,6 +1,7 @@
 import { load } from 'cheerio';
 import { createClient } from '@supabase/supabase-js';
 import OpenAI from 'openai';
+import sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -404,10 +405,9 @@ async function main() {
     try {
       const imgRes = await fetch(originalImageUrl, { redirect: 'follow' });
       if (imgRes.ok) {
-        const ct = imgRes.headers.get('content-type') || 'image/jpeg';
-        const ext = ct.includes('webp') ? 'webp' : ct.includes('png') ? 'png' : 'jpg';
-        const buf = Buffer.from(await imgRes.arrayBuffer());
-        const storagePath = slug.substring(0, 80) + '.' + ext;
+        const rawBuf = Buffer.from(await imgRes.arrayBuffer());
+        const buf = await sharp(rawBuf).resize(1200, 800, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer();
+        const storagePath = slug.substring(0, 80) + '.jpg';
         const { error: upErr } = await supabase.storage.from('article-images').upload(storagePath, buf, { contentType: ct, upsert: true });
         if (!upErr) {
           imageUrl = `${SUPABASE_URL}/storage/v1/object/public/article-images/${storagePath}`;
