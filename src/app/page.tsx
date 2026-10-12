@@ -135,8 +135,8 @@ export default async function Home() {
             )}
           </div>
 
-          {/* Sticky sidebar */}
-          <aside style={{ position: 'sticky', top: 80, alignSelf: 'start' }}>
+          {/* Sidebar - sticky with internal scroll */}
+          <aside className="sidebar-sticky">
             <Sidebar articles={popular} latestArticles={latest} />
           </aside>
         </div>
