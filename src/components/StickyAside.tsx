@@ -4,38 +4,32 @@ import { useRef, useEffect, useState } from 'react';
 
 export default function StickyAside({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [stickyTop, setStickyTop] = useState(80);
+  const [top, setTop] = useState<number | undefined>(undefined);
 
   useEffect(() => {
     function calc() {
       if (!ref.current) return;
-      const h = ref.current.scrollHeight;
-      const vh = window.innerHeight;
-      if (h > vh - 100) {
-        setStickyTop(-(h - vh + 40));
+      const sidebarH = ref.current.offsetHeight;
+      const viewportH = window.innerHeight;
+      // Sidebar is taller than viewport: stick when its bottom hits viewport bottom
+      // top = -(sidebarHeight - viewportHeight + padding)
+      if (sidebarH > viewportH - 80) {
+        setTop(-(sidebarH - viewportH + 20));
       } else {
-        setStickyTop(80);
+        setTop(80);
       }
     }
 
-    // Recalculate on resize
+    // ResizeObserver for when images load and change height
+    const ro = new ResizeObserver(calc);
+    if (ref.current) ro.observe(ref.current);
+
     window.addEventListener('resize', calc);
-
-    // Recalculate when sidebar content changes size (images load etc.)
-    const observer = new ResizeObserver(calc);
-    if (ref.current) observer.observe(ref.current);
-
-    // Also recalculate after images load
-    const timer1 = setTimeout(calc, 500);
-    const timer2 = setTimeout(calc, 1500);
-    const timer3 = setTimeout(calc, 3000);
+    calc();
 
     return () => {
+      ro.disconnect();
       window.removeEventListener('resize', calc);
-      observer.disconnect();
-      clearTimeout(timer1);
-      clearTimeout(timer2);
-      clearTimeout(timer3);
     };
   }, []);
 
@@ -43,7 +37,7 @@ export default function StickyAside({ children }: { children: React.ReactNode })
     <div
       ref={ref}
       className="sidebar-sticky"
-      style={{ position: 'sticky', top: stickyTop }}
+      style={top !== undefined ? { position: 'sticky', top } : undefined}
     >
       {children}
     </div>
