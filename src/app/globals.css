@@ -128,10 +128,14 @@ a {
   margin-bottom: 48px;
   width: 100%;
 }
+.content-layout > * {
+  min-width: 0;
+}
 @media (min-width: 1024px) {
   .content-layout {
     grid-template-columns: 1fr 340px;
     align-items: start;
+    overflow: visible;
   }
 }
 
