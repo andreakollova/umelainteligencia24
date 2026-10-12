@@ -29,24 +29,19 @@ const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 const supabase = SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-// State file for glossary index
-const STATE_FILE = resolve(__dirname, '../.glossary-state.json');
-
-function loadState() {
-  try { return JSON.parse(readFileSync(STATE_FILE, 'utf8')); }
-  catch { return { index: 0 }; }
-}
-
-function saveState(state) {
-  writeFileSync(STATE_FILE, JSON.stringify(state, null, 2));
+// Use day-of-year to determine which term to post — no state file needed
+function getTodayIndex() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), 0, 0);
+  const dayOfYear = Math.floor((now - start) / 86400000);
+  return dayOfYear % glossaryTerms.length;
 }
 
 async function main() {
   console.log('=== inteligencia24 Daily Glossary ===');
   console.log(`Time: ${new Date().toISOString()}`);
 
-  const state = loadState();
-  const termIdx = state.index % glossaryTerms.length;
+  const termIdx = getTodayIndex();
   const term = glossaryTerms[termIdx];
 
   console.log(`Term ${termIdx + 1}/${glossaryTerms.length}: ${term.en} (${term.sk})`);
@@ -136,9 +131,6 @@ async function main() {
   }
 
   // Update state
-  state.index = termIdx + 1;
-  saveState(state);
-
   console.log('Done!');
 }
 
