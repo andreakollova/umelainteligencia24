@@ -5,6 +5,7 @@ import Sidebar from '@/components/Sidebar';
 import ProjectsSection from '@/components/ProjectsSection';
 import NewsletterBanner from '@/components/NewsletterBanner';
 import Link from 'next/link';
+import StickyAside from '@/components/StickyAside';
 
 export const revalidate = 600;
 
@@ -135,10 +136,9 @@ export default async function Home() {
             )}
           </div>
 
-          {/* Sidebar - sticky with internal scroll */}
-          <aside className="sidebar-sticky">
+          <StickyAside>
             <Sidebar articles={popular} latestArticles={latest} />
-          </aside>
+          </StickyAside>
         </div>
       </div>
 
