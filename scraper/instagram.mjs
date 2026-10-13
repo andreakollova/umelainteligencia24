@@ -588,6 +588,65 @@ export async function generateStory(articleImageUrl, title) {
 }
 
 // ============================================================
+// COMPANY INFO SLIDE (before CTA)
+// ============================================================
+
+const companyData = {
+  'EPFL News': { name: 'EPFL', country: 'Švajčiarsko', countryCode: 'ch', info: 'EPFL je jedna z najlepších technických univerzít v Európe. Sídli v Lausanne vo Švajčiarsku a patrí medzi svetových lídrov vo výskume umelej inteligencie a strojového učenia. Na EPFL pôsobí viac ako 380 laboratórií.' },
+  'Microsoft': { name: 'Microsoft', country: 'USA', countryCode: 'us', info: 'Microsoft je americká technologická spoločnosť so sídlom v Redmonde, Washington. Je jedným z najväčších investorov do umelej inteligencie na svete. Microsoft investoval viac ako 13 miliárd dolárov do OpenAI a vyvinul Azure AI a GitHub Copilot.' },
+};
+
+async function generateCompanyInfoSlide(sourceName, theme) {
+  const company = companyData[sourceName];
+  if (!company) return null;
+
+  const templatePath = resolve(__dirname, `templates/${theme}/slide2.png`);
+
+  let flagBuf = null;
+  try {
+    const flagRes = await fetch(`https://flagcdn.com/w160/${company.countryCode}.png`);
+    if (flagRes.ok) flagBuf = Buffer.from(await flagRes.arrayBuffer());
+  } catch {}
+
+  const headingSvg = `<text x="${W / 2}" y="300" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="500" fill="#ffffff" text-anchor="middle" opacity="0.5">O spoločnosti</text>`;
+  const nameSvg = `<text x="${W / 2}" y="400" font-family="Inter, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#ffffff" text-anchor="middle">${escapeXml(company.name)}</text>`;
+  const countrySvg = `<text x="${W / 2}" y="460" font-family="Inter, -apple-system, sans-serif" font-size="28" font-weight="500" fill="#ffffff" text-anchor="middle" opacity="0.5">${escapeXml(company.country)}</text>`;
+
+  const sentences = company.info.split(/(?<=\.)\s+/);
+  const group1 = sentences.slice(0, 2).join(' ');
+  const group2 = sentences.slice(2).join(' ');
+
+  const fontSize = 36;
+  const lineHeight = 48;
+  const sentenceGap = 28;
+  let currentY = 530;
+
+  const g1Lines = wrapText(group1, 44);
+  const g1Svg = g1Lines.map((line) => {
+    currentY += lineHeight;
+    return `<text x="${W / 2}" y="${currentY}" font-family="Inter, -apple-system, sans-serif" font-size="${fontSize}" font-weight="400" fill="#ffffff" text-anchor="middle">${escapeXml(line)}</text>`;
+  }).join('\n');
+
+  currentY += sentenceGap;
+
+  const g2Lines = group2 ? wrapText(group2, 44) : [];
+  const g2Svg = g2Lines.map((line) => {
+    currentY += lineHeight;
+    return `<text x="${W / 2}" y="${currentY}" font-family="Inter, -apple-system, sans-serif" font-size="${fontSize}" font-weight="400" fill="#ffffff" text-anchor="middle">${escapeXml(line)}</text>`;
+  }).join('\n');
+
+  const svgOverlay = Buffer.from(`<svg width="${W}" height="${H}">${headingSvg}${nameSvg}${countrySvg}${g1Svg}${g2Svg}</svg>`);
+  const composites = [{ input: svgOverlay, top: 0, left: 0 }];
+
+  if (flagBuf) {
+    const flag = await sharp(flagBuf).resize(100, 66, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).toBuffer();
+    composites.push({ input: flag, top: 185, left: Math.round((W - 100) / 2) });
+  }
+
+  return sharp(templatePath).composite(composites).png().toBuffer();
+}
+
+// ============================================================
 // PUBLIC EXPORTS
 // ============================================================
 
@@ -607,6 +666,8 @@ export async function generateCarousel(article, postIndex) {
     const excerptPages = await generateArticleExcerptPages(article.excerpt || article.title, theme, categoryLabel);
     const lastSlide = generateArticleSlide3(theme);
 
+    const companySlide = article.source_name ? await generateCompanyInfoSlide(article.source_name, theme) : null;
+
     const slides = [];
     writeFileSync(`${prefix}-1.png`, slide1);
     slides.push(`${prefix}-1.png`);
@@ -616,6 +677,12 @@ export async function generateCarousel(article, postIndex) {
       writeFileSync(path, page);
       slides.push(path);
     });
+
+    if (companySlide) {
+      const companyPath = `${prefix}-${slides.length + 1}.png`;
+      writeFileSync(companyPath, companySlide);
+      slides.push(companyPath);
+    }
 
     const lastPath = `${prefix}-${slides.length + 1}.png`;
     writeFileSync(lastPath, lastSlide);
