@@ -4,41 +4,57 @@ import { useRef, useEffect, useState } from 'react';
 
 export default function StickyAside({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [top, setTop] = useState<number | undefined>(undefined);
+  const [style, setStyle] = useState<React.CSSProperties>({});
 
   useEffect(() => {
-    function calc() {
+    function update() {
       if (!ref.current) return;
-      const sidebarH = ref.current.offsetHeight;
+      const sidebar = ref.current;
+      const parent = sidebar.parentElement?.parentElement; // content-layout
+      if (!parent) return;
+
+      const sidebarH = sidebar.offsetHeight;
       const viewportH = window.innerHeight;
-      // Sidebar is taller than viewport: stick when its bottom hits viewport bottom
-      // top = -(sidebarHeight - viewportHeight + padding)
-      if (sidebarH > viewportH - 80) {
-        setTop(-(sidebarH - viewportH + 20));
+      const parentRect = parent.getBoundingClientRect();
+      const parentBottom = parentRect.bottom;
+
+      // If sidebar fits in viewport, simple sticky top
+      if (sidebarH <= viewportH - 80) {
+        setStyle({ position: 'sticky', top: 80, zIndex: 10 });
+        return;
+      }
+
+      const scrollY = window.scrollY;
+      const sidebarTop = parent.offsetTop;
+      const stickyPoint = sidebarTop + sidebarH - viewportH + 20;
+
+      if (scrollY < stickyPoint) {
+        // Haven't scrolled past sidebar bottom yet — no sticky
+        setStyle({ zIndex: 10 });
       } else {
-        setTop(80);
+        // Sidebar bottom reached viewport bottom — stick it
+        setStyle({ position: 'sticky', top: -(sidebarH - viewportH + 20), zIndex: 10 });
       }
     }
 
-    // ResizeObserver for when images load and change height
-    const ro = new ResizeObserver(calc);
-    if (ref.current) ro.observe(ref.current);
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
 
-    window.addEventListener('resize', calc);
-    calc();
+    // Initial + delayed for images
+    update();
+    const t1 = setTimeout(update, 500);
+    const t2 = setTimeout(update, 1500);
 
     return () => {
-      ro.disconnect();
-      window.removeEventListener('resize', calc);
+      window.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
   }, []);
 
   return (
-    <div
-      ref={ref}
-      className="sidebar-sticky"
-      style={top !== undefined ? { position: 'sticky', top, zIndex: 10 } : undefined}
-    >
+    <div ref={ref} className="sidebar-sticky" style={style}>
       {children}
     </div>
   );
