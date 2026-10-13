@@ -1,7 +1,7 @@
 // EPFL News robotics scraper
 // Respects CC BY-SA 4.0 license - proper attribution required
 import { createClient } from '@supabase/supabase-js';
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 import sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
@@ -18,7 +18,7 @@ try {
 
 const SUPABASE_URL = 'https://fxnpgqsztiwqbhvyokgd.supabase.co';
 const supabase = createClient(SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 const ROBOT_KEYWORDS = ['artificial intelligence', 'machine learning', 'deep learning', 'neural network', 'language model', 'AI', 'GPT', 'transformer', 'computer vision', 'natural language', 'reinforcement learning', 'generative', 'chatbot', 'foundation model', 'large language'];
@@ -106,14 +106,13 @@ ${summary}
 OBSAH ČLÁNKU:
 ${content}`;
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
-    messages: [{ role: 'user', content: prompt }],
-    temperature: 0.3,
+  const response = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
     max_tokens: 8000,
+    messages: [{ role: 'user', content: prompt }],
   });
 
-  const text = response.choices[0].message.content.trim();
+  const text = response.content[0].text.trim();
   const cleaned = text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
   const parsed = JSON.parse(cleaned);
   parsed.title = parsed.title.replace(/[—–]/g, '-');

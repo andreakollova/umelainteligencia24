@@ -10,6 +10,7 @@
     "scrape": "node scraper/scrape.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
     "@supabase/supabase-js": "^2.117.2",
     "@vercel/analytics": "^2.0.1",
     "cheerio": "^1.2.0",

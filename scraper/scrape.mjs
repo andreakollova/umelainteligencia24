@@ -1,6 +1,6 @@
 import { load } from 'cheerio';
 import { createClient } from '@supabase/supabase-js';
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 import sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
@@ -17,17 +17,17 @@ try {
   });
 } catch {}
 
-const OPENAI_KEY = process.env.OPENAI_API_KEY;
 const SUPABASE_URL = 'https://fxnpgqsztiwqbhvyokgd.supabase.co';
 const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const ANTHROPIC_KEY = process.env.ANTHROPIC_API_KEY;
 
-if (!OPENAI_KEY || !SUPABASE_KEY) {
-  console.error('Missing OPENAI_API_KEY or SUPABASE_SERVICE_ROLE_KEY');
+if (!ANTHROPIC_KEY || !SUPABASE_KEY) {
+  console.error('Missing ANTHROPIC_API_KEY or SUPABASE_SERVICE_ROLE_KEY');
   process.exit(1);
 }
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-const openai = new OpenAI({ apiKey: OPENAI_KEY });
+const anthropic = new Anthropic({ apiKey: ANTHROPIC_KEY });
 
 // How many articles to scrape per source (set to 3 for testing)
 const ARTICLES_PER_SOURCE = 10;
@@ -195,14 +195,13 @@ ${excerpt}
 OBSAH CLANKU:
 ${content}`;
 
-  const response = await openai.chat.completions.create({
-    model: 'gpt-4o',
-    messages: [{ role: 'user', content: prompt }],
-    temperature: 0.3,
+  const response = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
     max_tokens: 8000,
+    messages: [{ role: 'user', content: prompt }],
   });
 
-  const text = response.choices[0].message.content.trim();
+  const text = response.content[0].text.trim();
   // Try to parse JSON - handle markdown code blocks
   const cleaned = text.replace(/```json\s*/g, '').replace(/```\s*/g, '');
   try {

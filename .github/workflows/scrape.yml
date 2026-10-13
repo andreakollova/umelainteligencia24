@@ -1,9 +1,9 @@
 name: Scrape Articles
 
 on:
-  # schedule:
-  #   - cron: '0 5 * * *'
-  #   - cron: '0 16 * * *'
+  schedule:
+    - cron: '0 5 * * *'
+    - cron: '0 16 * * *'
   workflow_dispatch:
 
 jobs:
@@ -22,7 +22,7 @@ jobs:
 
       - name: Run scraper
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           SITE_URL: ${{ secrets.SITE_URL }}

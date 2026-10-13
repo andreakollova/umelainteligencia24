@@ -1,6 +1,6 @@
 // Microsoft Source AI news scraper
 import { createClient } from '@supabase/supabase-js';
-import OpenAI from 'openai';
+import Anthropic from '@anthropic-ai/sdk';
 import sharp from 'sharp';
 import { readFileSync } from 'fs';
 import { resolve, dirname } from 'path';
@@ -18,7 +18,7 @@ try {
 
 const SUPABASE_URL = 'https://fxnpgqsztiwqbhvyokgd.supabase.co';
 const supabase = createClient(SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 const LIMIT = parseInt(process.argv[2] || '10');
 const USER_AGENT = 'inteligencia24-bot/1.0 (+https://inteligencia24.sk; studio@drixton.com)';
@@ -33,9 +33,7 @@ async function articleExists(url) {
 }
 
 async function writeArticle(title, content, sourceUrl) {
-  const res = await openai.chat.completions.create({
-    model: 'gpt-4o',
-    messages: [{ role: 'user', content: `Na základe faktov napíš VLASTNÝ slovenský spravodajský článok. NIKDY nekopíruj ani neprekladaj pôvodný text - napíš ho úplne vlastnými slovami na základe faktov.
+  const prompt = `Na základe faktov napíš VLASTNÝ slovenský spravodajský článok. NIKDY nekopíruj ani neprekladaj pôvodný text - napíš ho úplne vlastnými slovami na základe faktov.
 
 KRITICKÉ PRAVIDLÁ:
 - NADPIS: 10-14 slov, zaujímavý, s faktom. Dvojbodku použi ak je názov firmy/produktu a za ním popis.
@@ -57,10 +55,14 @@ Vráť VÝHRADNE JSON: {"title":"...","excerpt":"...","content":"..."}
 
 Fakty:
 ${title}
-${content}` }],
-    temperature: 0.4, max_tokens: 4000,
+${content}`;
+
+  const res = await anthropic.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 4000,
+    messages: [{ role: 'user', content: prompt }],
   });
-  const text = res.choices[0].message.content.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '');
+  const text = res.content[0].text.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '');
   const parsed = JSON.parse(text);
   parsed.title = parsed.title.replace(/[—–]/g, '-');
   return parsed;
