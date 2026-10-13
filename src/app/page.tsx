@@ -155,7 +155,10 @@ export default async function Home() {
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px' }}>
           <section style={{ marginTop: 32, marginBottom: 20 }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #cb1e26', marginBottom: 16, paddingBottom: 8 }}>
-              <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)' }}>Najnovšie na robotika24.sk</h2>
+              <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: 10 }}>
+                <img src="/robotika24-logo.png" alt="robotika24" style={{ height: 24, width: 'auto' }} />
+                Najnovšie na robotika24.sk
+              </h2>
               <a href="https://www.robotika24.sk" target="_blank" rel="noopener noreferrer" style={{ fontSize: 13, fontWeight: 600, color: '#cb1e26', textDecoration: 'none' }}>Navštíviť</a>
             </div>
             <div className="scrollbar-hide" style={{ display: 'flex', gap: 16, overflowX: 'auto', paddingBottom: 8 }}>
