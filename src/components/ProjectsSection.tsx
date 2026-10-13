@@ -42,7 +42,7 @@ export default async function ProjectsSection() {
             href={project.external_url}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'block', textDecoration: 'none', borderRadius: 10, overflow: 'hidden', backgroundColor: 'var(--bg-secondary)', transition: 'opacity 0.2s' }}
+            style={{ display: 'block', textDecoration: 'none', borderRadius: 10, overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)', transition: 'opacity 0.2s' }}
             className="group hover:opacity-90"
           >
             {project.image_url ? (
@@ -58,7 +58,7 @@ export default async function ProjectsSection() {
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 6 }}>
                 <span style={{ fontSize: 11, fontWeight: 600, color: '#37b3f2', textTransform: 'uppercase', letterSpacing: '0.04em' }}>{project.category}</span>
                 {project.is_new && (
-                  <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', backgroundColor: '#37b3f2', padding: '2px 6px', borderRadius: 3, textTransform: 'uppercase' }}>New</span>
+                  <span style={{ fontSize: 9, fontWeight: 700, color: '#fff', backgroundColor: '#37b3f2', padding: '2px 6px', borderRadius: 3, textTransform: 'uppercase' }}>Novinka</span>
                 )}
               </div>
               <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--text-primary)', lineHeight: 1.3, marginBottom: 6 }} className="group-hover:text-[#37b3f2] transition-colors">
