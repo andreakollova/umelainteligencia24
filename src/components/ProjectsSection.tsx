@@ -27,7 +27,7 @@ export default async function ProjectsSection() {
   if (!projects.length) return null;
 
   return (
-    <section style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 20px 32px' }}>
+    <section style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 20px 12px' }}>
       <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', paddingBottom: 8 }}>Open Source Projekty</h2>
         <a href="/projekty" style={{ fontSize: 13, fontWeight: 600, color: '#37b3f2', textDecoration: 'none', paddingBottom: 8 }}>
