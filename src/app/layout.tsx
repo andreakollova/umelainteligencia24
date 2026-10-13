@@ -14,16 +14,16 @@ const inter = Inter({ subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'inteligencia24.sk - Správy zo sveta umelej inteligencie a AI na Slovensku',
+    default: 'inteligencia24.sk - Správy zo sveta umelej inteligencie a AI technológií',
     template: '%s | inteligencia24.sk',
   },
-  description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch, strojovom učení a AI technológiách v slovenčine. Denne prinášame novinky, analýzy a rozhovory zo sveta AI pre slovenských čitateľov.',
+  description: 'Denne prinášame najnovšie správy o umelej inteligencii, jazykových modeloch, strojovom učení a AI nástrojoch. Novinky od OpenAI, Google DeepMind, Anthropic, Microsoft a ďalších lídrov v oblasti AI.',
   keywords: [
     'umelá inteligencia', 'AI', 'strojové učenie', 'jazykové modely',
     'ChatGPT', 'Claude', 'Gemini', 'GPT', 'LLM', 'deep learning',
-    'neurónové siete', 'AI Slovensko', 'AI novinky', 'generatívna AI',
+    'neurónové siete', 'AI novinky', 'generatívna AI',
     'počítačové videnie', 'NLP', 'AI nástroje', 'AI výskum',
-    'OpenAI', 'Google DeepMind', 'Anthropic', 'Meta AI',
+    'OpenAI', 'Google DeepMind', 'Anthropic', 'Meta AI', 'Microsoft AI',
   ],
   authors: [{ name: 'inteligencia24' }],
   creator: 'inteligencia24',
@@ -40,15 +40,15 @@ export const metadata: Metadata = {
     locale: 'sk_SK',
     url: 'https://inteligencia24.sk',
     siteName: 'inteligencia24',
-    title: 'inteligencia24.sk - Správy zo sveta umelej inteligencie',
-    description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch a AI technológiách v slovenčine.',
+    title: 'inteligencia24.sk - Správy zo sveta umelej inteligencie a AI technológií',
+    description: 'Denne prinášame najnovšie správy o umelej inteligencii, jazykových modeloch, strojovom učení a AI nástrojoch.',
     images: [{ url: '/logo.png', width: 1200, height: 630 }],
     countryName: 'Slovakia',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'inteligencia24.sk - Správy zo sveta umelej inteligencie',
-    description: 'Najnovšie správy o umelej inteligencii, jazykových modeloch a AI technológiách v slovenčine.',
+    title: 'inteligencia24.sk - Správy zo sveta umelej inteligencie a AI technológií',
+    description: 'Denne prinášame najnovšie správy o umelej inteligencii, jazykových modeloch, strojovom učení a AI nástrojoch.',
   },
   robots: {
     index: true,
