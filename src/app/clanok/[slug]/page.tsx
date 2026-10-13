@@ -7,6 +7,7 @@ import ShareLinks from '@/components/ShareLinks';
 import AboutAuthor from '@/components/AboutAuthor';
 import type { Metadata } from 'next';
 import AdBlock from '@/components/AdBlock';
+import CompanyInfo from '@/components/CompanyInfo';
 
 export const revalidate = 300;
 
@@ -285,6 +286,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <div className="mt-8">
             <ShareLinks url={articleUrl} title={a.title} />
           </div>
+
+          <CompanyInfo sourceName={a.source_name} />
 
           <AboutAuthor authorName={a.author} />
         </article>

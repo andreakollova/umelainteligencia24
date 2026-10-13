@@ -120,7 +120,7 @@ async function main() {
           const rawBuf = Buffer.from(await imgRes.arrayBuffer());
           const buf = await sharp(rawBuf).resize(800, 500, { fit: "inside", withoutEnlargement: true }).jpeg({ quality: 70 }).toBuffer();
           const storagePath = slug.substring(0, 80) + '.jpg';
-          const { error: upErr } = await supabase.storage.from('article-images').upload(storagePath, buf, { contentType: ct, upsert: true });
+          const { error: upErr } = await supabase.storage.from('article-images').upload(storagePath, buf, { contentType: 'image/jpeg', upsert: true });
           if (!upErr) {
             imageUrl = `${SUPABASE_URL}/storage/v1/object/public/article-images/${storagePath}`;
             console.log('  Image uploaded to Storage');
