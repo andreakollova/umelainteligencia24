@@ -36,7 +36,7 @@ async function writeArticle(title, content, sourceUrl) {
   const prompt = `Na základe faktov napíš VLASTNÝ slovenský spravodajský článok. NIKDY nekopíruj ani neprekladaj pôvodný text - napíš ho úplne vlastnými slovami na základe faktov.
 
 KRITICKÉ PRAVIDLÁ:
-- NADPIS: 10-14 slov, zaujímavý, s faktom. NIKDY nepoužívaj dvojbodku v nadpise. Nadpis musí byť plynulá veta.
+- NADPIS: 10-14 slov, zaujímavý, s faktom. NIKDY nepoužívaj dvojbodku v nadpise ani v podnadpisoch (## ). Vždy píš plynulé vety.
 - EXCERPT: 6-8 viet s **bold** na dôležitých slovách. Každá veta musí končiť bodkou.
 - CONTENT: Vlastný článok s ## nadpismi. Kľúčové pojmy boldni. Píš vlastnými slovami, nie preklad.
 - NIKDY NEPREKLADAJ mená ľudí a názvy firiem/technológií.
