@@ -24,8 +24,8 @@ export default function NewsletterBanner() {
   }
 
   return (
-    <section style={{ backgroundColor: '#051722', padding: '40px 20px', marginBottom: 32, marginTop: 32 }}>
-      <div style={{ maxWidth: 1100, margin: '0 auto', display: 'flex', alignItems: 'center', gap: 40, flexWrap: 'wrap' }}>
+    <section style={{ backgroundColor: '#051722', padding: '52px 20px', marginBottom: 32, marginTop: 32 }}>
+      <div style={{ maxWidth: 1240, margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 40, flexWrap: 'wrap' }}>
         {/* Left - text */}
         <div style={{ flex: 1, minWidth: 280 }}>
           <h2 style={{ fontSize: 22, fontWeight: 700, color: '#ffffff', marginBottom: 6, margin: 0 }}>
