@@ -43,14 +43,6 @@ KRITICKÉ PRAVIDLÁ:
 - DIAKRITIKA JE POVINNÁ v KAŽDOM slove.
 - Nikdy nepoužívaj dlhé pomlčky. Vždy iba krátku pomlčku -.
 
-Na konci obsahu VŽDY pridaj:
-
-## Zdroj
-Zdroj: Microsoft News Center
-Originál: ${sourceUrl}
-Spracovanie: Redakcia inteligencia24
-Fotografia: Used with permission from Microsoft.
-
 Vráť VÝHRADNE JSON: {"title":"...","excerpt":"...","content":"..."}
 
 Fakty:
