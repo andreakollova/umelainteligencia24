@@ -99,7 +99,7 @@ export default async function Home() {
             {/* Category sections */}
             {Object.entries(byCategory).map(([slug, articles]) => {
               const name = categoryNames[slug] || slug;
-              if (articles.length < 3) return null;
+              if (articles.length < 1) return null;
               return (
                 <section key={slug} style={{ marginTop: 40, marginBottom: 20 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '2px solid #37b3f2', marginBottom: 16, paddingBottom: 8 }}>
