@@ -15,8 +15,8 @@ export default function AIModelsWidget() {
       <div>
         {models.map((m) => (
           <div key={m.category} style={{ display: 'flex', alignItems: 'center', padding: '10px 14px', borderBottom: '1px solid var(--border-light)', gap: 12 }}>
-            <div style={{ width: 32, height: 32, borderRadius: 8, flexShrink: 0, backgroundColor: '#37b3f2', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', fontSize: 14, fontWeight: 700 }}>
-              {m.name.charAt(0)}
+            <div style={{ width: 32, height: 32, borderRadius: 8, overflow: 'hidden', flexShrink: 0, backgroundColor: 'var(--bg-secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src={`https://www.google.com/s2/favicons?domain=${m.domain}&sz=32`} alt={m.name} width={32} height={32} loading="lazy" style={{ objectFit: 'contain' }} />
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
               <div style={{ fontSize: 14, fontWeight: 600, color: 'var(--text-primary)' }}>{m.name}</div>
