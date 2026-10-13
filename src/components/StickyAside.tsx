@@ -4,54 +4,71 @@ import { useRef, useEffect, useState } from 'react';
 
 export default function StickyAside({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [style, setStyle] = useState<React.CSSProperties>({});
+  const [mode, setMode] = useState<'static' | 'fixed' | 'stuck'>('static');
+  const [fixedTop, setFixedTop] = useState(0);
+  const heights = useRef({ sidebar: 0, parent: 0, parentTop: 0 });
 
   useEffect(() => {
-    function update() {
+    function measure() {
       if (!ref.current) return;
-      const sidebar = ref.current;
-      const parent = sidebar.parentElement?.parentElement; // content-layout
+      const parent = ref.current.parentElement?.parentElement;
       if (!parent) return;
+      heights.current = {
+        sidebar: ref.current.offsetHeight,
+        parent: parent.offsetHeight,
+        parentTop: parent.offsetTop,
+      };
+    }
 
-      const sidebarH = sidebar.offsetHeight;
-      const viewportH = window.innerHeight;
-      const parentRect = parent.getBoundingClientRect();
-      const parentBottom = parentRect.bottom;
+    function onScroll() {
+      if (!ref.current) return;
+      const { sidebar, parent, parentTop } = heights.current;
+      if (!sidebar || !parent) return;
 
-      // If sidebar fits in viewport, simple sticky top
-      if (sidebarH <= viewportH - 80) {
-        setStyle({ position: 'sticky', top: 80, zIndex: 10 });
+      const vh = window.innerHeight;
+      const scrollY = window.scrollY;
+
+      // If sidebar fits in viewport, always sticky top
+      if (sidebar <= vh - 80) {
+        setMode('static');
         return;
       }
 
-      const scrollY = window.scrollY;
-      const sidebarTop = parent.offsetTop;
-      const stickyPoint = sidebarTop + sidebarH - viewportH + 20;
+      // Point where sidebar bottom aligns with viewport bottom
+      const stickyStart = parentTop + sidebar - vh + 20;
+      // Point where parent ends (sidebar should stop)
+      const stickyEnd = parentTop + parent - sidebar - 20;
 
-      if (scrollY < stickyPoint) {
-        // Haven't scrolled past sidebar bottom yet — no sticky
-        setStyle({ zIndex: 10 });
+      if (scrollY < stickyStart) {
+        // Scrolling through sidebar content — let it scroll naturally
+        setMode('static');
+      } else if (scrollY <= stickyEnd) {
+        // Sidebar bottom hit viewport bottom — fix it
+        setMode('fixed');
+        setFixedTop(vh - sidebar - 20);
       } else {
-        // Sidebar bottom reached viewport bottom — stick it
-        setStyle({ position: 'sticky', top: -(sidebarH - viewportH + 20), zIndex: 10 });
+        // Past parent — stick at bottom of parent
+        setMode('static');
       }
     }
 
-    window.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-
-    // Initial + delayed for images
-    update();
-    const t1 = setTimeout(update, 500);
-    const t2 = setTimeout(update, 1500);
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => { measure(); onScroll(); });
+    const t1 = setTimeout(() => { measure(); onScroll(); }, 500);
+    const t2 = setTimeout(() => { measure(); onScroll(); }, 2000);
 
     return () => {
-      window.removeEventListener('scroll', update);
-      window.removeEventListener('resize', update);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', () => { measure(); onScroll(); });
       clearTimeout(t1);
       clearTimeout(t2);
     };
   }, []);
+
+  const style: React.CSSProperties = mode === 'fixed'
+    ? { position: 'fixed', top: fixedTop, width: 340, zIndex: 10 }
+    : { zIndex: 10 };
 
   return (
     <div ref={ref} className="sidebar-sticky" style={style}>
