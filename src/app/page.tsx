@@ -36,10 +36,9 @@ async function getArticles() {
   const popular = allPopular.filter(a => !heroIds.has(a.id)).slice(0, 5);
   const latest = articles.filter(a => !heroIds.has(a.id)).slice(0, 10);
 
-  // Category sections — articles NOT already shown in hero or grid
-  const remaining = articles.filter(a => !gridIds.has(a.id));
+  // Category sections — all articles grouped by category
   const byCategory: Record<string, Article[]> = {};
-  for (const a of remaining) {
+  for (const a of articles) {
     const catSlug = (a as any).categories?.slug || 'ostatne';
     if (!byCategory[catSlug]) byCategory[catSlug] = [];
     if (byCategory[catSlug].length < 4) byCategory[catSlug].push(a);
