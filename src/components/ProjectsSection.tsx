@@ -27,8 +27,8 @@ export default async function ProjectsSection() {
   if (!projects.length) return null;
 
   return (
-    <section style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px 48px' }}>
-      <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 24, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <section style={{ maxWidth: 1280, margin: '0 auto', padding: '16px 20px 32px' }}>
+      <div style={{ borderBottom: '2px solid #37b3f2', marginBottom: 20, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <h2 style={{ fontSize: 18, fontWeight: 700, color: 'var(--text-primary)', paddingBottom: 8 }}>Open Source Projekty</h2>
         <a href="/projekty" style={{ fontSize: 13, fontWeight: 600, color: '#37b3f2', textDecoration: 'none', paddingBottom: 8 }}>
           Zobraziť všetky &rarr;
@@ -42,8 +42,8 @@ export default async function ProjectsSection() {
             href={project.external_url}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ display: 'block', textDecoration: 'none', border: '1px solid var(--border)', borderRadius: 10, overflow: 'hidden', transition: 'border-color 0.2s' }}
-            className="group hover:border-[#37b3f2]"
+            style={{ display: 'block', textDecoration: 'none', borderRadius: 10, overflow: 'hidden', backgroundColor: 'var(--bg-secondary)', transition: 'opacity 0.2s' }}
+            className="group hover:opacity-90"
           >
             {project.image_url ? (
               <div style={{ aspectRatio: '16/9', overflow: 'hidden', backgroundColor: 'var(--bg-tertiary)' }}>
