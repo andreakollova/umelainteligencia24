@@ -32,10 +32,32 @@ async function articleExists(url) {
   return data && data.length > 0;
 }
 
-async function writeArticle(title, content, source) {
+async function writeArticle(title, content, sourceUrl) {
   const res = await openai.chat.completions.create({
     model: 'gpt-4o',
-    messages: [{ role: 'user', content: 'Na základe faktov napíš VLASTNÝ slovenský článok. V texte vždy jasne uveď akú firmu alebo inštitúciu sa článok týka. Nadpis 10-14 slov, zaujímavý, s faktom. Excerpt 6-8 viet s **bold**. Content s ## nadpismi. Na konci: ## Zdroj\nZdroj: ' + source + '\nSpracovanie: Redakcia inteligencia24\n\nVráť JSON: {"title":"...","excerpt":"...","content":"..."}\n\nFakty:\n' + title + '\n' + content }],
+    messages: [{ role: 'user', content: `Na základe faktov napíš VLASTNÝ slovenský spravodajský článok. NIKDY nekopíruj ani neprekladaj pôvodný text - napíš ho úplne vlastnými slovami na základe faktov.
+
+KRITICKÉ PRAVIDLÁ:
+- NADPIS: 10-14 slov, zaujímavý, s faktom. Dvojbodku použi ak je názov firmy/produktu a za ním popis.
+- EXCERPT: 6-8 viet s **bold** na dôležitých slovách. Každá veta musí končiť bodkou.
+- CONTENT: Vlastný článok s ## nadpismi. Kľúčové pojmy boldni. Píš vlastnými slovami, nie preklad.
+- NIKDY NEPREKLADAJ mená ľudí a názvy firiem/technológií.
+- DIAKRITIKA JE POVINNÁ v KAŽDOM slove.
+- Nikdy nepoužívaj dlhé pomlčky. Vždy iba krátku pomlčku -.
+
+Na konci obsahu VŽDY pridaj:
+
+## Zdroj
+Zdroj: Microsoft News Center
+Originál: ${sourceUrl}
+Spracovanie: Redakcia inteligencia24
+Fotografia: Used with permission from Microsoft.
+
+Vráť VÝHRADNE JSON: {"title":"...","excerpt":"...","content":"..."}
+
+Fakty:
+${title}
+${content}` }],
     temperature: 0.4, max_tokens: 4000,
   });
   const text = res.choices[0].message.content.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '');
