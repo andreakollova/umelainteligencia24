@@ -3,7 +3,6 @@
 import { useEffect, useRef } from 'react';
 
 export default function AdBlock({ format = 'rectangle' }: { format?: 'rectangle' | 'vertical' | 'horizontal' }) {
-  const adRef = useRef<HTMLDivElement>(null);
   const pushed = useRef(false);
 
   useEffect(() => {
@@ -14,19 +13,14 @@ export default function AdBlock({ format = 'rectangle' }: { format?: 'rectangle'
     } catch {}
   }, []);
 
-  const style: Record<string, string> = {
-    rectangle: 'display:inline-block;width:300px;height:250px',
-    vertical: 'display:inline-block;width:300px;height:600px',
-    horizontal: 'display:inline-block;width:728px;height:90px',
-  };
-
+  // Display ad for sidebar (rectangle/vertical)
   return (
-    <div style={{ textAlign: 'center' as const }} ref={adRef}>
+    <div style={{ textAlign: 'center' }}>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block', width: '100%', maxWidth: format === 'horizontal' ? 728 : 300, height: format === 'vertical' ? 600 : format === 'horizontal' ? 90 : 250 }}
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-1548129646460327"
-        data-ad-slot=""
+        data-ad-slot="7681406163"
         data-ad-format="auto"
         data-full-width-responsive="true"
       />
