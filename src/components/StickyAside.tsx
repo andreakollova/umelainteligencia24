@@ -37,7 +37,7 @@ export default function StickyAside({ children }: { children: React.ReactNode })
     <div
       ref={ref}
       className="sidebar-sticky"
-      style={top !== undefined ? { position: 'sticky', top } : undefined}
+      style={top !== undefined ? { position: 'sticky', top, zIndex: 10 } : undefined}
     >
       {children}
     </div>

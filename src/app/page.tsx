@@ -22,11 +22,16 @@ async function getArticles() {
   const allPopular = (popularRaw || []) as unknown as Article[];
   const videoArticles = (videoRaw || []) as unknown as Article[];
 
-  const hero = articles[0];
-  const heroSide = articles[1];
+  // Rotate hero/grid daily so homepage looks fresh even without new articles
+  const dayOfYear = Math.floor((Date.now() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+  const offset = (dayOfYear * 2) % Math.max(articles.length, 1);
+  const rotated = [...articles.slice(offset), ...articles.slice(0, offset)];
+
+  const hero = rotated[0] || articles[0];
+  const heroSide = rotated[1] || articles[1];
   const heroIds = new Set([hero?.id, heroSide?.id]);
 
-  const grid = articles.filter(a => !heroIds.has(a.id)).slice(0, 8);
+  const grid = rotated.filter(a => !heroIds.has(a.id)).slice(0, 8);
   const gridIds = new Set([...heroIds, ...grid.map(a => a.id)]);
 
   const popular = allPopular.filter(a => !heroIds.has(a.id)).slice(0, 5);
