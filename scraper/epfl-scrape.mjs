@@ -196,7 +196,7 @@ async function main() {
         const imgRes = await fetch(imageUrl, { redirect: 'follow' });
         if (imgRes.ok) {
           const rawBuf = Buffer.from(await imgRes.arrayBuffer());
-          const buf = await sharp(rawBuf).resize(1200, 800, { fit: 'inside', withoutEnlargement: true }).jpeg({ quality: 80 }).toBuffer();
+          const buf = await sharp(rawBuf).resize(800, 500, { fit: "inside", withoutEnlargement: true }).jpeg({ quality: 70 }).toBuffer();
           const storagePath = articleSlug.substring(0, 80) + '.jpg';
           const { error: upErr } = await supabase.storage.from('article-images').upload(storagePath, buf, { contentType: ct, upsert: true });
           if (!upErr) {
