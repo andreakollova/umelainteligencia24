@@ -188,8 +188,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           {a.image_url && (
             <div className="rounded-lg overflow-hidden mb-2">
               <img src={a.image_url} alt={a.title} className="w-full aspect-video object-cover" />
-              {a.source_name === 'Microsoft' && (
-                <p className="text-[10px] text-gray-400 mt-1">Used with permission from Microsoft.</p>
+              {a.source_name && (
+                <p style={{ fontSize: 10, color: 'var(--text-muted)', marginTop: 4 }}>
+                  Foto: {a.source_name}{a.source_name === 'Microsoft' ? '. Used with permission from Microsoft.' : ', tlačové materiály.'}
+                </p>
               )}
             </div>
           )}
