@@ -42,6 +42,7 @@ KRITICKÉ PRAVIDLÁ:
 - NIKDY NEPREKLADAJ mená ľudí a názvy firiem/technológií.
 - DIAKRITIKA JE POVINNÁ v KAŽDOM slove.
 - Nikdy nepoužívaj dlhé pomlčky. Vždy iba krátku pomlčku -.
+- NIKDY nepoužívaj slovo "kontrola" ani "kontrolovať". Použi "riadenie", "správa", "vlastníctvo" alebo "dohľad".
 
 Vráť VÝHRADNE JSON: {"title":"...","excerpt":"...","content":"..."}
 
