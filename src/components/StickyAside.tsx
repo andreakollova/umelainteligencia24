@@ -20,47 +20,49 @@ export default function StickyAside({ children }: { children: React.ReactNode })
       };
     }
 
+    let ticking = false;
     function onScroll() {
-      if (!ref.current) return;
-      const { sidebar, parent, parentTop } = heights.current;
-      if (!sidebar || !parent) return;
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        ticking = false;
+        if (!ref.current) return;
+        const { sidebar, parent, parentTop } = heights.current;
+        if (!sidebar || !parent) return;
 
-      const vh = window.innerHeight;
-      const scrollY = window.scrollY;
+        const vh = window.innerHeight;
+        const scrollY = window.scrollY;
 
-      // If sidebar fits in viewport, always sticky top
-      if (sidebar <= vh - 80) {
-        setMode('static');
-        return;
-      }
+        if (sidebar <= vh - 80) {
+          setMode('static');
+          return;
+        }
 
-      // Point where sidebar bottom aligns with viewport bottom
-      const stickyStart = parentTop + sidebar - vh + 20;
-      // Point where parent ends (sidebar should stop)
-      const stickyEnd = parentTop + parent - sidebar - 20;
+        const stickyStart = parentTop + sidebar - vh + 20;
+        const stickyEnd = parentTop + parent - sidebar - 20;
 
-      if (scrollY < stickyStart) {
-        // Scrolling through sidebar content — let it scroll naturally
-        setMode('static');
-      } else if (scrollY <= stickyEnd) {
-        // Sidebar bottom hit viewport bottom — fix it
-        setMode('fixed');
-        setFixedTop(vh - sidebar - 20);
-      } else {
-        // Past parent — stick at bottom of parent
-        setMode('static');
-      }
+        if (scrollY < stickyStart) {
+          setMode('static');
+        } else if (scrollY <= stickyEnd) {
+          setMode('fixed');
+          setFixedTop(vh - sidebar - 20);
+        } else {
+          setMode('static');
+        }
+      });
     }
+
+    function onResize() { measure(); onScroll(); }
 
     measure();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => { measure(); onScroll(); });
+    window.addEventListener('resize', onResize, { passive: true });
     const t1 = setTimeout(() => { measure(); onScroll(); }, 500);
     const t2 = setTimeout(() => { measure(); onScroll(); }, 2000);
 
     return () => {
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', () => { measure(); onScroll(); });
+      window.removeEventListener('resize', onResize);
       clearTimeout(t1);
       clearTimeout(t2);
     };

@@ -6,11 +6,10 @@ import Link from 'next/link';
 
 const categories = [
   { name: 'Novinky', slug: '/', subs: [] },
-  { name: 'Modely', slug: '/kategoria/modely', subs: [] },
+  { name: 'Humanoidy', slug: '/kategoria/humanoidy', subs: [] },
   { name: 'Výskum', slug: '/kategoria/vyskum', subs: [] },
-  { name: 'Nástroje', slug: '/kategoria/nastroje', subs: [] },
-  { name: 'Biznis', slug: '/kategoria/biznis', subs: [] },
-  { name: 'Šport', slug: '/kategoria/sport', subs: [] },
+  { name: 'Technológie', slug: '/kategoria/technologie', subs: [] },
+  { name: 'Priemysel', slug: '/kategoria/priemysel', subs: [] },
   { name: 'E-shop', slug: '/eshop', subs: [] },
   { name: 'Projekty', slug: '/projekty', subs: [] },
 ];
@@ -51,7 +50,7 @@ function LangSelector() {
           <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-primary)', fontWeight: 600, fontSize: 13, borderBottom: '1px solid var(--border-light)', backgroundColor: 'var(--bg-secondary)' }}>
             <FlagSK /> Slovenská verzia
           </div>
-          <a href="https://inteligencia.cz" style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-tertiary)', fontSize: 13, textDecoration: 'none' }} className="hover:bg-[var(--bg-tertiary)]">
+          <a href="https://robotika24.cz" style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', gap: 10, color: 'var(--text-tertiary)', fontSize: 13, textDecoration: 'none' }} className="hover:bg-[var(--bg-tertiary)]">
             <FlagCZ /> Prejsť na českú verziu
           </a>
         </div>
@@ -96,7 +95,7 @@ function ThemeToggle({ onToggle }: { onToggle?: (dark: boolean) => void }) {
   };
 
   return (
-    <button onClick={toggle} style={{ color: 'var(--text-tertiary)', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-[#37b3f2] transition-colors" aria-label="Prepnúť tmavý režim">
+    <button onClick={toggle} style={{ color: 'var(--text-tertiary)', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-[#cb1e26] transition-colors" aria-label="Prepnúť tmavý režim">
       {dark ? <SunIcon /> : <MoonIcon />}
     </button>
   );
@@ -105,9 +104,7 @@ function ThemeToggle({ onToggle }: { onToggle?: (dark: boolean) => void }) {
 function PulsingDot() {
   return (
     <span style={{ position: 'relative', display: 'inline-flex', width: 7, height: 7, flexShrink: 0 }}>
-      <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', backgroundColor: '#22c55e', opacity: 0.75, animation: 'ping 1.5s cubic-bezier(0,0,0.2,1) infinite' }} />
       <span style={{ position: 'relative', display: 'inline-flex', width: 7, height: 7, borderRadius: '50%', backgroundColor: '#22c55e' }} />
-      <style>{`@keyframes ping{75%,100%{transform:scale(2);opacity:0}}`}</style>
     </span>
   );
 }
@@ -119,7 +116,7 @@ function NavItem({ cat }: { cat: typeof categories[0] }) {
       <Link
         href={cat.slug}
         style={{ padding: '8px 14px', fontSize: 13, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.04em', textDecoration: 'none', whiteSpace: 'nowrap', display: 'block' }}
-        className="text-[var(--text-primary)] hover:text-[#37b3f2] transition-colors"
+        className="text-[var(--text-primary)] hover:text-[#cb1e26] transition-colors"
       >
         {cat.name}
       </Link>
@@ -134,7 +131,7 @@ function NavItem({ cat }: { cat: typeof categories[0] }) {
                 key={sub}
                 href={cat.slug}
                 style={{ display: 'block', padding: '8px 16px', fontSize: 13, color: 'var(--text-secondary)', textDecoration: 'none' }}
-                className="hover:bg-[var(--bg-tertiary)] hover:text-[#37b3f2] transition-colors"
+                className="hover:bg-[var(--bg-tertiary)] hover:text-[#cb1e26] transition-colors"
               >
                 {sub}
               </Link>
@@ -153,10 +150,19 @@ export default function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 160);
-    window.addEventListener('scroll', handleScroll);
+    let ticking = false;
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        setScrolled(window.scrollY > 160);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
 
   return (
     <>
@@ -164,7 +170,7 @@ export default function Header() {
       <header className="hidden md:block" style={{ backgroundColor: 'var(--bg)', borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 92 }}>
           <a href="/" style={{ flexShrink: 0, position: 'relative', zIndex: 10 }}>
-            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="umelá inteligencia24" width={280} height={72} style={{ height: 72, width: 'auto' }} priority />
+            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="robotika24" width={280} height={56} style={{ height: 68, width: 'auto' }} priority />
           </a>
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -172,12 +178,12 @@ export default function Header() {
               <NavItem key={cat.slug} cat={cat} />
             ))}
             <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginLeft: 16 }}>
-              <button onClick={() => setSearchOpen(!searchOpen)} style={{ color: '#6b7280', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-[#37b3f2] transition-colors">
+              <button onClick={() => setSearchOpen(!searchOpen)} style={{ color: '#6b7280', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-[#cb1e26] transition-colors">
                 <SearchIcon />
               </button>
               <ThemeToggle onToggle={setIsDark} />
               <LangSelector />
-              <Link href="/odber" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 22px', fontSize: 13, fontWeight: 700, color: '#fff', backgroundColor: '#37b3f2', borderRadius: 24, textDecoration: 'none' }} className="hover:bg-[#2da0e0] transition-colors">
+              <Link href="/odber" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '9px 22px', fontSize: 13, fontWeight: 700, color: '#fff', backgroundColor: '#cb1e26', borderRadius: 24, textDecoration: 'none' }} className="hover:bg-[#e0242d] transition-colors">
                 <BellIcon /> Odoberať
               </Link>
             </div>
@@ -188,7 +194,7 @@ export default function Header() {
           <div style={{ borderTop: '1px solid #f3f4f6', padding: '12px 20px', maxWidth: 1280, margin: '0 auto' }}>
             <form action="/hladanie" method="GET" style={{ display: 'flex', gap: 8 }}>
               <input name="q" type="text" placeholder="Hľadať články..." style={{ flex: 1, padding: '10px 16px', border: '1px solid var(--border)', borderRadius: 4, fontSize: 16, outline: 'none', backgroundColor: 'var(--input-bg)', color: 'var(--text-primary)' }} autoFocus />
-              <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#37b3f2', color: '#fff', border: 'none', borderRadius: 24, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Hľadať</button>
+              <button type="submit" style={{ padding: '10px 20px', backgroundColor: '#cb1e26', color: '#fff', border: 'none', borderRadius: 24, fontWeight: 700, fontSize: 13, cursor: 'pointer' }}>Hľadať</button>
             </form>
           </div>
         )}
@@ -206,7 +212,7 @@ export default function Header() {
 
           {/* Logo center */}
           <a href="/" style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', zIndex: 10 }}>
-            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="umelá inteligencia24" width={200} height={48} style={{ height: 48, width: 'auto' }} priority />
+            <Image src={isDark ? '/logo-dark.png' : '/logo.png'} alt="robotika24" width={200} height={40} style={{ height: 40, width: 'auto' }} priority />
           </a>
 
           {/* Search right */}
@@ -244,7 +250,7 @@ export default function Header() {
               </div>
             ))}
             <div style={{ padding: '12px 20px', borderTop: '1px solid #f3f4f6' }}>
-              <Link href="/odber" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '12px', fontSize: 14, fontWeight: 700, color: '#fff', backgroundColor: '#37b3f2', borderRadius: 24, textDecoration: 'none' }}>
+              <Link href="/odber" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6, padding: '12px', fontSize: 14, fontWeight: 700, color: '#fff', backgroundColor: '#cb1e26', borderRadius: 24, textDecoration: 'none' }}>
                 <BellIcon /> Odoberať novinky
               </Link>
             </div>
@@ -254,10 +260,9 @@ export default function Header() {
 
       {/* Sticky navbar on scroll - desktop + mobile */}
       <div style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 9999,
-        backgroundColor: '#051722', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.3)',
+        position: 'fixed', top: 0, left: 0, right: 0, width: '100%', zIndex: 9999,
+        backgroundColor: '#0c1a26', boxShadow: scrolled ? '0 4px 6px -1px rgba(0,0,0,0.3)' : 'none',
         display: scrolled ? 'block' : 'none',
-        
       }}>
         <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 60 }}>
           {/* Mobile: hamburger */}
@@ -268,13 +273,13 @@ export default function Header() {
           </button>
 
           <a href="/" style={{ flexShrink: 0, position: 'relative', zIndex: 10 }}>
-            <Image src="/logo-dark.png" alt="umelá inteligencia24" width={200} height={48} style={{ height: 48, width: 'auto' }} />
+            <Image src="/logo-dark.png" alt="robotika24" width={200} height={40} style={{ height: 40, width: 'auto' }} />
           </a>
 
           {/* Desktop nav */}
           <div className="hidden md:flex" style={{ alignItems: 'center' }}>
             {categories.map((cat) => (
-              <Link key={cat.slug} href={cat.slug} style={{ padding: '8px 12px', fontSize: 12, fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', textDecoration: 'none', whiteSpace: 'nowrap' }} className="hover:text-[#37b3f2] transition-colors">
+              <Link key={cat.slug} href={cat.slug} style={{ padding: '8px 12px', fontSize: 12, fontWeight: 700, color: '#ffffff', textTransform: 'uppercase', letterSpacing: '0.04em', textDecoration: 'none', whiteSpace: 'nowrap' }} className="hover:text-[#cb1e26] transition-colors">
                 {cat.name}
               </Link>
             ))}
@@ -285,7 +290,7 @@ export default function Header() {
             <button onClick={() => setSearchOpen(!searchOpen)} style={{ color: '#9ca3af', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-white transition-colors hidden md:block">
               <SearchIcon />
             </button>
-            <button onClick={() => { const next = !isDark; setIsDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('theme', next ? 'dark' : 'light'); }} style={{ color: '#ffffff', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-[#37b3f2] transition-colors">
+            <button onClick={() => { const next = !isDark; setIsDark(next); document.documentElement.classList.toggle('dark', next); localStorage.setItem('theme', next ? 'dark' : 'light'); }} style={{ color: '#ffffff', cursor: 'pointer', background: 'none', border: 'none', padding: 4 }} className="hover:text-[#cb1e26] transition-colors">
               {isDark ? <SunIcon /> : <MoonIcon />}
             </button>
           </div>
