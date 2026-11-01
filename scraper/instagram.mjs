@@ -129,10 +129,14 @@ async function generateArticleSlide1(articleImageUrl, title, theme) {
     ${titleSvg}
   </svg>`);
 
+  // Require article image - don't generate slide without it
+  if (!articleImg) {
+    console.error('  IG: No valid article image found, skipping carousel generation');
+    return null;
+  }
+
   // Layer order: 1) image, 2) gradient over image, 3) template on top, 4) title on top
-  const base = articleImg
-    ? sharp(articleImg).resize(W, H)
-    : sharp(templatePath);
+  const base = sharp(articleImg).resize(W, H);
 
   const composites = [
     { input: svgOverlay, top: 0, left: 0 },        // gradient + title under template
@@ -217,7 +221,7 @@ function renderRichLine(wordSegments, x, y, size, color) {
 async function generateArticleExcerptPages(excerpt, theme, category) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide2.png`);
   const textColor = theme === 'modry' ? '#ffffff' : '#0c1a26';
-  const catLabel = category || 'AI';
+  const catLabel = category || 'Robotika';
 
   const fontSize = 50;
   const lineHeight = 66;
@@ -231,7 +235,7 @@ async function generateArticleExcerptPages(excerpt, theme, category) {
 
   // Category label
   const catSvg = catLabel
-    ? `<text x="115" y="132" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#37b3f2" dominant-baseline="central">${escapeXml(catLabel)}</text>`
+    ? `<text x="115" y="132" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#cb1e26" dominant-baseline="central">${escapeXml(catLabel)}</text>`
     : '';
 
   // Split across pages - max 2 sentences per page (prevents logo overlap)
@@ -326,7 +330,7 @@ async function generateGlossaryExplanationPages(termEN, explanation) {
   const maxContentHeight = H - 380;
 
   // Term name in red - to the right of red bar (bar at x:85-99, y:89-174, center y:132)
-  const termSvg = `<text x="115" y="132" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#37b3f2" dominant-baseline="central">${escapeXml(termEN)}</text>`;
+  const termSvg = `<text x="115" y="132" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#cb1e26" dominant-baseline="central">${escapeXml(termEN)}</text>`;
 
   // "Vysvetlenie" is NOT a separate heading - it's the first line of text content
   // Will be prepended as a bold larger line directly above the explanation text
@@ -695,6 +699,10 @@ export async function generateCarousel(article, postIndex) {
 
   try {
     const slide1 = await generateArticleSlide1(article.image_url, article.title, theme);
+    if (!slide1) {
+      console.error(`  IG: Skipping carousel - no valid image for: ${article.title.substring(0, 50)}`);
+      return null;
+    }
     const categoryLabel = article.categories?.name || 'Robotika';
     const excerptPages = await generateArticleExcerptPages(article.excerpt || article.title, theme, categoryLabel);
     const lastSlide = generateArticleSlide3(theme);
