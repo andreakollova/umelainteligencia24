@@ -68,41 +68,61 @@ function wrapText(text, maxChars) {
 // Slide 1: article image FULL HEIGHT as base layer, template on top, title on top of everything
 async function generateArticleSlide1(articleImageUrl, title, theme) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide1.png`);
-  const textColor = '#ffffff';
-  const bgColor = theme === 'modry' ? '#051722' : '#ffffff';
+  const textColor = theme === 'modry' ? '#ffffff' : '#0c1a26';
+  const bgColor = theme === 'modry' ? '#0c1a26' : '#ffffff';
 
-  // Download article image
+  // Load article image (local path or URL)
   let articleImg = null;
   try {
-    const imgRes = await fetch(articleImageUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
-    });
-    if (imgRes.ok && imgRes.headers.get('content-type')?.startsWith('image')) {
-      const imgBuf = Buffer.from(await imgRes.arrayBuffer());
-      // Full size - covers entire canvas
-      articleImg = await sharp(imgBuf)
-        .resize(W, H, { fit: 'cover', position: 'center' })
-        .toBuffer();
+    let imgBuf;
+    if (articleImageUrl?.startsWith('/images/') || articleImageUrl?.startsWith('/ig-images/')) {
+      // Load local file - check ig-images first for high quality
+      const filename = articleImageUrl.split('/').pop();
+      const igPath = resolve(__dirname, '..', 'public', 'ig-images', filename);
+      const localPath = resolve(__dirname, '..', 'public', 'images', filename);
+      if (existsSync(igPath)) imgBuf = readFileSync(igPath);
+      else if (existsSync(localPath)) imgBuf = readFileSync(localPath);
+    } else if (articleImageUrl) {
+      const imgRes = await fetch(articleImageUrl, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
+      });
+      if (imgRes.ok && imgRes.headers.get('content-type')?.startsWith('image')) {
+        imgBuf = Buffer.from(await imgRes.arrayBuffer());
+      }
+    }
+    if (imgBuf) {
+      // Full height cover, centered - but skip upscaling tiny images
+      const meta = await sharp(imgBuf).metadata();
+      if (meta.width >= 400) {
+        articleImg = await sharp(imgBuf).resize(W, H, { fit: 'cover', position: 'centre' }).toBuffer();
+      }
     }
   } catch {}
 
-  // Title - big, left-aligned with red bar (~x:45), lower third
-  const titleLines = wrapText(title, 20);
-  const lineHeight = 88;
+  // Title - auto-scale font based on length
+  const titleLen = title.length;
+  let fontSize = 92;
+  let charsPerLine = 18;
+  if (titleLen > 50) { fontSize = 80; charsPerLine = 20; }
+  if (titleLen > 70) { fontSize = 68; charsPerLine = 24; }
+  if (titleLen > 90) { fontSize = 60; charsPerLine = 28; }
+
+  const titleLines = wrapText(title, charsPerLine);
+  const lineHeight = Math.round(fontSize * 1.1);
   const titleBlockHeight = titleLines.length * lineHeight;
-  const titleStartY = H - 240 - titleBlockHeight;
+  const titleStartY = H - 220 - titleBlockHeight;
 
   const titleSvg = titleLines.map((line, i) =>
-    `<text x="85" y="${titleStartY + i * lineHeight + 78}" font-family="Inter, -apple-system, sans-serif" font-size="80" font-weight="800" fill="${textColor}">${escapeXml(line)}</text>`
+    `<text x="85" y="${titleStartY + i * lineHeight + fontSize}" font-family="Inter, -apple-system, sans-serif" font-size="${fontSize}" font-weight="800" fill="${textColor}">${escapeXml(line)}</text>`
   ).join('\n');
 
   // Gradient from bottom going up - under the template graphic, over the photo
   const svgOverlay = Buffer.from(`<svg width="${W}" height="${H}">
     <defs>
       <linearGradient id="fade-bottom" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0.45" stop-color="#051722" stop-opacity="0"/>
-        <stop offset="0.7" stop-color="#051722" stop-opacity="0.75"/>
-        <stop offset="1" stop-color="#051722" stop-opacity="0.95"/>
+        <stop offset="0.45" stop-color="#0c1a26" stop-opacity="0"/>
+        <stop offset="0.7" stop-color="#0c1a26" stop-opacity="0.75"/>
+        <stop offset="1" stop-color="#0c1a26" stop-opacity="0.95"/>
       </linearGradient>
     </defs>
     <rect x="0" y="0" width="${W}" height="${H}" fill="url(#fade-bottom)"/>
@@ -196,47 +216,29 @@ function renderRichLine(wordSegments, x, y, size, color) {
 // Returns array of page buffers (1 or 2 pages)
 async function generateArticleExcerptPages(excerpt, theme, category) {
   const templatePath = resolve(__dirname, `templates/${theme}/slide2.png`);
-  const textColor = '#ffffff';
+  const textColor = theme === 'modry' ? '#ffffff' : '#0c1a26';
   const catLabel = category || 'AI';
 
-  const fontSize = 54;
-  const lineHeight = 70;
-  const sentenceGap = 40;
+  const fontSize = 50;
+  const lineHeight = 66;
+  const sentenceGap = 32;
   const maxContentHeight = H - 350;
   const contentStartY = 130;
 
-  // Split into sentences, wrap each with bold preservation - shorter lines for readability
+  // Split into sentences
   const sentences = excerpt.split(/(?<=\.)\s+/).filter(s => s.trim());
+  const sentenceGroups = sentences.map(s => wrapTextWithBold(s, 32));
 
-  // Each sentence group = array of lines, each line = array of {text, bold} segments
-  const sentenceGroups = sentences.map(s => wrapTextWithBold(s, 26));
-
-  // Category label - to the right of red bar (bar at x:85-99, y:89-174, center y:132)
+  // Category label
   const catSvg = catLabel
     ? `<text x="115" y="132" font-family="Inter, -apple-system, sans-serif" font-size="26" font-weight="700" fill="#37b3f2" dominant-baseline="central">${escapeXml(catLabel)}</text>`
     : '';
 
-  // Calculate total height of all content
-  const totalContentHeight = sentenceGroups.reduce((h, group, i) => {
-    return h + group.length * lineHeight + (i > 0 ? sentenceGap : 0);
-  }, 0);
-
-  // Split across 4 pages for shorter, more readable text per slide
+  // Split across pages - max 2 sentences per page (prevents logo overlap)
   const totalSentences = sentenceGroups.length;
   const pageGroupsList = [];
-  if (totalSentences >= 4) {
-    const t1 = Math.ceil(totalSentences / 4);
-    const t2 = Math.ceil((totalSentences * 2) / 4);
-    const t3 = Math.ceil((totalSentences * 3) / 4);
-    pageGroupsList.push(sentenceGroups.slice(0, t1), sentenceGroups.slice(t1, t2), sentenceGroups.slice(t2, t3), sentenceGroups.slice(t3));
-  } else if (totalSentences >= 3) {
-    const t1 = Math.ceil(totalSentences / 3);
-    const t2 = Math.ceil((totalSentences * 2) / 3);
-    pageGroupsList.push(sentenceGroups.slice(0, t1), sentenceGroups.slice(t1, t2), sentenceGroups.slice(t2));
-  } else if (totalSentences >= 2) {
-    pageGroupsList.push(sentenceGroups.slice(0, 1), sentenceGroups.slice(1));
-  } else {
-    pageGroupsList.push(sentenceGroups);
+  for (let i = 0; i < totalSentences; i += 2) {
+    pageGroupsList.push(sentenceGroups.slice(i, i + 2));
   }
 
   const pages = pageGroupsList.map(groups => {
@@ -425,7 +427,7 @@ async function generateCompanySlide1(logoPath) {
 // Slide 2+: company description pages - small logo + text
 async function generateCompanyDescPages(companyName, description, logoPath) {
   const templatePath = resolve(__dirname, 'templates/poznasfirmu/slide2.png');
-  const textColor = '#051722';
+  const textColor = '#0c1a26';
 
   const fontSize = 46;
   const lineHeight = 60;
@@ -545,16 +547,25 @@ const SH = 1920;
 export async function generateStory(articleImageUrl, title) {
   const templatePath = resolve(__dirname, 'templates/story/template.png');
 
-  // Download article image as full background
+  // Load article image as full background
   let bgBuf;
   try {
-    const imgRes = await fetch(articleImageUrl, {
-      headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
-    });
-    if (imgRes.ok && imgRes.headers.get('content-type')?.startsWith('image')) {
-      const raw = Buffer.from(await imgRes.arrayBuffer());
-      bgBuf = await sharp(raw).resize(SW, SH, { fit: 'cover', position: 'center' }).toBuffer();
+    let raw;
+    if (articleImageUrl?.startsWith('/images/') || articleImageUrl?.startsWith('/ig-images/')) {
+      const filename = articleImageUrl.split('/').pop();
+      const igPath = resolve(__dirname, '..', 'public', 'ig-images', filename);
+      const localPath = resolve(__dirname, '..', 'public', 'images', filename);
+      if (existsSync(igPath)) raw = readFileSync(igPath);
+      else if (existsSync(localPath)) raw = readFileSync(localPath);
+    } else if (articleImageUrl) {
+      const imgRes = await fetch(articleImageUrl, {
+        headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36' },
+      });
+      if (imgRes.ok && imgRes.headers.get('content-type')?.startsWith('image')) {
+        raw = Buffer.from(await imgRes.arrayBuffer());
+      }
     }
+    if (raw) bgBuf = await sharp(raw).resize(SW, SH, { fit: 'cover', position: 'centre' }).toBuffer();
   } catch {}
 
   // If no image, use solid dark bg
@@ -592,8 +603,15 @@ export async function generateStory(articleImageUrl, title) {
 // ============================================================
 
 const companyData = {
-  'EPFL News': { name: 'EPFL', country: 'Švajčiarsko', countryCode: 'ch', info: 'EPFL je jedna z najlepších technických univerzít v Európe. Sídli v Lausanne vo Švajčiarsku a patrí medzi svetových lídrov vo výskume umelej inteligencie a strojového učenia. Na EPFL pôsobí viac ako 380 laboratórií.' },
-  'Microsoft': { name: 'Microsoft', country: 'USA', countryCode: 'us', info: 'Microsoft je americká technologická spoločnosť so sídlom v Redmonde, Washington. Je jedným z najväčších investorov do umelej inteligencie na svete. Microsoft investoval viac ako 13 miliárd dolárov do OpenAI a vyvinul Azure AI a GitHub Copilot.' },
+  'EPFL News': { name: 'EPFL', country: 'Švajčiarsko', countryCode: 'ch', info: 'EPFL je jedna z najlepších technických univerzít v Európe. Sídli v Lausanne vo Švajčiarsku a patrí medzi svetových lídrov vo výskume robotiky a AI. Na EPFL pôsobí viac ako 380 laboratórií.' },
+  '1X Technologies': { name: '1X Technologies', country: 'Nórsko', countryCode: 'no', info: '1X Technologies je nórska spoločnosť vyvíjajúca humanoidného robota NEO pre domácnosti. Podporuje ju OpenAI a Samsung. Prvá séria 10 000 kusov sa vypredala za päť dní.' },
+  'Comau': { name: 'Comau', country: 'Taliansko', countryCode: 'it', info: 'Comau je talianska spoločnosť so sídlom v Turíne špecializujúca sa na priemyselnú automatizáciu a robotiku. Vznikla v roku 1973 a pôsobí vo viac ako 13 krajinách.' },
+  'ABB': { name: 'ABB', country: 'Švajčiarsko / Švédsko', countryCode: 'ch', info: 'ABB je švajčiarsko-švédska korporácia so sídlom v Zürichu. Patrí medzi svetových lídrov v robotike a automatizácii s viac ako 105 000 zamestnancami.' },
+  'KUKA': { name: 'KUKA', country: 'Nemecko', countryCode: 'de', info: 'KUKA je nemecký výrobca priemyselných robotov so sídlom v Augsburgu. Firma bola založená v roku 1898 a patrí medzi najväčších výrobcov robotov na svete.' },
+  'Avular': { name: 'Avular', country: 'Holandsko', countryCode: 'nl', info: 'Avular je holandská robotická spoločnosť z Eindhovenu vyvíjajúca autonómne roboty pre vonkajšie prostredie v stavebníctve, údržbe a poľnohospodárstve.' },
+  'AutoStore': { name: 'AutoStore', country: 'Nórsko', countryCode: 'no', info: 'AutoStore je nórska spoločnosť z Nedre Vats, svetový líder v automatizovaných skladových systémoch. Jej kubická mriežka s robotmi umožňuje 4-násobne vyššiu hustotu skladovania.' },
+  'NEURA Robotics': { name: 'NEURA Robotics', country: 'Nemecko', countryCode: 'de', info: 'NEURA Robotics je nemecká spoločnosť z Metzingenu vyvíjajúca kognitívne roboty s AI. Jej humanoid 4NE1 manipuluje s predmetmi do 100 kg. Firma získala investíciu 1,7 miliardy dolárov.' },
+  'Agility Robotics': { name: 'Agility', country: 'USA', countryCode: 'us', info: 'Agility Robotics je americká spoločnosť z Oregonu, ktorá vyvinula humanoidného robota Digit. Medzi jej zákazníkov patria Amazon, GXO Logistics a Mercado Libre. Digit premiestnil viac ako 100 000 prepraviek.' },
 };
 
 async function generateCompanyInfoSlide(sourceName, theme) {
@@ -602,16 +620,23 @@ async function generateCompanyInfoSlide(sourceName, theme) {
 
   const templatePath = resolve(__dirname, `templates/${theme}/slide2.png`);
 
+  // Download flag
   let flagBuf = null;
   try {
     const flagRes = await fetch(`https://flagcdn.com/w160/${company.countryCode}.png`);
     if (flagRes.ok) flagBuf = Buffer.from(await flagRes.arrayBuffer());
   } catch {}
 
+  // "O spoločnosti" label
   const headingSvg = `<text x="${W / 2}" y="300" font-family="Inter, -apple-system, sans-serif" font-size="24" font-weight="500" fill="#ffffff" text-anchor="middle" opacity="0.5">O spoločnosti</text>`;
+
+  // Company name - big
   const nameSvg = `<text x="${W / 2}" y="400" font-family="Inter, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#ffffff" text-anchor="middle">${escapeXml(company.name)}</text>`;
+
+  // Country
   const countrySvg = `<text x="${W / 2}" y="460" font-family="Inter, -apple-system, sans-serif" font-size="28" font-weight="500" fill="#ffffff" text-anchor="middle" opacity="0.5">${escapeXml(company.country)}</text>`;
 
+  // Info text - split into sentences, 2 sentences + gap + rest
   const sentences = company.info.split(/(?<=\.)\s+/);
   const group1 = sentences.slice(0, 2).join(' ');
   const group2 = sentences.slice(2).join(' ');
@@ -621,14 +646,17 @@ async function generateCompanyInfoSlide(sourceName, theme) {
   const sentenceGap = 28;
   let currentY = 530;
 
+  // Render group 1
   const g1Lines = wrapText(group1, 44);
   const g1Svg = g1Lines.map((line) => {
     currentY += lineHeight;
     return `<text x="${W / 2}" y="${currentY}" font-family="Inter, -apple-system, sans-serif" font-size="${fontSize}" font-weight="400" fill="#ffffff" text-anchor="middle">${escapeXml(line)}</text>`;
   }).join('\n');
 
+  // Gap between groups
   currentY += sentenceGap;
 
+  // Render group 2
   const g2Lines = group2 ? wrapText(group2, 44) : [];
   const g2Svg = g2Lines.map((line) => {
     currentY += lineHeight;
@@ -636,14 +664,19 @@ async function generateCompanyInfoSlide(sourceName, theme) {
   }).join('\n');
 
   const svgOverlay = Buffer.from(`<svg width="${W}" height="${H}">${headingSvg}${nameSvg}${countrySvg}${g1Svg}${g2Svg}</svg>`);
+
   const composites = [{ input: svgOverlay, top: 0, left: 0 }];
 
+  // Add flag centered above heading
   if (flagBuf) {
     const flag = await sharp(flagBuf).resize(100, 66, { fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } }).toBuffer();
     composites.push({ input: flag, top: 185, left: Math.round((W - 100) / 2) });
   }
 
-  return sharp(templatePath).composite(composites).png().toBuffer();
+  return sharp(templatePath)
+    .composite(composites)
+    .png()
+    .toBuffer();
 }
 
 // ============================================================
@@ -662,10 +695,11 @@ export async function generateCarousel(article, postIndex) {
 
   try {
     const slide1 = await generateArticleSlide1(article.image_url, article.title, theme);
-    const categoryLabel = article.categories?.name || 'AI';
+    const categoryLabel = article.categories?.name || 'Robotika';
     const excerptPages = await generateArticleExcerptPages(article.excerpt || article.title, theme, categoryLabel);
     const lastSlide = generateArticleSlide3(theme);
 
+    // Company info slide (if source is a known company)
     const companySlide = article.source_name ? await generateCompanyInfoSlide(article.source_name, theme) : null;
 
     const slides = [];
@@ -678,6 +712,7 @@ export async function generateCarousel(article, postIndex) {
       slides.push(path);
     });
 
+    // Add company info slide before CTA
     if (companySlide) {
       const companyPath = `${prefix}-${slides.length + 1}.png`;
       writeFileSync(companyPath, companySlide);

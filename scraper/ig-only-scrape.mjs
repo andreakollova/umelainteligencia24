@@ -182,8 +182,13 @@ async function main() {
 
   console.log(`Total: ${items.length} items`);
 
-  // Take only the newest item that's different from last posted
-  const newItems = items.filter(i => i.link !== lastPostedUrl);
+  // Filter: no military topics, must be different from last posted
+  const SKIP_TOPICS = ['military', 'warfare', 'weapon', 'defense', 'defence', 'army', 'airspace', 'surveillance', 'missile', 'nato', 'pentagon'];
+  const newItems = items.filter(i => {
+    if (i.link === lastPostedUrl) return false;
+    const text = (i.title + ' ' + i.desc).toLowerCase();
+    return !SKIP_TOPICS.some(t => text.includes(t));
+  });
   console.log(`New: ${newItems.length}`);
 
   let published = 0;
