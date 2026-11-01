@@ -29,20 +29,33 @@ const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 const supabase = SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-// Track which terms have been posted — never repeat
-const STATE_FILE = resolve(__dirname, '../.glossary-posted.json');
-function loadPosted() {
-  try { return JSON.parse(readFileSync(STATE_FILE, 'utf8')); }
-  catch { return { posted: [] }; }
+// Track posted terms in Supabase (persists across GH Actions runs)
+async function getPostedSlugs() {
+  const { data } = await supabase.from('articles').select('source_url').eq('slug', 'glossary-posted-slugs').single();
+  return data?.source_url ? data.source_url.split(',') : [];
 }
-function savePosted(state) { writeFileSync(STATE_FILE, JSON.stringify(state, null, 2)); }
+async function addPostedSlug(slug) {
+  const existing = await getPostedSlugs();
+  existing.push(slug);
+  const val = existing.join(',');
+  const { data } = await supabase.from('articles').select('id').eq('slug', 'glossary-posted-slugs').single();
+  if (data) {
+    await supabase.from('articles').update({ source_url: val }).eq('slug', 'glossary-posted-slugs');
+  } else {
+    await supabase.from('articles').insert({
+      title: 'GLOSSARY-STATE', slug: 'glossary-posted-slugs', source_url: val,
+      source_name: 'system', is_published: false, published_at: new Date().toISOString(),
+      author: 'bot', image_url: null, excerpt: null, content: null,
+    });
+  }
+}
 
 async function main() {
   console.log('=== inteligencia24 Daily Glossary ===');
   console.log(`Time: ${new Date().toISOString()}`);
 
-  const state = loadPosted();
-  const remaining = glossaryTerms.filter(t => !state.posted.includes(t.slug));
+  const postedSlugs = await getPostedSlugs();
+  const remaining = glossaryTerms.filter(t => !postedSlugs.includes(t.slug));
 
   if (remaining.length === 0) {
     console.log('All', glossaryTerms.length, 'terms posted. Add new terms to continue.');
@@ -138,10 +151,9 @@ async function main() {
     console.log('  Slack notification sent!');
   }
 
-  // Mark as posted — never repeat
-  state.posted.push(term.slug);
-  savePosted(state);
-  console.log('Done! Remaining:', glossaryTerms.length - state.posted.length);
+  // Mark as posted in Supabase — never repeat
+  await addPostedSlug(term.slug);
+  console.log('Done! Remaining:', remaining.length - 1);
 }
 
 main().catch(err => {
