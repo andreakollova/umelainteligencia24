@@ -29,22 +29,30 @@ const SLACK_WEBHOOK = process.env.SLACK_WEBHOOK_URL;
 
 const supabase = SUPABASE_KEY ? createClient(SUPABASE_URL, SUPABASE_KEY) : null;
 
-// Use day-of-year to determine which term to post — no state file needed
-function getTodayIndex() {
-  const now = new Date();
-  const start = new Date(now.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor((now - start) / 86400000);
-  return dayOfYear % glossaryTerms.length;
+// Track which terms have been posted — never repeat
+const STATE_FILE = resolve(__dirname, '../.glossary-posted.json');
+function loadPosted() {
+  try { return JSON.parse(readFileSync(STATE_FILE, 'utf8')); }
+  catch { return { posted: [] }; }
 }
+function savePosted(state) { writeFileSync(STATE_FILE, JSON.stringify(state, null, 2)); }
 
 async function main() {
   console.log('=== inteligencia24 Daily Glossary ===');
   console.log(`Time: ${new Date().toISOString()}`);
 
-  const termIdx = getTodayIndex();
-  const term = glossaryTerms[termIdx];
+  const state = loadPosted();
+  const remaining = glossaryTerms.filter(t => !state.posted.includes(t.slug));
 
-  console.log(`Term ${termIdx + 1}/${glossaryTerms.length}: ${term.en} (${term.sk})`);
+  if (remaining.length === 0) {
+    console.log('All', glossaryTerms.length, 'terms posted. Add new terms to continue.');
+    return;
+  }
+
+  const term = remaining[0];
+  const termIdx = glossaryTerms.indexOf(term);
+
+  console.log(`Term ${termIdx + 1}/${glossaryTerms.length} (${remaining.length} remaining): ${term.en}`);
 
   // Generate carousel
   const result = await generateGlossaryCarousel(term);
@@ -130,8 +138,10 @@ async function main() {
     console.log('  Slack notification sent!');
   }
 
-  // Update state
-  console.log('Done!');
+  // Mark as posted — never repeat
+  state.posted.push(term.slug);
+  savePosted(state);
+  console.log('Done! Remaining:', glossaryTerms.length - state.posted.length);
 }
 
 main().catch(err => {
