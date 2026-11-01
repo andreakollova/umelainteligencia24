@@ -156,29 +156,6 @@ async function main() {
     console.log(`The Decoder: ${items.length} items`);
   } catch (e) { console.error('The Decoder error:', e.message); }
 
-  await new Promise(r => setTimeout(r, 3000 + Math.random() * 2000));
-
-  // Interesting Engineering - AI articles
-  try {
-    const ieRes = await fetch('https://interestingengineering.com/rss', { headers: { 'User-Agent': USER_AGENT } });
-    const ieXml = await ieRes.text();
-    const ie$ = load(ieXml, { xml: true });
-    const before = items.length;
-    ie$('item').each((_, el) => {
-      const title = ie$(el).find('title').text().trim();
-      const link = ie$(el).find('link').text().trim();
-      const desc = stripHtml(ie$(el).find('description').text());
-      const contentHtml = ie$(el).find('content\\:encoded').text();
-      const pubDate = ie$(el).find('pubDate').text().trim();
-      const cats = [];
-      ie$(el).find('category').each((_, c) => cats.push(ie$(c).text().toLowerCase()));
-      const joined = cats.join(' ') + ' ' + title.toLowerCase();
-      if (title && link && (joined.includes('ai') || joined.includes('artificial intelligence') || joined.includes('machine learning') || joined.includes('gpt') || joined.includes('language model'))) {
-        items.push({ title, link, desc, contentHtml, pubDate, source: 'Interesting Engineering' });
-      }
-    });
-    console.log(`Interesting Engineering: ${items.length - before} AI items`);
-  } catch (e) { console.error('IE error:', e.message); }
 
   console.log(`Total: ${items.length} items`);
 
@@ -197,9 +174,19 @@ async function main() {
   for (const item of newItems) {
     if (published >= limit) break;
 
-    // Extract image from content
+    // Extract image - try RSS content first, then fetch OG image from article page
     const content$ = load(item.contentHtml || '');
-    const imageUrl = content$('img').first().attr('src');
+    let imageUrl = content$('img').first().attr('src');
+    if (!imageUrl) {
+      try {
+        const pageRes = await fetch(item.link, { headers: { 'User-Agent': USER_AGENT } });
+        if (pageRes.ok) {
+          const html = await pageRes.text();
+          const match = html.match(/og:image[^>]*content="([^"]+)"/);
+          if (match) imageUrl = match[1];
+        }
+      } catch {}
+    }
     if (!imageUrl) { console.log(`  SKIP (no image): ${item.title.substring(0, 50)}`); continue; }
 
     const textContent = stripHtml(item.contentHtml || item.desc).substring(0, 3000);
