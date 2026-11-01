@@ -1,0 +1,33 @@
+name: Cleanup Old Articles
+
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Delete old articles and images
+        env:
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: node scraper/cleanup.mjs
+
+      - name: Commit deleted images
+        run: |
+          git config user.name "robotika24-bot"
+          git config user.email "studio@drixton.com"
+          git add -A public/images/ || true
+          git diff --cached --quiet || git commit -m "Cleanup: remove old article images [bot]"
+          git push || true

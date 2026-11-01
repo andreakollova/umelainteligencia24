@@ -43,3 +43,11 @@ jobs:
           SITE_URL: ${{ secrets.SITE_URL }}
           IG_PUBLISH_SECRET: ${{ secrets.IG_PUBLISH_SECRET }}
         run: node scraper/microsoft-scrape.mjs 5
+
+      - name: Commit and push new images
+        run: |
+          git config user.name "inteligencia24-bot"
+          git config user.email "studio@drixton.com"
+          git add public/images/ || true
+          git diff --cached --quiet || git commit -m "Add new article images [bot]"
+          git push || true
